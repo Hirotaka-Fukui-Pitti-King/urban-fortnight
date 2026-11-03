@@ -140,3 +140,75 @@ $$
 | HANK/NK | Kolmogorov Forward、Mean Field | 最適化・分布・価格硬直性の均衡 | 新しい直接相互作用×流動性制約の政策効果 |
 
 これらの数理的対応は講義で用いる**教育的な整理**である。すべてのモデルを同じHamiltonian、同じEntropy最大化原理、同じGibbs測度で扱うことはできない。研究上重要なのは、既存の経済理論がすでに説明する現象を正確に取り除いた後に残る比較静学である。
+
+## Appendix A. 最適資産需要から価格方程式を導く
+
+Heterogeneous-Belief資産価格の簡単なMean–Variance近似を明示する。タイプ$h$が保有量$z_h$を選び、
+$$
+\max_{z_h}\left\{
+z_h\left(E_{h,t}[p_{t+1}+d_{t+1}]-Rp_t\right)
+-\frac{a\sigma^2}{2}z_h^2\right\}
+$$
+を解くと、$a\sigma^2>0$より目的関数は厳密凹であり、
+$$
+z_h=\frac{E_{h,t}[p_{t+1}+d_{t+1}]-Rp_t}{a\sigma^2}
+$$
+が一意の最適需要となる。外部株式供給が$z_s$で、タイプ人口比$n_h$が総和1なら清算条件から
+$$
+Rp_t=\sum_hn_hE_{h,t}[p_{t+1}+d_{t+1}]-a\sigma^2 z_s
+$$
+となる。本文は$z_s=0$という特殊ケースである。期待形成ルールが真の確率法則に一致するとは限らず、これは必ずしも合理的期待均衡ではない。
+
+## Appendix B. 生産ネットワークの投入最適化と対数価格連関
+
+企業$i$の技術を、$\sum_j\gamma_{ij}<1$のCobb–Douglas
+$$
+Y_i=A_iL_i^{1-\sum_j\gamma_{ij}}\prod_jX_{ij}^{\gamma_{ij}}
+$$
+と仮定する。価格を所与とした費用最小化から中間投入の費用シェアは$\gamma_{ij}$、労働シェアは$1-\sum_j\gamma_{ij}$となる。単位費用関数は、正規化定数$\kappa_i$を用いて
+$$
+p_i=\frac{\kappa_i}{A_i}\,
+w^{1-\sum_j\gamma_{ij}}\prod_jp_j^{\gamma_{ij}}.
+$$
+対数を取り、賃金とシェアを固定した生産性ショック$\varepsilon_i=\Delta\log A_i$に関する変動を考えると
+$$
+\Delta\log\mathbf p=-\varepsilon+\Gamma\Delta\log\mathbf p.
+$$
+$\rho(\Gamma)<1$で
+$$
+\boxed{\Delta\log\mathbf p=-(I-\Gamma)^{-1}\varepsilon.}
+$$
+これは競争企業の**費用最小化とゼロ利潤**からの厳密な対数価格方程式である。本文の$y=\varepsilon+Ay$というアウトプットのReduced-Form波及式とは変数・係数が異なる。後者が厳密に成り立つには、追加の最終需要、産出、労働・市場清算の条件が必要である。入力係数の向きも定義に依存する。
+
+## Appendix C. Calvoの価格分布と生産資源の歪み
+
+企業ごとの価格$P_{it}$に対するCES価格指数を
+$$
+P_t^{1-\epsilon}=\int_0^1P_{it}^{1-\epsilon}\,di,
+\qquad\epsilon>1
+$$
+と定義する。企業が各期独立に確率$\theta$で価格を据え置き、残りが共通価格$P_t^*$へ改定するなら
+$$
+P_t^{1-\epsilon}
+=\theta P_{t-1}^{1-\epsilon}+(1-\theta)(P_t^*)^{1-\epsilon}
+$$
+が導かれる。相対価格歪み（Price Dispersion）を
+$$
+\Delta_t=\int_0^1(P_{it}/P_t)^{-\epsilon}di
+$$
+とすると、前期価格を維持する企業の相対価格はインフレ率$\Pi_t=P_t/P_{t-1}$だけ減価するので
+$$
+\boxed{
+\Delta_t=\theta\Pi_t^\epsilon\Delta_{t-1}
++(1-\theta)(P_t^*/P_t)^{-\epsilon}.
+}
+$$
+需要$Y_{it}=(P_{it}/P_t)^{-\epsilon}Y_t$と共通の線形生産$Y_{it}=AN_{it}$なら、必要労働投入は$N_t=Y_t\Delta_t/A$。これが**価格分布と集計生産コストの具体的な接続**である。Calvoの単純なモデルの導出であり、HANKの最適な家計分布や金融政策反応を解き終えたという意味ではない。
+
+## Appendix D. Marchenko–Pasturの対象
+
+$S=XX^\top/T$、$N/T\to q>0$の白色雑音標本共分散で、標本側のStieltjes変換$m(z)=N^{-1}\operatorname{Tr}(S-zI)^{-1}$は、適切な仮定の下で
+$$
+z=-\frac1{m(z)}+\frac{\sigma^2}{1+q\sigma^2m(z)}
+$$
+を満たす。支持端点はこの関係の判別式がゼロとなる点から$\lambda_\pm=\sigma^2(1\pm\sqrt q)^2$と求められる。$q>1$では階数が最大$T<N$であることから、原点の点質量$1-1/q$が生じる。これは標本固有値の高次元**推定誤差**の記述であり、資産需要やネットワーク感染の因果的均衡方程式ではない。
