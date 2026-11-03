@@ -1,0 +1,11 @@
+Stage 2-B decision memo — 2026-11-03
+
+Attempted joint nonseparable (a,m,z) CM/DM optimization with endogenous discrete Nash pair contract (d,q) and shared labor/time. Computed fixed-price continuation values and stationary mass: Bellman 9.66e-9, invariant measure 7.56e-16. DM money and capital conserved to machine precision. 40k-agent one-step Monte Carlo distribution error averaged .00842 over 4 seeds.
+
+FAILED FULL GE: capital-market excess -3.880104; money-market excess +.197646; labor mismatch -.053913; goods resource +.583097. Outer price root unsuccessful with nonconvergent inner evaluations. Do not claim equilibrium or use those aggregates for policy/welfare.
+
+STRUCTURAL DEFECT: discrete Gumbel portfolio tastes give direct monetary utility even with zero matching and no monetary services. The model cannot prove fiat money is essential. Discrete Nash optimality is over an announced finite contract menu, not continuous Nash FOCs. Coarse capital grid does not meet Aiyagari accuracy benchmark.
+
+CRITICAL COMPETITOR: Molico and Zhang (2006), Monetary Policy and the Distribution of Money and Capital, already models optimal joint capital and money choice in search equilibrium with nondegenerate wealth. Molico (2006) has endogenous payments and quantity bargaining. Use their canonical economic specification next and derive its kinetic operator conditional on endogenous policies.
+
+No updates to the old Stage 0–2 verified results; this Stage 2-B attempt is explicitly a separate failed full-GE extension.
