@@ -32,6 +32,24 @@ jobs:
         run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2c/tests -v
       - name: Execute fixed-contract Bellman and endogenous Nash policy audit
         run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_fixed_price_diagnostic.py
+      - name: Execute original Step 6 adaptive grid on actual CM to DM transition
+        run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_adaptive_single_step.py
+      - name: Verify regridding did not fabricate money or stationary GE
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2f/results/adaptive_single_source_step.json').read_text())
+          assert x['certified_GE'] is False
+          assert x['source_step6_implemented'] is True
+          assert abs(x['issuer_money_after_regrid']-1)<1e-8
+          assert max(abs(v) for v in x['incoming_moment_differences'])<1e-9
+          if x['second_auction_status']=='CLEARED':
+              assert abs(x['second_CM_fiat']-1)<1e-8
+              assert abs(x['second_DM_fiat']-1)<1e-8
+              assert abs(x['second_CM_budget'])<1e-8
+          print('Adaptive-grid CM-to-DM transport verified; no stationary GE claim.')
+          PY
       - name: Audit numerical claims against generated data
         run: |
           python - <<'PY'
