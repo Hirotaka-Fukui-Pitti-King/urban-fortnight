@@ -102,26 +102,42 @@ def run(out=HERE/"results", nq=9,nx=7,maxfev=500):
     stages.append(dict(diag,label="adaptive",accepted=diag["relative_residual"]<1e-7))
     if diag["relative_residual"]>=1e-7:
         raise RuntimeError("no-matching private baseline failed")
-    step=.08
-    attempts=0
-    while last_lambda < 1.-1e-12 and attempts<60:
-        attempts+=1
-        target=round(min(1.,last_lambda+step),12)
+    # First reproduce the already observed successful coarse continuation
+    # branch: 0, .05, .15, .30, .55. Starting with tiny steps from zero
+    # instead selected a different branch and stalled near 0.1756.
+    seed_path=[.05,.15,.30,.55]
+    for target in seed_path:
         candidate,diag=root_at_match(big,f,2.5,z,target,nq,nx,maxfev)
         accepted=diag["relative_residual"]<1e-7
-        stages.append(dict(diag,label="adaptive",accepted=bool(accepted)))
-        print("ADAPTIVE",json.dumps(stages[-1]),flush=True)
-        if accepted:
-            last_lambda=target
-            z=candidate
-            np.savez(out/"private_5x5_last_accepted.npz",
-                     relative_value=z,matching_multiplier=last_lambda)
-            step=min(.12,step*1.25)
-        else:
-            step*=.5
-            if step<.0005:
-                print("ADAPTIVE_STOP_MINIMUM_STEP",step,flush=True)
-                break
+        stages.append(dict(diag,label="branch_seed",accepted=bool(accepted)))
+        print("SEED_BRANCH",json.dumps(stages[-1]),flush=True)
+        if not accepted:
+            break
+        last_lambda=target
+        z=candidate
+        np.savez(out/"private_5x5_last_accepted.npz",
+                 relative_value=z,matching_multiplier=last_lambda)
+    step=.05
+    attempts=0
+    if last_lambda>=.55-1e-10:
+        while last_lambda < 1.-1e-12 and attempts<35:
+            attempts+=1
+            target=round(min(1.,last_lambda+step),12)
+            candidate,diag=root_at_match(big,f,2.5,z,target,nq,nx,maxfev)
+            accepted=diag["relative_residual"]<1e-7
+            stages.append(dict(diag,label="branch_follow",accepted=bool(accepted)))
+            print("BRANCH_FOLLOW",json.dumps(stages[-1]),flush=True)
+            if accepted:
+                last_lambda=target
+                z=candidate
+                np.savez(out/"private_5x5_last_accepted.npz",
+                         relative_value=z,matching_multiplier=last_lambda)
+                step=min(.08,step*1.25)
+            else:
+                step*=.5
+                if step<.0005:
+                    print("BRANCH_STOP_MINIMUM_STEP",step,flush=True)
+                    break
     success=last_lambda>=1.-1e-12
     final_diagnostics={}
     if success:
