@@ -114,7 +114,7 @@ $$
 
 $$
 (q^*,d^*)\in\arg\max_{\substack{(q,d)\in\mathcal F_{b,s}(V)\\G_B>0,\ G_S>0}}
-\left\{\eta\log G_B+(1-\eta)\log G_S\right\}.
+\left\{\eta\,\log G_B+(1-\eta)\,\log G_S\right\}.
 $$
 
 この問題は正の両余剰の下で通常のNash積$G_B^\eta G_S^{1-\eta}$の最大化と同値である。どちらかの正余剰を実現できないなら、外部オプションである不取引を選ぶ。契約上限・生産可能性・貨幣残高が拘束する場合も明示的にこの制約集合の上で解く。
@@ -131,7 +131,7 @@ $$
 
 が必要である。
 
-**証明。** 対数目的を$\mathcal N(q,d)=\eta\log G_B+(1-\eta)\log G_S$と置く。連鎖律から$\partial_qG_B=u'(q)$、$\partial_qG_S=-c'(q)$なので
+**証明。** 対数目的を$\mathcal N(q,d)=\eta\,\log G_B+(1-\eta)\,\log G_S$と置く。連鎖律から$\partial_qG_B=u'(q)$、$\partial_qG_S=-c'(q)$なので
 
 $$
 \partial_q\mathcal N
@@ -264,7 +264,7 @@ $$
 だから遷移率との自己整合性も満たす。平均$\bar m(r)=\sum_m m r^m/\sum_m r^m$を対数$r$で微分すると
 
 $$
-\frac{d\bar m(r)}{d\log r}
+\frac{d\bar m(r)}{d\,\log r}
 =\sum_m m^2f_m-\left(\sum_m mf_m\right)^2
 =\operatorname{Var}_f(m)>0.
 $$
@@ -279,14 +279,14 @@ $$
 
 $$
 \max_{g_m\ge0}
-H(g)=-\sum_{m=0}^M g_m\log g_m,\quad
+H(g)=-\sum_{m=0}^M g_m\,\log g_m,\quad
 \sum_mg_m=1,\quad\sum_m mg_m=\bar m.
 $$
 
 内点のLagrange関数を$H(g)-\alpha(\sum g-1)-\xi(\sum mg-\bar m)$と置き、各$g_m$で微分すると
 
 $$
--\log g_m-1-\alpha-\xi m=0.
+-\,\log g_m-1-\alpha-\xi m=0.
 $$
 
 従って$g_m=e^{-1-\alpha}e^{-\xi m}$。正規化から
@@ -295,7 +295,7 @@ $$
 g_m^*=\frac{e^{-\xi m}}{\sum_{j=0}^M e^{-\xi j}}
 $$
 
-である。Shannon EntropyのHessianは$-{\rm diag}(1/g_m)$で負定値だから、実行可能内点では唯一の最大解となる。$r=e^{-\xi}$と置くと前節の切断幾何分布と一致する。
+である。Shannon EntropyのHessianは$-{\operatorname{diag}}(1/g_m)$で負定値だから、実行可能内点では唯一の最大解となる。$r=e^{-\xi}$と置くと前節の切断幾何分布と一致する。
 
 ここで**定常分布が最大Entropyを生じた理由**は、全取引受容、一様Matching、最近接の出生死亡過程という制度により$f_{m+1}/f_m$が状態$m$に依存しなくなったためである。一般の状態依存マッチングでは$f_{m+1}/f_m$が$m$に依存し得るので、平均貨幣のみのEntropy最大化に一致する必然性はない。[Foley (1994)](https://doi.org/10.1006/jeth.1994.1018)が扱うのは許容取引集合上の**取引分布**であり、貨幣保有分布とは対象が違う。
 
