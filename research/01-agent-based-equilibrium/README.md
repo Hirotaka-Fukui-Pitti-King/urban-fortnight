@@ -1,45 +1,17 @@
-# Stage 1: Agent-Based Econophysics as an Equilibrium Computation Method
+# Stage 1: Finite-Agent Simulation of Optimal Policies
 
-**Status:** Planned — no model solutions or empirical results claimed. **Category:** method.
+Status: **preliminary simulation comparison**, not a proven finite-N general equilibrium.
 
-## Research question
+Agents evolve using the *same* Stage 0 policy functions and idiosyncratic Markov transitions, at fixed stationary general-equilibrium prices. The simulated asset decisions remain continuous; histogram mass-splitting is **not** imposed on individual choices.
 
-Can many-agent simulations of policy-optimal decisions replicate the stationary and transition distributions of the same heterogeneous-agent general equilibrium model?
+Run `python research/01-agent-based-equilibrium/scripts/run_particles.py`, or add `--quick` for the CI smoke experiment.
 
-## Feasibility assessment
+Local experiment: 1,400 burn-in periods, 150 measurement periods, seeds 101/202/303.
 
-Yes as a numerical representation, provided the simulated decision rules solve the same equilibrium and common/aggregate risk is consistently forecast.
+| N | Average simulated K | Stage 0 reference K |
+|---:|---:|---:|
+| 2,500 | 5.537903 | 5.706221 |
+| 10,000 | 5.661995 | 5.706221 |
+| 40,000 | 5.669039 | 5.706221 |
 
-## Economic mechanisms
-
-- Individual agents use verified Bellman policies
-- Finite-N Markov evolution and seed-controlled Monte Carlo
-- Distribution operator and particle-method comparison
-
-## Model objects and equations
-
-**State variables:** individual asset and income state arrays; cross-sectional distribution and moments; prices and aggregate state.
-
-- Discrete Kolmogorov or histogram distribution evolution
-- Law of motion of aggregate states
-- Market-clearing identities in agent simulation
-
-## Nested benchmark
-
-Distributional operator solution of Stage 0 at the same prices and shocks
-
-## Mandatory tests
-
-- Particle distribution converges to stationary measure as N and time increase
-- Policies agree with Stage 0 over the state grid
-- Aggregate resource and financial asset accounting
-- Common-shock versus idiosyncratic-shock simulation distinction
-- Multiple-seed confidence intervals and reproducible run manifests
-
-## Stage completion criterion
-
-Treat ABM as an implementation method, not as a free-standing economic microfoundation.
-
-**Literature to consult and verify:** Aiyagari (1994); Krusell and Smith (1998); Numerical distribution simulation methods.
-
-Reports, code versions, seed files and diagnostics should be stored in `results/`. The machine-readable specification is `plan.json`; model decisions and counterexamples are recorded in `RESEARCH.me`.
+The mean N=40,000 difference is about -0.65%. It may combine finite-N sampling noise and histogram-discretization bias. Nine seed/population combinations and one reproducibility unit test have been executed; more seeds and asset-grid refinements are needed to establish a convergence rate. No endogenous price re-clearing is performed for individual finite-N realizations.

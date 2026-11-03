@@ -1,23 +1,4 @@
-Research decision memo — Stage 1
-Title: Agent-Based Econophysics as an Equilibrium Computation Method
-Status: NOT STARTED
-
-Central hypothesis: Can many-agent simulations of policy-optimal decisions replicate the stationary and transition distributions of the same heterogeneous-agent general equilibrium model?
-
-Feasibility prior:
-Yes as a numerical representation, provided the simulated decision rules solve the same equilibrium and common/aggregate risk is consistently forecast.
-
-Core economic distinction:
-Distributional operator solution of Stage 0 at the same prices and shocks
-
-Conditions to check:
-1. Discrete Kolmogorov or histogram distribution evolution
-2. Law of motion of aggregate states
-3. Market-clearing identities in agent simulation
-
-Pass / fail criterion:
-Treat ABM as an implementation method, not as a free-standing economic microfoundation.
-
-The project reports negative feasibility results when a kinetic, entropy, adaptive-trading, or heuristic-firm mechanism cannot be reconciled with optimization and equilibrium. Do not silently weaken rational expectations or drop clearing equations.
-
-Evidence status: no derived theorems, numerical solutions or validated simulations committed yet.
+Stage 1 local executed Monte Carlo, 2026-11-03.
+Continuous optimal policy at stationary Aiyagari equilibrium prices. N=2500,10000,40000; seeds=101,202,303; 1400 burn-in, 150 measurement periods.
+Across-seed mean capital: N2500 5.537903; N10000 5.661995; N40000 5.669039 versus infinite-population K=5.706221.
+Particle paths have no kinetic transfers and no stochastic rounding of policy choices. Result is not a re-cleared finite-N general equilibrium. Investigate sampling vs histogram discretization bias; increase seeds, N, run duration and grid resolution.

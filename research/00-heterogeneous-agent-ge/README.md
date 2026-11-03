@@ -1,46 +1,36 @@
-# Stage 0: Optimizing Heterogeneous-Agent General Equilibrium
+# Stage 0: Stationary Aiyagari General Equilibrium
 
-**Status:** Planned — no model solutions or empirical results claimed. **Category:** benchmark.
+Status: **numerically validated reference**, not an analytical existence/uniqueness theorem. We solve CRRA consumption/saving with idiosyncratic Rouwenhorst labor-productivity states, competitive Cobb–Douglas capital and labor demand, rational stationary expectations, and household/firm/goods/asset clearing. No aggregate risk or nominal rigidity is assumed.
 
-## Research question
+## Run
 
-Can a canonical incomplete-markets heterogeneous-agent economy satisfy individual optimization, rational expectations and general equilibrium with sufficiently accurate numerical solutions?
+From the repository root, install `requirements.txt` and execute:
 
-## Feasibility assessment
+- `python research/00-heterogeneous-agent-ge/scripts/run_stationary_equilibrium.py`
+- `python research/00-heterogeneous-agent-ge/scripts/run_accuracy_tests.py`
+- `python research/00-heterogeneous-agent-ge/scripts/make_figures.py`
+- `python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v`
 
-Baseline: established in standard Aiyagari/Huggett-type economies, subject to the specified asset and aggregate-risk closure.
+Stage 0 uses EGM, a mass-preserving histogram distribution operator, and bracketed Brent root solving. Invalid upper-asset-grid policies fail explicitly rather than being clipped.
 
-## Economic mechanisms
+## Local reference (Python 3.13.5, November 3, 2026)
 
-- Incomplete-markets household saving and labor decisions
-- Competitive firms, wages and asset returns
-- Stationary equilibrium and optional aggregate uncertainty with rational forecasting
+Calibration: beta=0.96, sigma=2, alpha=0.36, delta=0.08, rho_z=0.9, unconditional log income SD 0.2, 5 productivity states, 360 asset nodes over [0,600].
 
-## Model objects and equations
+| Outcome | Calculated |
+|---|---:|
+| Capital K | 5.70622063 |
+| Net return r | 0.03809715 |
+| Wage w | 1.19802383 |
+| Output Y | 1.87191223 |
+| Consumption C | 1.41541457 |
+| Asset Gini | 0.49391408 |
+| Relative capital-market residual | 2.31e-8 |
+| Goods-resource residual | 5.35e-9 |
+| Weighted p99 Euler/KKT error | 7.94e-7 |
+| Invariant distribution sup-norm residual | 9.90e-13 |
+| Stationary probability at upper asset bound | 0 |
 
-**State variables:** individual financial assets a; idiosyncratic productivity z; aggregate distribution mu; aggregate shocks and prices, when active.
+The capital solution changes from 5.71077 (200 asset nodes) to 5.70622 (360) to 5.70507 (520), holding income states and the upper bound fixed. See `results/reference_accuracy.csv`. Economic and numerical accuracy must be kept separate; aggregate stochastic rational expectations have not been implemented.
 
-- Household Bellman and Euler equations
-- Household budget and borrowing constraints
-- Goods, labor and bond/capital market clearing
-- Rational aggregate transition law
-
-## Nested benchmark
-
-Canonical representative-agent or no-idiosyncratic-risk economy under the same primitives
-
-## Mandatory tests
-
-- Household feasibility and Euler/Bellman residuals
-- Firm optimization and zero-profit/distributional profit allocation
-- Asset supply and goods/labor clearing to documented tolerances
-- Distribution normalization, stationary moments and grid convergence
-- Krusell-Smith forecasting accuracy if aggregate risk is activated
-
-## Stage completion criterion
-
-Accept a fully converged and economically closed baseline; do not add nominal rigidity yet.
-
-**Literature to consult and verify:** Huggett (1993); Aiyagari (1994); Krusell and Smith (1998).
-
-Reports, code versions, seed files and diagnostics should be stored in `results/`. The machine-readable specification is `plan.json`; model decisions and counterexamples are recorded in `RESEARCH.me`.
+CI uploads policy-function CSV, invariant-distribution CSV, results JSON, and separately rendered SVGs as workflow artifacts.

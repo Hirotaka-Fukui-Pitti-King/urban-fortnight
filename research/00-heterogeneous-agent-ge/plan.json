@@ -4,7 +4,7 @@
   "folder": "research/00-heterogeneous-agent-ge",
   "title": "Optimizing Heterogeneous-Agent General Equilibrium",
   "category": "benchmark",
-  "status": "planned",
+  "status": "numerically_validated_baseline",
   "research_question": "Can a canonical incomplete-markets heterogeneous-agent economy satisfy individual optimization, rational expectations and general equilibrium with sufficiently accurate numerical solutions?",
   "feasibility_hypothesis": "Baseline: established in standard Aiyagari/Huggett-type economies, subject to the specified asset and aggregate-risk closure.",
   "prerequisites": [],
@@ -40,9 +40,9 @@
     "Krusell and Smith (1998)"
   ],
   "implementation": {
-    "status": "not_started",
+    "status": "locally_executed",
     "method": "equilibrium solving plus ABM/distribution verification when relevant",
-    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "language": "Python 3.13",
     "artifacts": "results/",
     "reporting": [
       "code revision",
@@ -51,6 +51,11 @@
       "numerical solver residuals",
       "seed and tolerances",
       "matched ablation comparisons"
+    ],
+    "tests": [
+      "5 unittest checks passed",
+      "na 200,360,520; nz 5,7; amax 600,900",
+      "EGM Euler/KKT and all accounting conditions"
     ]
   }
 }

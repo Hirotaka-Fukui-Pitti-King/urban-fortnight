@@ -1,24 +1,7 @@
-Research decision memo — Stage 0
-Title: Optimizing Heterogeneous-Agent General Equilibrium
-Status: NOT STARTED
-
-Central hypothesis: Can a canonical incomplete-markets heterogeneous-agent economy satisfy individual optimization, rational expectations and general equilibrium with sufficiently accurate numerical solutions?
-
-Feasibility prior:
-Baseline: established in standard Aiyagari/Huggett-type economies, subject to the specified asset and aggregate-risk closure.
-
-Core economic distinction:
-Canonical representative-agent or no-idiosyncratic-risk economy under the same primitives
-
-Conditions to check:
-1. Household Bellman and Euler equations
-2. Household budget and borrowing constraints
-3. Goods, labor and bond/capital market clearing
-4. Rational aggregate transition law
-
-Pass / fail criterion:
-Accept a fully converged and economically closed baseline; do not add nominal rigidity yet.
-
-The project reports negative feasibility results when a kinetic, entropy, adaptive-trading, or heuristic-firm mechanism cannot be reconciled with optimization and equilibrium. Do not silently weaken rational expectations or drop clearing equations.
-
-Evidence status: no derived theorems, numerical solutions or validated simulations committed yet.
+Stage 0 verified local numeric baseline, 2026-11-03.
+Households: CRRA EGM, Rouwenhorst idiosyncratic shocks, capital savings; stationary rational expectations.
+Firms: Cobb–Douglas, competitive wage and interest rate. Market clearing: K supply=demand and Y=C+delta K.
+Numerical tests: all 5 unittest passed. Capital relative residual 2.31e-8, goods residual 5.35e-9, weighted p99 KKT/Euler residual 7.94e-7; zero upper-edge mass.
+Sensitivity: na in 200/360/520, nz in 5/7, asset maximum in 600/900; reports committed.
+Limitations: no aggregate risk, no proof of mathematical equilibrium uniqueness, no finite population price re-clearing.
+Stage 2 priority: voluntary bilateral matching and trading with distinct liquidity preferences/assets and explicit participation constraints; do not treat arbitrary zero-sum swaps as utility-maximizing trades.
