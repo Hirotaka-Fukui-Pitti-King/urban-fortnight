@@ -35,6 +35,13 @@ def check_pdf(pdf: Path, destination: Path) -> dict:
         text = page.get_text(sort=True)
         texts.append(text)
         bad_tex=RAW_TEX.search(text)
+        # Quarto can silently pass malformed display delimiters through as
+        # literal dollar signs even when Typst returns exit code 0.
+        if "$" in text:
+            dollar=text.index("$")
+            excerpt=text[max(0,dollar-120):min(len(text),dollar+220)]
+            raise AssertionError(
+                f"Unrendered math dollar marker on page {index+1}: {pdf}: {excerpt!r}")
         if bad_tex:
             excerpt=text[max(0,bad_tex.start()-160):min(len(text),bad_tex.end()+160)]
             raise AssertionError(
