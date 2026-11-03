@@ -19,7 +19,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-plt.rcParams.update({"svg.fonttype": "path", "mathtext.fontset": "dejavusans", "font.size": 10})
+plt.rcParams.update({"svg.fonttype": "path", "mathtext.fontset": "dejavusans", "font.size": 10, "svg.hashsalt": "econ-first-stable-v1"})
 
 
 def egm(r, a, z, trans, beta=.96, gamma=2., alpha=.36, delta=.08):
@@ -141,7 +141,7 @@ def aiyagari_figures(out):
            title="Aiyagari: optimizing savings policies")
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(out / "aiyagari-savings.svg")
+    fig.savefig(out / "aiyagari-savings.svg", metadata={"Date": None})
     plt.close(fig)
     initial = np.zeros_like(mu)
     initial[0, :] = .5
@@ -160,7 +160,7 @@ def aiyagari_figures(out):
            ylim=(0, 1.02))
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(out / "aiyagari-distribution.svg")
+    fig.savefig(out / "aiyagari-distribution.svg", metadata={"Date": None})
     plt.close(fig)
     return {"r": float(r), "K_supply": k, "K_demand": float(kd),
             "wage": float(wage), "capital_error": float(k - kd),
@@ -188,7 +188,7 @@ def ising_figure(out):
            title=rf"Asynchronous logit equilibrium: $N={n}$, $h=0$")
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(out / "ising-finite-population.svg")
+    fig.savefig(out / "ising-finite-population.svg", metadata={"Date": None})
     plt.close(fig)
     # Direct detailed-balance check on all single-flip edges, N=7.
     n_small = 7
@@ -277,7 +277,7 @@ def monetary_figure(out):
            title="Optimal voluntary service-for-token exchange")
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(out / "monetary-matching.svg")
+    fig.savefig(out / "monetary-matching.svg", metadata={"Date": None})
     plt.close(fig)
     return {"uniform":{**d0,"distribution":f0.tolist()},
             "assortative":{**d1,"distribution":f1.tolist()}}
