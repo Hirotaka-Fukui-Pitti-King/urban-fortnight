@@ -58,6 +58,10 @@ def egm(r, a, z, trans, beta=.96, gamma=2., alpha=.36, delta=.08):
 
 
 def lottery(ap, a):
+    # Distribution lottery MUST NOT silently clip positive probability mass.
+    # The distribution grid must include every reached policy state.
+    if np.min(ap) < a[0]-1e-10 or np.max(ap) > a[-1]+1e-10:
+        raise ValueError("New distribution grid excludes a policy-reachable asset state")
     lower = np.maximum(0, np.minimum(len(a) - 2,
                                       np.searchsorted(a, ap, side="right") - 1))
     upper = lower + 1
@@ -123,6 +127,58 @@ def aiyagari_policy_diagnostics(r, a, z, trans, c, ap, beta=.96, gamma=2., alpha
             "upper_cap_mask":upper}
 
 
+def evaluate_aiyagari_bellman(a, z, trans, r, wage, c, ap,
+                              beta=.96, gamma=2.):
+    """Policy value from sparse Markov evaluation; global grid-deviation audit.
+
+    This is a feasible finite-grid *policy value* test, not a proof of global
+    optimality in the unbounded-asset continuum economy.
+    """
+    from scipy.sparse import csr_matrix, eye
+    from scipy.sparse.linalg import spsolve
+    na, nz = len(a), len(z)
+    lo, hi, wgt = lottery(ap, a)
+    rows, cols, weights = [], [], []
+    for ia in range(na):
+        for iz in range(nz):
+            row = ia*nz+iz
+            for jz in range(nz):
+                probability = trans[iz,jz]
+                for jj, weight in [(lo[ia,iz],1-wgt[ia,iz]),
+                                   (hi[ia,iz],wgt[ia,iz])]:
+                    rows.append(row)
+                    cols.append(int(jj)*nz+jz)
+                    weights.append(float(probability*weight))
+    P = csr_matrix((weights,(rows,cols)),shape=(na*nz,na*nz))
+    if max(abs(np.asarray(P.sum(axis=1)).ravel()-1)) > 1e-11:
+        raise RuntimeError("Policy Markov matrix is not stochastic")
+    if gamma == 1:
+        utility = np.log(c)
+    else:
+        utility = c**(1-gamma)/(1-gamma)
+    V = np.asarray(spsolve(eye(na*nz,format="csr")-beta*P,
+                          utility.ravel())).reshape(na,nz)
+    eval_resid = np.max(abs(V.ravel()-utility.ravel()-beta*P@V.ravel()))
+    # One-step deviations include all feasible savings-grid choices.
+    # The EGM choice itself need not coincide with a grid node.
+    maximum_gain = 0.
+    for iz in range(nz):
+        ev = V @ trans[iz]
+        for ia in range(na):
+            resources = (1+r)*a[ia]+wage*z[iz]
+            feasible = a < resources-1e-12
+            consumption = resources-a[feasible]
+            if gamma == 1:
+                u = np.log(consumption)
+            else:
+                u = consumption**(1-gamma)/(1-gamma)
+            deviations = u + beta*ev[feasible]
+            current = utility[ia,iz]+beta*np.interp(ap[ia,iz],a,ev)
+            maximum_gain = max(maximum_gain,float(np.max(deviations)-current))
+    return {"bellman_policy_evaluation_sup":float(eval_resid),
+            "bellman_one_step_deviation_gain_sup":max(0.,float(maximum_gain))}
+
+
 def aiyagari_figures(out):
     a = 30 * np.linspace(0, 1, 240) ** 1.7
     z = np.array([.7, 1.3])
@@ -136,6 +192,13 @@ def aiyagari_figures(out):
     mu, op = stationary(ap, a, trans)
     k = float(np.sum(a[:, None] * mu))
     diagnostics=aiyagari_policy_diagnostics(r,a,z,trans,_,ap)
+    bellman=evaluate_aiyagari_bellman(a,z,trans,r,wage,_,ap)
+    # In a mass/moment preserving policy lottery:
+    next_mu=forward(mu,*op,trans)
+    moment_transfer_error=float(abs(
+        np.sum(a[:,None]*next_mu)-np.sum(ap*mu)))
+    if moment_transfer_error > 1e-9:
+        raise RuntimeError("Lotteried distribution does not preserve asset first moment")
     upper_mass=float(mu[diagnostics.pop("upper_cap_mask")].sum())
     if abs(k-kd) > .005 or abs(mu.sum()-1)>1e-8 or upper_mass>1e-4:
         raise RuntimeError("Aiyagari market clearing, mass, or upper-grid cap failed")
@@ -171,7 +234,9 @@ def aiyagari_figures(out):
     return {"r": float(r), "K_supply": k, "K_demand": float(kd),
             "wage": float(wage), "capital_error": float(k - kd),
             "mass_error": float(abs(mu.sum() - 1)),
-            "upper_cap_stationary_mass":upper_mass, **diagnostics}
+            "upper_cap_stationary_mass":upper_mass,
+            "distribution_first_moment_transfer_error":moment_transfer_error,
+            **bellman, **diagnostics}
 
 
 def ising_figure(out):
