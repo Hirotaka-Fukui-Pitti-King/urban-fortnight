@@ -62,3 +62,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-G: 3x3 endogenous continuous Nash--Bellman private equilibrium
 
 [Stage 2-G](stage2g/README.md) implements source-bounded continuous Nash contracts, analytic payment-space reduction, FOC/KKT polishing, and a joint relative-value root solver at fixed price and partner distribution. A 3x3 pilot reaches sup Bellman residual 9.09e-13 and smooth-branch Nash KKT residual 8.88e-16, with 11 positive contracts among 17 relevant pairs. Continuous global Nash optimality and higher-grid convergence remain unproved; no clearing monetary price, invariant distribution, or stationary GE has been found. Draft PR #10.
+
+
+## Stage 2-H: convex Nash decomposition and source-code verification
+
+[Stage 2-H](stage2h/README.md) implements convex DCP Nash bargaining by buyer/seller CM interpolation-triangle pairs, with analytically admissible pruning and independent re-evaluation. A 3x3 single actual pair passes a 64-branch numerical benchmark (39 after pruning). The related Chiu–Molico (2021) Fortran archive was actually downloaded and inspected; it is not the original Molico–Zhang source. The 5x5 private Nash–Bellman root and stationary monetary GE remain **not certified**. Draft PR #11, stacked on Stage 2-G PR #10.
