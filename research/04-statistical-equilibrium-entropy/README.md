@@ -45,3 +45,8 @@ Prove a conditional characterization or report an informative failure; do not im
 **Literature to consult and verify:** Jaynes (1957); Markov chains and invariant measures; Statistical equilibrium in economic models.
 
 Reports, code versions, seed files and diagnostics should be stored in `results/`. The machine-readable specification is `plan.json`; model decisions and counterexamples are recorded in `RESEARCH.me`.
+
+
+## Stage 2 evidence and an important distinction
+
+Foley (1994), pp. 327–329, derives a maximum-entropy **transaction** distribution under explicitly specified feasible offers, type normalization and aggregate market clearing. Stage 2 finds a stationary truncated-geometric **money** distribution in a restricted uniform optimal meeting economy, but state-dependent matching breaks the mean-money maximum-entropy property (KL=0.0060626683). These are mathematically different objects and do not refute Foley. A further Foley-style *modified-offer-set* transaction calculation yields KL=0.1924 or 0.3598 against realized transition rates; this reflects omitted matching constraints, not a failure of Foley's theorem. See Stage 2 primary-source notes.

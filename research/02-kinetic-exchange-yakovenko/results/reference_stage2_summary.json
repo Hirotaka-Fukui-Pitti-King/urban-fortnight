@@ -1,0 +1,71 @@
+{
+  "status": "full_local_executed",
+  "date": "2026-11-03",
+  "models": [
+    {
+      "model": "C_uniform",
+      "meeting_rate": 0.45,
+      "assortativity": 0,
+      "trade_rate": 0.15200708894443946,
+      "bellman_sup_error": 3.552713678800501e-15,
+      "stationarity_sup_error": 6.7894018683380126e-18,
+      "participation_failures": 0,
+      "kl_money_mean_constrained": 4.3635615782131354e-17,
+      "kl_transaction_different_offer_set": 0.19240048610707128,
+      "particle_w1_means": {
+        "1500": 0.003103,
+        "6000": 0.001531,
+        "20000": 0.000903
+      }
+    },
+    {
+      "model": "C_state_dependent",
+      "meeting_rate": 0.2,
+      "assortativity": 3,
+      "trade_rate": 0.09684966542630431,
+      "bellman_sup_error": 1.7763568394002505e-15,
+      "stationarity_sup_error": 6.938893903907228e-18,
+      "participation_failures": 0,
+      "kl_money_mean_constrained": 0.0060626682945436414,
+      "kl_transaction_different_offer_set": 0.3597971648509718,
+      "particle_w1_means": {
+        "1500": 0.005533,
+        "6000": 0.00188,
+        "20000": 0.000877
+      }
+    }
+  ],
+  "params": {
+    "M": 5,
+    "mean_money": 2,
+    "beta": 0.96,
+    "buyer_value": 5,
+    "seller_cost": 0.15
+  },
+  "simulation": {
+    "population_sizes": [
+      1500,
+      6000,
+      20000
+    ],
+    "seeds": [
+      11,
+      22,
+      33,
+      44
+    ],
+    "burnin_periods": 1800,
+    "observation_periods": 700,
+    "frequency": 10
+  },
+  "test_counts": {
+    "stage0": 6,
+    "stage2": 9
+  },
+  "limitations": [
+    "posted one-token price, not bargaining",
+    "coexisting no-trade equilibrium",
+    "not a nonseparable integrated HANK-money GE",
+    "money entropy and Foley transaction entropy are distinct"
+  ]
+}

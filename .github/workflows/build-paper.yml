@@ -35,7 +35,7 @@ jobs:
               folder=Path(item["directory"])
               plan=json.loads((folder/"plan.json").read_text())
               assert plan["stage"]==n
-              assert plan["status"] in ("planned","numerically_validated_baseline","preliminary_particle_validation")
+              assert plan["status"] in ("planned","numerically_validated_baseline","preliminary_particle_validation","restricted_posted_price_model_verified")
               for f in ("README.md","RESEARCH.me","results/.gitkeep"):
                   assert (folder/f).is_file(), f
           assert root["paper"]["format"]=="academic-typst"

@@ -6,7 +6,7 @@ author:
   - name: "Author to be confirmed"
 lang: en
 abstract: |
-  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report Python results for a stationary Aiyagari equilibrium and compare finite-agent simulations to its stationary distribution; all proposed statistical-mechanical extensions remain untested.
+  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report Python solutions for a stationary Aiyagari equilibrium and a restricted, optimizing, monetary-search service economy in which an endogenous quadratic Boltzmann gain-loss operator and finite-agent simulations agree. We distinguish this constrained example from the still-unresolved nonseparable integration of money, capital savings, bargaining and rational price determination.
 keywords:
   - heterogeneous-agent general equilibrium
   - econophysics
@@ -154,8 +154,112 @@ At 40,000 agents the mean difference is approximately $-0.03718$, or $-0.65\%$ o
 
 The next conceptual step is to ask whether a Boltzmann-like bilateral collision kernel can arise from individually optimal and mutually admissible trade. Conserving financial assets in a two-agent pair is necessary but insufficient. A serious candidate is decentralized matching and bargaining over economically distinct consumption services or claims when parties face liquidity or preference shocks. Before defining the collision operator, one must specify gains from trade, information sets, participation constraints, exchange prices, and an aggregate market-clearing arrangement. If a classical random exchange kernel cannot satisfy those conditions, it should be reported as a heuristic comparator rather than called a rational-expectations equilibrium.
 
+
+# Stage 2: Individual optimality and the kinetic exchange operator
+
+## Primary sources and the conservation question
+
+@foley1994 (pp. 324--330) defines market types by *offer sets of feasible transactions*, and chooses type-specific transaction distributions by maximizing weighted Shannon entropy subject to type probabilities and aggregate commodity clearing. Under supporting interiority, probabilities take a Gibbs form with shadow *entropy* prices. This is not, by itself, a Bellman rational-expectations equilibrium or a stationary law of wealth. Foley's statements about Pareto efficiency and welfare are qualified rather than Walrasian equivalence claims.
+
+@gallegati2006 (Section 4) makes a separate economic point: conserving a transferred asset at the bilateral level does not generate real income. In our baseline the competitive capital sector produces numeraire output; the next model has an additional production activity when a seller creates a perishable service. We separately account for money transfers and production rather than imposing conservation of income.
+
+## Proposition: No mutually voluntary pure asset transfer
+
+Let $V_i(a_i)$ and $V_j(a_j)$ be strictly increasing continuation values and suppose the only contract is $(a_i,a_j)\mapsto (a_i+\Delta,a_j-\Delta)$, without goods, liquidity service, promises, externalities or other contractual terms. Bilateral voluntary participation requires
+
+$
+V_i(a_i+\Delta)\geq V_i(a_i),\qquad
+V_j(a_j-\Delta)\geq V_j(a_j).
+$
+
+By strict monotonicity the first requires $\Delta\geq0$ and the second $\Delta\leq0$. Hence $\Delta=0$. Any nonzero, exogenously random zero-sum pure transfer violates at least one participation constraint. This proposition does not exclude potentially optimal insurance, heterogeneous commodity exchange, or payments for productive services.
+
+## A constrained optimal service-for-token model
+
+Our first economically feasible alternative takes the simplest possible monetary-search route, related in motivation but not identical to @lagoswright2005. Each household holds a token balance $m\in\{0,\ldots,M\}$ with stationary population measure $f_m$, and the aggregate mean token supply $\bar m$ is fixed. Every period households are randomly paired into buyer and seller roles. One unit of a perishable service yields utility $b>0$ to the buyer and costs the seller production disutility $c>0$. If both accept, the buyer transfers **one token** and receives one service. The protocol restricts the token price to one, and each party can decline; we have not implemented price bargaining.
+
+With common discount factor $\beta$, the gains conditional on a prospective successful match are
+
+$
+G_B(m)=b+\beta[V(m-1)-V(m)],\qquad
+G_S(m)=-c+\beta[V(m+1)-V(m)].
+$
+
+Thus the chosen match is voluntary when both gains are nonnegative. Agents correctly forecast stationary $f$, which determines the probability of encountering each counterparty token balance. Writing $P(f,\chi)$ for the optimal match-induced transition of the individual token state, the stationary Bellman and distributional consistency equations are
+
+$
+V = u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V,
+\qquad fP(f,\chi)=f,\qquad
+\sum_m f_m=1,\quad\sum_m m f_m=\bar m.
+$
+
+The right to reject is evaluated *after solving* the value equation. A stationary fixed point of $f$ alone cannot certify optimality. Under the illustrative parameters $M=5$, $\bar m=2$, $\beta=0.96$, $b=5$, $c=0.15$, matching intensity $0.45$, an active full-trade candidate passes all participation inequalities. A **separate zero-trade equilibrium** also exists: if all sellers refuse, tokens provide no consumption services, and a token shadow value of zero makes refusal optimal. We have not selected among these equilibria.
+
+## Proposition: Microscopic optimal trades imply a gain-loss equation
+
+Let the matching exposure depend on buyer and seller balances through $w(m_b,m_s)$, with contact probability $\lambda w$ not exceeding one. Conditional on a fixed optimal acceptance policy $\chi(m_b,m_s)$, the mean number of successful buyer-seller matches per household is
+
+$
+q_{b,s}(f)=\frac{\lambda}{2}
+w(b,s)\chi(b,s)f_bf_s.
+$
+
+For any test function $\varphi$ of token holdings, the exactly implied quadratic collision operator is
+
+$
+\sum_m\varphi(m)Q_m[f]
+=\sum_{b=1}^{M}\sum_{s=0}^{M-1}q_{b,s}(f)
+\left[
+\varphi(b-1)-\varphi(b)+
+\varphi(s+1)-\varphi(s)
+\right].
+$
+
+The discrete forward equation is $f_{t+1}=f_t+Q[f_t]$. Taking $\varphi=1$ and $\varphi(m)=m$ gives population and token conservation. Since the one-period individual transition $P=I+L$ is stochastic, the distribution also preserves nonnegativity. Every successful trade delivers exactly one service from a producer to a consumer; the service-market clearing condition holds separately. Holding optimal policies fixed, $Q$ is quadratic in $f$; policies that respond to $f$ generate additional nonlinear feedback.
+
+The common Aiyagari numeraire good remains produced by capital and labor. The monetary-token and productive-capital decisions are independent **only under explicit separability restrictions**. We additionally evaluated the Aiyagari value function under its optimal savings policy and checked the numerical product of its stationary capital-income distribution with the stationary monetary search distribution. This verifies a *segmented product equilibrium*, not a nonseparable joint wealth/monetary economy. Capital-money conversion, bargaining over prices and a shared labor resource remain unsolved.
+
+## Separable production--search product equilibrium check
+
+For a separate, tightly restricted test, assume that household preferences are additively separable in the consumption good and match services, tokens are not convertible into the capital good or usable as collateral, and sellers have a separate home-service effort endowment. Income and matching shocks are independent and the two sectors share the same discount factor. The joint policy value is then the sum of an Aiyagari value function and the optimal monetary-search value function. The stationary cross-sectional distribution factors as the product of the capital-income distribution and token distribution. Conditional on these restrictions, the productive capital sector continues to satisfy its optimal pricing and asset, labor, goods and resource constraints, while the service sector separately clears its services and tokens.
+
+We implemented a numerical **product-economy verification** at 200 Aiyagari asset grid points, five income states, and five-plus-one token states. The joint distribution invariance sup residual is $2.45\times10^{-13}$, the summed policy Bellman evaluation residual is $9.22\times10^{-12}$, the capital-market relative residual is $1.79\times10^{-9}$, and the numeraire goods-resource residual is $7.11\times10^{-10}$. The service-output and service-consumption flows both equal 0.15200709, with token supply conservation below $10^{-16}$. These checks establish consistency of this explicitly segmented product construction, not uniqueness or the existence of a more interesting nonseparable monetary HANK equilibrium.
+
+## Stationary entropy: an exact special case and a counterexample to universality
+
+Under uniform matching and acceptance of all feasible trades, the birth rate of tokens for an eligible seller is $\lambda(1-f_0)/2$, and the death rate for an eligible buyer is $\lambda(1-f_M)/2$. The detailed-balance recursion becomes
+
+$
+\frac{f_{m+1}}{f_m}
+=\frac{1-f_0}{1-f_M},\qquad m=0,\ldots,M-1.
+$
+
+Consequently the stationary money distribution is truncated geometric. That family also maximizes Shannon entropy of the **money distribution** under total mass and average money constraints. This is a property of the particular equilibrium transition rates; it is not Foley's statement about transaction entropy.
+
+To test robustness, we use an economically explicit nonuniform matching technology,
+
+$
+w(m_b,m_s)=1+\gamma\frac{m_bm_s}{M^2}.
+$
+
+At $\gamma=3$ and $\lambda=0.2$, optimal bilateral participation still holds, but the stationary money distribution no longer equals that same max-entropy distribution: $D_{\mathrm{KL}}(f\Vert f_{\mathrm{ME}})=0.00606267$. We also compare realized trading probabilities with a constructed Foley-*style* entropy program over feasible token changes $-1,0,+1$ that excludes the actual role and matching constraints. Its KL divergences are 0.192400 and 0.359797 under uniform and nonuniform matching, respectively. Because the admissible offer sets differ, **this is not a refutation of Foley's finite-offer entropy theorem**.
+
+## Python numerical evidence and particle validation
+
+| Verified quantity | Uniform matching | State-dependent matching |
+|---|---:|---:|
+| Successful service trades per household and period | 0.15200709 | 0.09684967 |
+| Bellman sup-norm residual | $3.55\times10^{-15}$ | $1.78\times10^{-15}$ |
+| Invariant distribution residual | $6.79\times10^{-18}$ | $6.94\times10^{-18}$ |
+| Bilateral participation failures | 0 | 0 |
+| KL: money measure relative to mean-constrained entropy | approximately 0 | 0.00606267 |
+
+For each monetary regime, four independently seeded Monte Carlo experiments were conducted at populations 1,500, 6,000 and 20,000. The matching mechanism is the same as that used in the analytic collision equation, and each simulated transaction moves precisely one token and produces one service. After 1,800 burn-in periods, 700 measurement periods were used. The average Wasserstein distance at 20,000 agents was 0.000903 for uniform matching and 0.000877 for assortative matching. These simulation comparisons corroborate the *conditional stationary submodel*, not global equilibrium uniqueness.
+
+This is a **partial Stage 2 success**. The productive Aiyagari baseline and the optimizing search economy can coexist under strong separability. A unified nonseparable general equilibrium with household portfolio choice, conversion between financial assets and money, jointly constrained labor resources, and endogenous bargaining prices remains unresolved. In particular the solution cannot be presented as a demonstrated new HANK equilibrium, and Foley's entropy solution cannot be imposed as an extra market-clearing condition.
+
 # Research sequence and precommitted acceptance criteria
 
 The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.
 
-The paper now reports numerical results for a stationary Aiyagari benchmark and preliminary particle comparisons, not a mathematical existence or uniqueness proof, an aggregate-risk solution, or an empirical calibration. The value of the program depends on identifying which familiar statistical-mechanical patterns survive economically consistent microfoundations, and on recording the counterexamples where they do not.
+The paper now reports a numerically validated Aiyagari benchmark and a restricted optimizing service-for-token collision model. These numerical results are not a general existence/uniqueness proof, aggregate-risk rational-expectations solution, nonseparable monetary HANK equilibrium, or empirical calibration. The value of the program depends on identifying which familiar statistical-mechanical patterns survive economically consistent microfoundations, and on recording the counterexamples where they do not.

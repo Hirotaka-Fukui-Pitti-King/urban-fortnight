@@ -1,49 +1,34 @@
-# Stage 2: Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)
+# Stage 2: Optimal kinetic monetary exchange
 
-**Status:** Planned — no model solutions or empirical results claimed. **Category:** economic mechanism.
+**Status: restricted posted-price search equilibrium implemented and tested; full integrated capital–money general equilibrium NOT completed.**
 
-## Research question
+A buyer voluntarily pays one indivisible token to a seller who supplies one freshly produced perishable service. Both decide optimally whether to participate, considering stationary rational continuation values. Optimal matching produces an explicit quadratic Boltzmann-type gain–loss operator for the endogenous token distribution, preserving household mass and aggregate token holdings. The sold service is produced at an effort cost, so token transfers must not be mistaken for income generation.
 
-Can voluntary optimal bilateral trades generate a kinetic exchange operator consistent with household budgets, rational expectations and market clearing?
+Run from the repository root after installing requirements.txt:
 
-## Feasibility assessment
+1. python -m unittest discover -s research/02-kinetic-exchange-yakovenko/tests -v
+2. python research/02-kinetic-exchange-yakovenko/scripts/run_stage2.py --quick
+3. python research/02-kinetic-exchange-yakovenko/scripts/run_stage2.py
+4. python research/02-kinetic-exchange-yakovenko/scripts/make_figures.py
 
-Conditional: exogenous random transfers conserve assets but do not generally arise from optimal trade; require gains from trade, matching frictions or a specified contractual market.
+Full simulation: N=1500,6000,20000; seeds 11,22,33,44; 1800 burn-in periods, 700 measurement periods. The CI workflow stage2.yml reruns tests and a quick independent simulation; generated CSV, JSON and SVG files are uploaded as workflow artifacts.
 
-## Economic mechanisms
+| Numerical quantity | Uniform matching | Assortative matching |
+|---|---:|---:|
+| Trades/services per household period | 0.15200709 | 0.09684967 |
+| Bellman residual (sup) | 3.55e-15 | 1.78e-15 |
+| Stationarity residual (sup) | 6.79e-18 | 6.94e-18 |
+| Participation violations | 0 | 0 |
+| Token conservation error | below 1e-16 | below 1e-16 |
+| KL money holdings versus fixed-mean max entropy | about 0 | 0.00606267 |
+| KL transactions versus *different-offer-set* entropy comparator | 0.19240049 | 0.35979716 |
 
-- State-dependent bilateral matching with voluntary trade
-- Bargaining or price-taking mutually feasible exchanges
-- Transition kernel for pairwise post-trade holdings
-- Boltzmann gain-loss equation coupled with household saving
+At N=20000 with four seeds, average Wasserstein distance to the stationary money distribution is approximately 0.000903 under uniform meeting and 0.000877 under assortativity.
 
-## Model objects and equations
+**Caution:** Foley (1994) characterizes transaction entropy conditional on specified offer sets; none of these comparisons refutes Foley. An active monetary equilibrium coexists with a no-trade equilibrium. Seller/buyer bargaining, fully coupled Aiyagari money-and-capital household optimization, and endogenous conversion price remain open.
 
-**State variables:** liquid assets or money and consumption goods; partner state and contract choice; distribution f_t(a,z); aggregate goods, money and asset supply.
+See notes/source_audit_and_propositions.md and results/reference_stage2_summary.json.
 
-- Bilateral post-trade financial asset conservation, accounting for external issuance
-- Both partners' budget constraints and participation constraints
-- Bellman optimality or bilateral Nash bargaining
-- Boltzmann collision operator and other household transition terms
-- Goods and financial market clearing
+## Executed segmented product-equilibrium check
 
-## Nested benchmark
-
-Aiyagari/Huggett GE with kinetic matching shut off; separately exogenous Yakovenko exchange as non-optimal benchmark
-
-## Mandatory tests
-
-- Realized matches satisfy participation and individual budget constraints
-- Asset transfers net to zero in a closed pair; goods flows clear
-- Particle operator matches nonlinear Boltzmann transition operator
-- Density remains normalized and nonnegative
-- Zero-matching-rate switch-off recovers baseline prices and distribution
-- No exchange theorem/counterexample under frictionless homogeneous preferences
-
-## Stage completion criterion
-
-Accept only if a microfounded, nondegenerate bilateral trading equilibrium exists and aggregate identities hold.
-
-**Literature to consult and verify:** Yakovenko and Rosser (2009); Kinetic exchange and Boltzmann models; Search, matching and bargaining theory.
-
-Reports, code versions, seed files and diagnostics should be stored in `results/`. The machine-readable specification is `plan.json`; model decisions and counterexamples are recorded in `RESEARCH.me`.
+A further Python experiment now combines the Aiyagari capital-income stationary measure and optimal-policy value evaluation with the monetary service-search measure under strong separability and nonconvertibility. Stationary joint-distribution sup residual: 2.45e-13. Joint additive Bellman policy-evaluation sup residual: 9.22e-12. Capital-market relative residual: 1.79e-9. Goods-resource residual: 7.11e-10. Token, service and labor resources are accounted separately. Run the additional product_embedding.py tests or scripts/run_product_embedding.py. **Do not interpret this construction as fully integrated capital-money portfolio choice or endogenous service-price bargaining.**

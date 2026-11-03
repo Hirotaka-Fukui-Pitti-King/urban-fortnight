@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "status": "stage0_numerical_solution_stage1_preliminary",
+  "status": "stage2_restricted_optimal_kinetic_submodel",
   "created": "2026-11-03",
   "project": "Statistical Mechanics within Optimizing Heterogeneous-Agent General Equilibrium",
   "central_question": "Can statistical-mechanical mechanisms be embedded in heterogeneous-agent general equilibrium with individual optimization, rational expectations and market clearing, before introducing New Keynesian nominal rigidity?",
@@ -37,7 +37,7 @@
       "title": "Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)",
       "directory": "research/02-kinetic-exchange-yakovenko",
       "category": "economic_mechanism",
-      "status": "planned",
+      "status": "restricted_posted_price_model_verified",
       "prerequisites": [
         0,
         1
@@ -146,5 +146,13 @@
     "stage0": "Stationary no-aggregate-shocks Aiyagari",
     "stage1": "Fixed-price continuous optimal policy simulation",
     "caveat": "Finite-N market clearing with endogenous prices and aggregate stochastic RE not yet implemented."
+  },
+  "stage2": {
+    "branch": "research/stage2-optimal-kinetic-foley",
+    "goal": "microfounded collision law, not arbitrary wealth transfers",
+    "accomplished": "restricted posted-price optimizing search and particle simulation",
+    "full_nonseparable_general_equilibrium": "not yet constructed",
+    "paper": "paper/article.qmd",
+    "numerical_results": "research/02-kinetic-exchange-yakovenko/results/reference_stage2_summary.json"
   }
 }
