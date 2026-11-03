@@ -244,5 +244,29 @@
     "endogenous_money_price_certified": false,
     "stationary_GE_certified": false,
     "draft_pr": 10
+  },
+  "stage2h": {
+    "branch": "research/stage2h-global-convex-nash-private-equilibrium",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2h",
+    "status": "convex_Nash_3x3_pilot_success_5x5_private_not_certified",
+    "related_Fortran_archive_retrieved": true,
+    "related_Fortran_archive_is_original_source": false,
+    "convex_Nash_3x3_pair": [
+      4,
+      4
+    ],
+    "convex_log_Nash": 4.63557270691288,
+    "convex_quantity": 1.063506320708567,
+    "convex_payment": 1,
+    "triangle_pair_count": 64,
+    "triangle_pair_pruned": 25,
+    "convex_subproblems_solved": 39,
+    "convex_solver_CI_passed": true,
+    "five_grid_direct_root_converged": false,
+    "five_grid_full_matching_certified": false,
+    "private_stationary_distribution": false,
+    "endogenous_price": false,
+    "stationary_GE": false,
+    "draft_pr": 11
   }
 }
