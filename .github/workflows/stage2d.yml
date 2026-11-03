@@ -1,0 +1,66 @@
+name: Stage 2-D monetary price clearing and non-GE diagnostics
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      high_grid:
+        description: 'Also execute the 9x9 one-period grid check'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  monetary-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install Python packages
+        run: python -m pip install -r requirements.txt
+      - name: Compile source files
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2c/src
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2d
+      - name: Regress previous canonical equations
+        env:
+          PYTHONPATH: research/02-kinetic-exchange-yakovenko/stage2c/src
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2c/tests -v
+      - name: Run eight Stage 2-D economic tests
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2d/tests -v
+      - name: Execute CM price clearing, conditional error and stationary failure audit
+        run: python research/02-kinetic-exchange-yakovenko/stage2d/scripts/run_stage2d.py --stationary-steps 30
+      - name: Optional higher-resolution grid check
+        if: github.event_name == 'workflow_dispatch' && inputs.high_grid == true
+        run: python research/02-kinetic-exchange-yakovenko/stage2d/scripts/run_stage2d.py --high-grid --stationary-steps 30
+      - name: Independently reject false general equilibrium certification
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('research/02-kinetic-exchange-yakovenko/stage2d/results/stage2d_diagnostics.json')
+          x=json.loads(path.read_text())
+          assert x['status']=='ONE_PERIOD_CM_CLEARED_NO_VERIFIED_STATIONARY_MONETARY_GE'
+          assert len(x['price_grids'])>=2
+          for r in x['price_grids']:
+              assert not r['stationary_GE']
+              assert abs(r['money_gap'])<1e-10
+              assert abs(r['budget_residual'])<1e-10
+              assert r['indifference_regret']<1e-8
+          assert not x['stationary_attempt']['status'].startswith('CANDIDATE_')
+          assert not x['issuer_balance_artificially_renormalized']
+          print('One-period auctions verified; stationary monetary GE remains unsolved.')
+          PY
+      - name: Upload CSV JSON and SVG
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2d-conditional-money-auction-not-stationary-GE
+          path: research/02-kinetic-exchange-yakovenko/stage2d/results/
+          retention-days: 30
+          if-no-files-found: error
