@@ -202,3 +202,8 @@ Aiyagariでの分布Forward Equation、固定政策のKL縮小、定常価格の
 [数値図：最適貯蓄と資産分布](figures/aiyagari-savings.svg)。[再現用Python](scripts/generate_figures.py)。図は有限グリッド上の近似数値であり、原著の量的再現とは主張しない。セミナーで問うべき点は、同じ$K$でも借入制約家計の分布が違えばどの均衡反応が変わるのか、そして価格内生性がKL解析をどう変えるかである。
 
 **Primary references:** [Huggett (1993)](https://doi.org/10.1016/0165-1889(93)90024-M), [Aiyagari (1994)](https://doi.org/10.2307/2118417), [Krusell and Smith (1998)](https://doi.org/10.1086/250034), [Achdou et al. (2022)](https://doi.org/10.1093/restud/rdab002), [Auclert, Bardóczy, Rognlie and Straub (2021)](https://doi.org/10.3982/ECTA17434).
+
+
+![Aiyagariの最適資産保有政策](figures/aiyagari-savings.svg)
+
+![Aiyagariの資産分布のForward Dynamics](figures/aiyagari-distribution.svg)
