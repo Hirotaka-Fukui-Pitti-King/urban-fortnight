@@ -328,6 +328,31 @@ Independent finite-agent simulations reproduce the *conditional one-period* dist
 There is a further **structural limitation**: randomized portfolio taste shocks give households a direct preference for money positions even when decentralized meetings are disabled. Consequently this prototype does **not** derive money's essentiality solely from search and limited commitment; nor does it recover the deterministic Aiyagari model as the meeting rate goes to zero. We retain the result as a falsified full-GE claim and a tested computational component, and place the next implementation priority on a replication of @molicozhang2006 before seeking new Boltzmann or entropy propositions.
 
 
+
+## Stage 2-B: Updated originality test and collision-distribution feedback
+
+We compare our research question against its closest intellectual competitors rather than treating each new modeling ingredient as novel. Optimization-based exchange equations were derived by @chakrabarti2009new; Pareto-improving Cobb--Douglas goods exchange produces a nonlinear Boltzmann-type equation in @toscani2013new. Endogenous monetary holdings and trade prices arise in the random-matching equilibrium of @greenzhou2002. Capital, labor, production, search-based money and a conditional neoclassical dichotomy already appear in @aruobawright2003. Inflation, bargaining and capital accumulation are analyzed by @aruoba2011, while @molicozhang2006 explicitly computes a joint distribution of money and capital and studies monetary-policy effects on investment and welfare. @farmer2024new also investigates monetary and nonmonetary equilibria in heterogeneous-agent incomplete markets. Therefore, our current combination of these ingredients is not yet a novel economic general-equilibrium mechanism.
+
+The narrower research question is whether the **endogenous joint liquidity distribution alters capital accumulation and monetary-policy transmission beyond the implications of existing monetary-search GE models**, in a way that can be distinguished using an otherwise identical economy. A gain--loss representation of an established Markov law alone does not change its economic content.
+
+As a first numerical check, **only conditional on the previously computed fixed-price stationary household distribution and fixed policy**, we implemented a conservative partner-distribution feedback diagnostic. Define $B(f,g)$ as the ordered buyer--seller collision mapping under rate $\lambda f_b g_s/2$, with the same Nash contract as the reference economy. The actual fixed-policy matching operator and an explicitly artificial one-factor-frozen comparison are
+
+$
+Q(f)=B(f,f),\quad
+DQ(f^*)[h]=B(h,f^*)+B(f^*,h),
+\qquad
+Q^{\mathrm{ref}}(f)=\frac{B(f,f^*)+B(f^*,f)}{2}.
+$
+
+Both operators coincide at $f=f^*$, conserve total tokens, productive assets and population mass for every bilateral event, and are not asserted to be individually optimal away from $f^*$. The second mapping suppresses part of the matching distribution feedback. It is a **diagnostic comparison law, not a new equilibrium institution or an estimated policy counterfactual**.
+
+Starting from a perturbation of 0.01 units of household probability mass that changes only asset--money dependence and leaves initial asset and money means unchanged, the numerical derivative of $Q$ matches its exact bilinear derivative with sup error $8.78\times10^{-13}$. The two mappings imply a next-period distribution total variation difference of 0.00236518 and a next-period capital supply difference of 0.000110128, keeping the household continuation values and prices fixed. This is a nonzero distributional sensitivity but is **not** a monetary transmission multiplier or a claim of novel macroeconomic causation.
+
+A complementary feasibility-region diagnostic shows why the old outer price search cannot yet substantiate a GE claim. At assumed labor $L=0.94$ and fiat token value $\phi=0.8$, $K^{\mathrm{guess}}=1$ leads to 99.9915% probability at the **maximum capital-grid point** (asset supply 9.9997), while guesses $K=2$ and $2.8$ do not yield converged private problems. At $K=4$, the private solution converges but aggregate capital supplied is only 0.5877. This pattern reveals severe grid-boundary sensitivity and failing inner fixed points, not a theorem that a full equilibrium does not exist. All previous market-clearing failures and the nonessential money issue due to portfolio taste shocks remain unresolved.
+
+Our proposed submission gate requires a high-accuracy **canonical monetary search joint portfolio GE**, microfounded essentiality of money, consistent asset and labor issuer accounts, and a policy shock comparison with endogenous prices and optimal policies recalculated for both matching specifications. Any claim that this adds a mechanism beyond @molicozhang2006 or @aruoba2011 would then require a specific comparative-static distinction; otherwise the project should be represented as a computational kinetic reformulation of an already existing model.
+
+
 # Research sequence and precommitted acceptance criteria
 
 The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.
