@@ -59,7 +59,7 @@ jobs:
       - name: Verify Pandoc and Quarto versions
         run: |
           quarto --version
-          pandoc --version | head -n 1
+          quarto pandoc --version | head -n 1
       - name: Test the math quality gate against intentionally broken equations
         run: python -m unittest discover -s scripts/tests -p test_math_quality.py -v
       - name: Validate all QMD math with Pandoc AST and equation inventory

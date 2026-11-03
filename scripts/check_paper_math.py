@@ -6,6 +6,7 @@ from collections import Counter
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 
@@ -56,7 +57,8 @@ def math_inventory(source: Path) -> dict[str,int]:
         body="\n".join(lines[start:end-1]).strip()
         if not body or "$" in body:
             raise MathQualityError(f"{source}:{start}: empty or malformed display math")
-    ast=json.loads(command("pandoc","--from","markdown+tex_math_dollars+raw_tex",
+    pandoc=("pandoc",) if shutil.which("pandoc") else ("quarto","pandoc")
+    ast=json.loads(command(*pandoc,"--from","markdown+tex_math_dollars+raw_tex",
                            "--to","json",str(source)))
     counts=Counter()
     stray=[]
