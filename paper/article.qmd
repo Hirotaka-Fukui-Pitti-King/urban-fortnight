@@ -396,6 +396,10 @@ The first pilot scans three fiat prices on a 5-by-5 next-period portfolio grid a
 
 Although distribution mass is conserved and the bilateral accounting checks pass, **none of the tested prices is a positive-stock stationary monetary general equilibrium**. The 7-by-7 values cannot be used as steady-state economic statistics because private value iteration did not converge. Failure of this coarse pilot is not a nonexistence theorem, and the tiny grids do not reproduce the original authors' approximately 100-by-100 interpolated state grid and 10,000 simulated household portfolios.
 
+### Initial-value dependence of the private stationary system
+
+We also ran a separate multistart experiment on the 5-by-5 capital/money choice grid at the **same quoted capital price of 3**. Zero initial continuation values and a uniform cross-sectional portfolio distribution converge after 327 iterations to essentially zero productive capital, mean nominal money of 0.343056 and nearly zero bilateral trade. In contrast, starting from positive continuation values and a distribution concentrated around positive capital and money converges after 1,249 iterations to capital 0.986579, money 1.183183 and trade flow 0.241363 per household-period. Value residuals are below 1e-7 and distribution residuals below 2e-11 in both cases. Thus an active **fixed-price private stationary** regime can be missed by the usual zero-value initialization. However, **neither regime clears the exogenous money supply of one**, and these are **not two general equilibria**. The experiment supports searching distinct active and inactive solution branches jointly with endogenous money prices; it does not validate an aggregate monetary policy response.
+
 The exact aggregate period budget for the zero-inflation source environment is
 
 $$

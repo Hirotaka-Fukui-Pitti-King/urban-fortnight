@@ -20,5 +20,15 @@
     "Novel monetary transmission result"
   ],
   "next": "Endogenous CM price solve jointly with value function and stationary distribution using accurate interpolation",
-  "result": "results/reference_pilot.json"
+  "result": "results/reference_pilot.json",
+  "new_result": {
+    "status": "two_distinct_fixed_quoted_price_private_stationary_regimes_both_not_GE",
+    "capital_price": 3,
+    "private_inactive_money": 0.34305608907570695,
+    "private_active_money": 1.1831828378052496,
+    "private_active_K": 0.9865791013395123,
+    "private_active_trade": 0.24136336545383785,
+    "source": "results/reference_multistart.json",
+    "reproduce": "scripts/run_monetary_multistart.py"
+  }
 }
