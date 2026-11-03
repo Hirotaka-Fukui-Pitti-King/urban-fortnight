@@ -20,7 +20,7 @@
 - [有限人数IsingのGibbs定常分布](figures/ising-finite-population.svg)
 - [最適な貨幣探索経済の定常保有分布](figures/monetary-matching.svg)
 
-Pythonで計算した校正点、数値残差、詳細釣合い・参加制約のチェック値は [numerical-validation.json](figures/numerical-validation.json) に収録。原著論文の量的較正の厳密再現ではありません。配布用にコミットしたSVGは軽量なベクター作図で、Pythonスクリプトを再実行するとMatplotlibで同じ対象の図を再生成します（SVGの内部データや装飾は同一ではありません）。
+Pythonの数値残差、詳細釣合い・Euler/KKT・参加制約のチェック値は [numerical-validation.json](figures/numerical-validation.json) に収録しています。配布用SVGは現在、Pythonの計算結果からMatplotlibで直接生成し、GitHub Actionsで生成データと同期します。原著論文の数量結果の厳密再現ではありません。
 
 再計算方法（リポジトリのルートで実行）：
 
@@ -42,3 +42,10 @@ quarto render lectures/economics-first/01-aiyagari-statistical-mechanics.qmd --t
 ## 厳密さと研究ブランチの境界
 
 分布の不変性、Detailed Balance、Gibbs、Entropy、Competitive GE、Rational Expectationsは異なる概念です。既存モデルの数学的同値と、経済的な新しい予測を区別しています。元の講義と既存研究資料は削除していません。Stage 2-Bの非分離な貨幣・資本GEは研究案であり、本講義改訂は研究実装ブランチを変更しません。
+
+
+## Stage 2監査とPDF画像検査
+
+- [数学・経済学・数値の監査記録（AUDIT.md）](AUDIT.md)：検証済み・修正・追加仮定が必要・数値のみ検証・未解決の区別。
+- [PDFページ別の自動検証](scripts/check_pdf_render.py)：全ページをPNGにレンダリングし、空白、文字の溢れ、残存する生のTeX数式をチェックします。
+- [GitHub Actions](https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/workflows/validate-economics-first.yml)：成功した実行のアーティファクトからPDFと全ページPNGを取得できます。ビルド成功と数学的な正しさ、および目視確認の完了は同義ではありません。
