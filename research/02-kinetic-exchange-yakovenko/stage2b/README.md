@@ -25,3 +25,8 @@ Seven Stage 2-B numerical/economic tests pass locally. Particle one-step distrib
 Full outputs: \`results/fixed_price_diagnostics.json\`, GitHub CI artifacts and user-facing local reproducibility bundle.
 
 **Accounting correction:** In this stationary CM budget system, the goods-gap statistic is implied by capital and labor mismatches: $Y^d-C-\delta K^s=(r+\delta)(K^d-K^s)+w(L^d-L^s)$. The identity is verified to 1.67e-15. Do not count goods clearing as an independent additional equation in this specification.
+
+
+## Updated novelty test and executed distribution-feedback ablation
+
+The three literature documents from main are preserved in this branch under lectures/literature/. Their dated comparison's assertion that Stage 2-B still equals the Stage 2 head is obsolete; see [the current primary-source and code audit](notes/literature_current_assessment.md). A new conservative, one-period fixed-price/fixed-policy pair-collision experiment changes next average capital by 0.000110128 and the next distribution by TV 0.002365183; this is a conditional sensitivity, NOT a GE comparative static. See scripts/run_feedback.py and results/reference_conditional_feedback.json. The price-feasibility scan rejects invalid inner fixed points and documents asset-grid boundary mass exceeding 99.99% at some guesses. No new equilibrium or causal policy effect is claimed.

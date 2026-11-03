@@ -1,6 +1,6 @@
 {
   "stage": "2-B",
-  "status": "fixed_price_joint_dp_solved_full_GE_failed",
+  "status": "conditional_distribution_feedback_verified_full_GE_open",
   "central_question": "Do optimal monetary bargaining collisions generate a nondegenerate distribution consistent with optimal joint capital-money savings and all markets clearing?",
   "candidate_model": "finite-grid joint a,m,z DP, discrete Nash contracts, shared CM labor time",
   "passed": [
@@ -20,5 +20,19 @@
     "src/joint_model.py",
     "src/validation.py"
   ],
-  "result": "results/reference_failed_ge.json"
+  "result": "results/reference_failed_ge.json",
+  "literature_import": [
+    "lectures/literature/literature-review.md",
+    "lectures/literature/stage2b-branch-comparison.md",
+    "lectures/literature/references.bib"
+  ],
+  "novelty_note": "research/02-kinetic-exchange-yakovenko/stage2b/notes/literature_current_assessment.md",
+  "latest_executed": {
+    "status": "fixed_price_and_policy_only",
+    "fréchet_derivative_error": 8.777423232686488e-13,
+    "one_step_distribution_tv": 0.0023651832580206303,
+    "one_step_capital_difference": 0.00011012810613498204,
+    "price_feasibility_scan": "results/ge_admissibility_scan.json",
+    "limitation": "no GE, no policy welfare inference"
+  }
 }

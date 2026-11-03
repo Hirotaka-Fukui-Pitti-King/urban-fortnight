@@ -54,3 +54,8 @@ Y(K^d,L^d)-C-\delta K^s
 $$
 
 This is an accounting identity **conditional on stationary household capital and money holdings**; it is not an extra independent equilibrium equation. At the executed price candidate the left side is 0.5830971013337501 and the right side is 0.5830971013337485, differing by 1.67e-15. Thus the goods mismatch cannot legitimately be counted as a fourth independent equilibrium defect: it is implied by the capital and labor mismatches. Our numerical solver still fails to clear both factor markets and the money market.
+
+
+## Literature comparison and code-audit update
+
+See literature_current_assessment.md. The main-branch literature files are copied verbatim and the old 9716f377 snapshot is retained as historical. Verified with Python: conservative pair-collision derivative error 8.78e-13, fixed-policy one-step distribution TV 0.00236518, and next capital difference 0.000110128. Not an equilibrium comparative static. An assumed-price scan found asset-grid upper mass 99.9915% at Kguess=1, nonconverged inner points near Kguess=2 and 2.8, and no accepted GE point. Original Stage 2-B market failures remain unresolved.
