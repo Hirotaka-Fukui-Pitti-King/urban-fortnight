@@ -145,14 +145,14 @@ $$
 W_N(m)=\binom Nk=\frac{N!}{k!(N-k)!}
 $$
 
-である。$p=k/N=(1+m)/2$。Stirlingの公式$\log n!=n\log n-n+O(\log n)$をそれぞれの階乗に適用すると、
+である。$p=k/N=(1+m)/2$。Stirlingの公式$\,\log n!=n\,\log n-n+O(\,\log n)$をそれぞれの階乗に適用すると、
 
 $$
 \begin{aligned}
-\frac1N\log W_N(m)
-&=\frac1N[\log N!-\log(Np)!-\log(N(1-p))!]\\
-&=-p\log p-(1-p)\log(1-p)+O(\log N/N)\\
-&=:H_B(m)+O(\log N/N)
+\frac1N\,\log W_N(m)
+&=\frac1N[\,\log N!-\,\log(Np)!-\,\log(N(1-p))!]\\
+&=-p\,\log p-(1-p)\,\log(1-p)+O(\,\log N/N)\\
+&=:H_B(m)+O(\,\log N/N)
 \end{aligned}
 $$
 
@@ -182,8 +182,8 @@ $$
 $\Psi(m)=H_B(m)+hm/\tau+Jm^2/(2\tau)$と定義する。前節の組合せ式から
 
 $$
-\frac1N\log\{W_N(m)e^{\Phi_N(m)/\tau}\}
-=\Psi(m)+O(\log N/N)
+\frac1N\,\log\{W_N(m)e^{\Phi_N(m)/\tau}\}
+=\Psi(m)+O(\,\log N/N)
 $$
 
 となる。$m$の値は$N+1$種類しかないので、最大項で分配関数の和を挟むと
@@ -193,10 +193,10 @@ $$
 \le Z_N\le(N+1)\max_m e^{N\Psi_N(m)},
 $$
 
-ここで$\Psi_N(m)=N^{-1}\log[W_N(m)e^{\Phi_N(m)/\tau}]$。対数を取って$N$で割ると、上界と下界の差は$\log(N+1)/N\to0$。従って
+ここで$\Psi_N(m)=N^{-1}\,\log[W_N(m)e^{\Phi_N(m)/\tau}]$。対数を取って$N$で割ると、上界と下界の差は$\,\log(N+1)/N\to0$。従って
 
 $$
-\lim_{N\to\infty}\frac1N\log Z_N
+\lim_{N\to\infty}\frac1N\,\log Z_N
 =\sup_{m\in[-1,1]}\Psi(m).
 $$
 
@@ -213,9 +213,9 @@ $$
 
 $$
 \begin{aligned}
-H_B'(m)&=-\frac12[\log((1+m)/2)+1]
-+\frac12[\log((1-m)/2)+1]\\
-&=\frac12\log\frac{1-m}{1+m}
+H_B'(m)&=-\frac12[\,\log((1+m)/2)+1]
++\frac12[\,\log((1-m)/2)+1]\\
+&=\frac12\,\log\frac{1-m}{1+m}
 =-\operatorname{arctanh}(m).
 \end{aligned}
 $$
@@ -294,11 +294,11 @@ $J>0$で安定な分枝では他者の反応の連鎖により社会的な反応
 
 $$
 \begin{aligned}
-\frac{\partial\log Z_N}{\partial h}
+\frac{\partial\,\log Z_N}{\partial h}
 &=\frac{1}{Z_N}\sum_{\mathbf s}
 \frac{S_N(\mathbf s)}{\tau}e^{\Phi_N(\mathbf s)/\tau}
 =\frac{E_{\pi_N}[S_N]}{\tau},\\
-\frac{\partial^2\log Z_N}{\partial h^2}
+\frac{\partial^2\,\log Z_N}{\partial h^2}
 &=\frac{E_{\pi_N}[S_N^2]-E_{\pi_N}[S_N]^2}{\tau^2}.
 \end{aligned}
 $$
