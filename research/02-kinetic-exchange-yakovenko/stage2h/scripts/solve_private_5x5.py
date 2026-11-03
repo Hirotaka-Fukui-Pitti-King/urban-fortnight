@@ -93,32 +93,57 @@ def run(out=HERE/"results", nq=9,nx=7,maxfev=500):
     z0=z0-z0[0]
     z0=z0[1:]  # relative-value root has n-1 independent coordinates
     stages=[]
-    # Initial direct solve: the desired economy, without changing primitives.
-    for label, schedule in [
-        ("direct",[1.]),
-        ("continuation",[0., .05,.15,.3,.55,.8,1.])
-    ]:
-        z=z0.copy()
-        trace=[]
-        for match in schedule:
-            print("5x5 stage",label,match,flush=True)
-            z,diag=root_at_match(big,f,2.5,z,match,nq,nx,maxfev)
-            diag["label"]=label
-            trace.append(diag)
-            print("5x5 result",json.dumps(diag),flush=True)
-            if diag["relative_residual"]>1e-5:
+    # Smooth matching-rate continuation. Never use a failed point to seed the
+    # next target; halve the step on poor progress, then retry the last
+    # certified private root. This is *not* monetary GE continuation.
+    z=z0.copy()
+    last_lambda=0.
+    z,diag=root_at_match(big,f,2.5,z,0.,nq,nx,maxfev)
+    stages.append(dict(diag,label="adaptive",accepted=diag["relative_residual"]<1e-7))
+    if diag["relative_residual"]>=1e-7:
+        raise RuntimeError("no-matching private baseline failed")
+    step=.08
+    attempts=0
+    while last_lambda < 1.-1e-12 and attempts<60:
+        attempts+=1
+        target=round(min(1.,last_lambda+step),12)
+        candidate,diag=root_at_match(big,f,2.5,z,target,nq,nx,maxfev)
+        accepted=diag["relative_residual"]<1e-7
+        stages.append(dict(diag,label="adaptive",accepted=bool(accepted)))
+        print("ADAPTIVE",json.dumps(stages[-1]),flush=True)
+        if accepted:
+            last_lambda=target
+            z=candidate
+            np.savez(out/"private_5x5_last_accepted.npz",
+                     relative_value=z,matching_multiplier=last_lambda)
+            step=min(.12,step*1.25)
+        else:
+            step*=.5
+            if step<.0005:
+                print("ADAPTIVE_STOP_MINIMUM_STEP",step,flush=True)
                 break
-        stages.extend(trace)
-        if trace[-1]["match"]==1. and trace[-1]["relative_residual"]<1e-7:
-            break
-    best_final=min([q for q in stages if q["match"]==1.],
-                   key=lambda q:q["relative_residual"],default=None)
-    success=bool(best_final is not None and best_final["relative_residual"]<1e-7)
+    success=last_lambda>=1.-1e-12
+    final_diagnostics={}
+    if success:
+        relative=np.r_[0.,z]
+        raw=endogenous_operator(relative,f,2.5,big,nq=max(17,nq),nx=max(15,nx))[0]
+        level=raw[0]/(1-big.p.beta)
+        values=relative+level
+        tfine,yy,dd,kkt=endogenous_operator(values,f,2.5,big,nq=max(23,nq),
+                                             nx=max(19,nx))
+        final_diagnostics=dict(independent_full_Bellman_sup=float(
+                       np.max(np.abs(tfine-values))),
+                       independent_Nash_KKT_max=float(kkt),
+                       candidate_positive_contracts=int(np.count_nonzero(yy)))
+        np.savez(out/"private_5x5_candidate.npz",V=values,y=yy,d=dd,f=f,
+                 k=big.k,m=big.m)
     # A strict fixed point must always be independently reevaluated at *finer*
     # Nash precision. A low coarse-search root residual alone is insufficient.
     report=dict(grid=[5,5],price=2.5,partner_state=[1.5,1.],
                 stages=stages,stage_2g_3x3_bellman_sup=baseline["bellman_sup"],
-                coarse_5x5_relative_root=success,
+                continuation_last_successful_multiplier=float(last_lambda),
+                independent_diagnostics=final_diagnostics,
+                coarse_5x5_relative_root=bool(success),
                 all_pair_Nash_global_certification=False,
                 high_accuracy_full_bellman_certification=False,
                 stationary_GE=False,wall_seconds=time.monotonic()-tic)
