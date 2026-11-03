@@ -51,6 +51,26 @@ def run():
         print("SOURCE",item["path"],item["lines"])
     for item in matches[:80]:
         print("CODE",item["path"],item["line"],item["text"])
+    # Selective read-only excerpts for reproducible methodological review.
+    # This is Chiu–Molico (2021) related code, NOT the original Zhang model.
+    chosen=("Steady State/src_code/bargprob.f90",
+            "Steady State/src_code/dq.f90",
+            "Steady State/src_code/mm2020.f90")
+    for name in chosen:
+        if name not in paths:
+            print("MISSING_FORTRAN_SOURCE",name)
+            continue
+        lines=archive.read(name).decode("utf-8",errors="replace").splitlines()
+        if name.endswith("mm2020.f90"):
+            keep=list(range(190,min(240,len(lines))))
+            keep+=list(range(280,min(310,len(lines))))
+            keep+=list(range(355,min(381,len(lines))))
+        else:
+            keep=list(range(min(100,len(lines))))
+        print("FORENSIC_SOURCE_START",name)
+        for k in keep:
+            print(f"F90:{k+1}: {lines[k][:200]}")
+        print("FORENSIC_SOURCE_END",name)
     return report
 
 
