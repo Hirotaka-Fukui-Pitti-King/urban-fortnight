@@ -1,0 +1,622 @@
+# 統計力学と経済物理学：理論・数理モデル・経済学的基礎
+
+博士課程・研究者向け研究講義（2026年11月3日）
+
+**中心的問い：** 個々の経済主体の確率的行動と相互作用は、所得・富の分布、金融市場の変動、群集行動、相転移、マクロ経済の規則性をどのように生み出すか。統計力学の方法には、標準的な経済理論に対するどのような追加的説明力があるか。
+
+**本講義の原則：** 統計的定常性、個人の最適反応、一般均衡を同一視しない。厳密な解析結果、近似、数値的知見、未検証の研究仮説を区別する。
+
+## 1. 統計力学の数学的基礎
+
+### 1.1 ミクロ状態・マクロ状態・アンサンブル
+
+$N$ 人の貨幣保有額 $\omega=(m_1,\ldots,m_N)\in\mathbb R_+^N$ はミクロ状態（microstate）であり、総額 $M=\sum_i m_i$、平均、分位点、経験測度
+$$
+\mu_N=\frac1N\sum_i\delta_{m_i}
+$$
+はマクロ状態（macrostate）を記述する。任意の集計量は $A_N=\int a(x)\mu_N(dx)$ と表せる。
+
+ミクロカノニカル・アンサンブル（microcanonical ensemble）は保存量 $E(\omega)=E_0$ の下で許容状態に一様測度を置く。連続状態空間では一様性を定義する**基準測度**が必要である。カノニカル・アンサンブル（canonical ensemble）は
+$$
+p_\beta(\omega)=Z(\beta)^{-1}e^{-\beta E(\omega)},\qquad
+Z(\beta)=\sum_\omega e^{-\beta E(\omega)}
+$$
+とする。$\beta$ は逆温度であり、家計の時間割引因子 $\beta_H$ とは異なる。グランドカノニカル・アンサンブル（grand canonical ensemble）は粒子数 $N$ も確率変数として
+$$
+p(\omega,N)=\Xi^{-1}e^{-\beta(E(\omega,N)-\mu N)},\quad
+\Xi=\sum_{N\ge0}e^{\beta\mu N}Z_N
+$$
+を使う。企業の参入退出との数学的類似はあるが、化学ポテンシャル $\mu$ が利潤や賃金を意味するわけではない。
+
+### 1.2 Boltzmann・Gibbs・Shannonエントロピー
+
+Boltzmann entropyは $S_B=k_B\log W$、Gibbs entropyは $S_G=-k_B\sum_\omega p_\omega\log p_\omega$、Shannon entropyは $H(p)=-\sum_\omega p_\omega\log p_\omega$ である。$K$ 状態の人数を $n_k$、比率を $p_k=n_k/N$ とすると配置数
+$$
+W=\frac{N!}{\prod_kn_k!}
+$$
+についてStirling公式から
+$$
+\frac{\log W}{N}
+=-\sum_kp_k\log p_k+o(1)=H(p)+o(1)
+$$
+を得る。これが最大エントロピーを「最も多くの配置で実現するマクロ状態」と解釈できる特定の条件である。経済では配置が一様確率とは限らない。
+
+### 1.3 Maximum Entropy、分配関数、自由エネルギー
+
+正規化と平均エネルギーの制約 $\sum_ip_i=1,\sum_ip_iE_i=\bar E$ の下で $H(p)$ を最大化する。Lagrangian
+$$
+\mathcal L=-\sum_ip_i\log p_i-\alpha(\sum_ip_i-1)
+-\beta(\sum_ip_iE_i-\bar E)
+$$
+の一階条件は $\log p_i=-1-\alpha-\beta E_i$ なので、
+$$
+\boxed{p_i^*=\frac{e^{-\beta E_i}}{\sum_je^{-\beta E_j}}}.
+$$
+さらに $-\partial_\beta\log Z=E_\beta[E]$ と $\partial_{\beta\beta}\log Z=\operatorname{Var}_\beta(E)\ge0$。自由エネルギー $F_\beta(p)=\sum_ip_iE_i-\beta^{-1}H(p)$ に対し、
+$$
+\boxed{F_\beta(p)-F_\beta(p_\beta^*)=
+\beta^{-1}D_{\rm KL}(p\Vert p_\beta^*)\ge0}.
+$$
+**命題1（Gibbs変分原理）。** $\beta>0,Z<\infty$ のときGibbs分布は自由エネルギーを唯一最小化する。証明はKullback–Leibler divergenceの非負性から直ちに従う。これは情報論的推論原理であり、それだけで経済主体の行動を説明しない。
+
+連続分布では基準密度 $q(x)$ を明示して $-D_{\rm KL}(f\Vert q)$ を最大化する。モーメント制約 $\int fg_k=c_k$ の下では
+$$
+f^*(x)=\frac{q(x)e^{-\sum_k\lambda_kg_k(x)}}{Z(\boldsymbol\lambda)}
+$$
+となる。基準測度を変えれば解が変わり得る。
+
+### 1.4 Master EquationとDetailed Balance
+
+状態$x$から$y$への連続時間Markov遷移率を $q(x,y)$ とする。確率の流入・流出を短時間で差し引き、時間幅をゼロにすると
+$$
+\boxed{\dot p_t(x)=\sum_{y\ne x}
+[p_t(y)q(y,x)-p_t(x)q(x,y)]}
+$$
+を得る。生成行列$Q$により $\dot p_t=p_tQ$、定常分布は $\pi Q=0$ を満たす。詳細釣合い（detailed balance）
+$$
+\pi(x)q(x,y)=\pi(y)q(y,x)
+$$
+は定常性の十分条件だが必要条件ではない。遷移率比が $q(x,y)/q(y,x)=e^{-\beta(E(y)-E(x))}$ ならGibbs分布が詳細釣合いを満たす。有限状態かつ既約なら定常分布は一意である。
+
+非平衡定常状態（non-equilibrium steady state）では各状態のネット流入がゼロでも個別ペアの確率流 $J_{xy}=\pi(x)q(x,y)-\pi(y)q(y,x)$ はゼロとは限らない。三状態の一方向循環が反例である。双方向の正の遷移率が存在するとき
+$$
+\sigma=\frac12\sum_{x,y}J_{xy}
+\log\frac{\pi(x)q(x,y)}{\pi(y)q(y,x)}\ge0
+$$
+は定常エントロピー生成率である。これは経済的な厚生損失とは異なる概念である。
+
+### 1.5 LangevinとFokker–Planck
+
+Itô拡散 $dX_t=b(X_t,t)dt+\sigma(X_t,t)dW_t$ にItô公式を適用すれば
+$$
+\frac{d}{dt}E[\varphi(X_t)]
+=E[b\varphi'+\tfrac12\sigma^2\varphi''].
+$$
+密度$f$について部分積分し境界項が消える場合、
+$$
+\boxed{\partial_tf=-\partial_x(bf)+\tfrac12\partial_{xx}(\sigma^2f)}
+$$
+が成立する（Fokker–Planck / Kolmogorov Forward Equation）。流束 $j=bf-\tfrac12\partial_x(\sigma^2f)$ が定常かつゼロであれば
+$$
+f^*(x)=\frac C{\sigma^2(x)}
+\exp\left(\int^x\frac{2b(y)}{\sigma^2(y)}dy\right).
+$$
+正規化、境界条件、定常分布の存在は別途調べなければならない。
+
+### 1.6 Mean-Field、相転移、大偏差、有限サイズ
+
+相互作用する確率過程
+$$
+dX_i^N=b(X_i^N,\mu_N)dt+\sigma dW_i,\quad
+\mu_N=N^{-1}\sum_i\delta_{X_i^N}
+$$
+は、適切な正則性・初期条件の下で、$N\to\infty$ において
+$$
+dX_t=b(X_t,\mu_t)dt+\sigma dW_t,\qquad\mu_t=\mathcal L(X_t)
+$$
+というMcKean–Vlasov方程式へ近づく。漸近的な個別主体の独立性を混沌の伝播（propagation of chaos）という。分布動学のドリフトが分布自身に依存するので非線形である。
+
+Sanovの大偏差原理では独立な経験分布の稀な変動に対し $P(\mu_N\simeq q)\asymp e^{-ND_{\rm KL}(q\Vert p)}$ となる。相互作用系では秩序変数$m$について $P(m_N\simeq m)\asymp e^{-NI(m)}$ が現れる。レート関数の最小点が複数になること、熱力学極限で自由エネルギーに非解析性が生まれることが相転移研究の中心である。エルゴード性は時間平均と定常分布平均の一致、mixingは初期条件の影響の消失を意味する。有限系では単一定常分布でも長寿命の準安定状態が存在し得る。相転移、複数の経済均衡、準安定性は区別する。
+
+## 2. Kinetic Exchange Models：貨幣・所得・富の分布
+
+### 2.1 基本交換と指数定常分布
+
+$N$人が $m_i\ge0,\sum_im_i=M$ を持つ。無作為ペア $(i,j)$ は一様な $\varepsilon\in[0,1]$ により
+$$
+m_i'=\varepsilon(m_i+m_j),\qquad
+m_j'=(1-\varepsilon)(m_i+m_j)
+$$
+と交換する。ペア合計は保存され、与えられたペア合計の下で一様に再分割する。したがって単体 $\Omega_M=\{\mathbf m\ge0:\sum_i m_i=M\}$ 上の一様測度が不変である。残りの$N-1$人が分割する貨幣額 $M-m$ の単体体積が $(M-m)^{N-2}$ に比例するため、一人の周辺密度は
+$$
+f_N(m)=\frac{N-1}{M}\left(1-\frac mM\right)^{N-2},\quad0\le m\le M.
+$$
+$M=NT$を保ち$N\to\infty$とすれば
+$$
+\boxed{f(m)=T^{-1}e^{-m/T}}.
+$$
+指数分布の原因は**貨幣保存だけではなく条件付き一様な交換核**である。
+
+### 2.2 Boltzmann型方程式
+
+ペア取引前の保有額が独立に同じ密度$f_t$から抽選される分子混沌仮説の下で、任意の試験関数$\varphi$に対し
+$$
+\begin{aligned}
+\frac d{dt}\int\varphi(m)f_t(m)dm
+=\frac12\iint f_t(x)f_t(y)\int_0^1
+\big[&\varphi(\varepsilon(x+y))\\
+&+\varphi((1-\varepsilon)(x+y))
+-\varphi(x)-\varphi(y)\big]\,d\varepsilon\,dx\,dy.
+\end{aligned}
+$$
+$\varphi=1,m$を代入すれば確率質量と平均貨幣量の保存を確認できる。Laplace変換 $\widehat f_t(s)=\int_0^\infty e^{-sm}f_t(m)dm$ は
+$$
+\partial_t\widehat f_t(s)=
+\int_0^1\widehat f_t(\varepsilon s)^2d\varepsilon-\widehat f_t(s)
+$$
+に従う。$\widehat f^*(s)=(1+Ts)^{-1}$ に対して $\int_0^1(1+T\varepsilon s)^{-2}d\varepsilon=(1+Ts)^{-1}$ なので定常解である。ただしこの代入のみでは任意の初期分布からの収束まで証明していない。
+
+### 2.3 共通・異質的貯蓄性向
+
+共通貯蓄性向 $\lambda\in[0,1)$ を導入し、
+$$
+\begin{aligned}
+m_i'&=\lambda m_i+\varepsilon(1-\lambda)(m_i+m_j),\\
+m_j'&=\lambda m_j+(1-\varepsilon)(1-\lambda)(m_i+m_j).
+\end{aligned}
+$$
+独立な事前保有額、$E[\varepsilon]=1/2,E[\varepsilon^2]=1/3$の下で、定常二次モーメントを計算すれば
+$$
+E[m^2]=\frac{2+\lambda}{1+2\lambda}E[m]^2,\qquad
+\frac{\operatorname{Var}(m)}{E[m]^2}=\frac{1-\lambda}{1+2\lambda}.
+$$
+Gamma分布の変動係数 $1/k$ と一致させると
+$$
+k=\frac{1+2\lambda}{1-\lambda},\qquad
+\vartheta=\frac{E[m]}k.
+$$
+**厳密なのは二次モーメントの関係であり、定常分布が厳密なGamma分布であるとは示していない。**
+
+固定された主体別貯蓄性向$\lambda_i$を持つ場合、平均的な流入・流出から
+$$
+(1-\lambda_i)E[m_i]=K,\qquad E[m_i]=\frac{K}{1-\lambda_i}.
+$$
+貯蓄性向の密度が$\lambda\uparrow1$で$\rho(\lambda)\sim C(1-\lambda)^\delta$なら、条件付き平均保有額 $w=K/(1-\lambda)$ の密度は
+$$
+f_W(w)\sim CK^{1+\delta}w^{-(2+\delta)}.
+$$
+これは**条件付き平均の分布**の変数変換である。実現貨幣の分布も同じ裾を持つためには追加条件が必要であり、Chatterjee–Chakrabarti–Mannaの結果には数値検証が含まれる。有限$N$で$\max_i\lambda_i<1$なら裾は切断される。
+
+### 2.4 Kesten過程、不完備市場との比較
+
+Kesten型の乗法成長過程 $W_{t+1}=A_tW_t+B_t$ は、$E[\log A_t]<0$、$P(A_t>1)>0$、$E[A_t^\kappa]=1$などの条件で $P(W>w)\sim Cw^{-\kappa}$ の裾を持ち得る。裾の生成機構は異質的貯蓄交換と異なる。
+
+貨幣はストック、所得はフロー、富は金融・実物資産から負債を差し引くストックである。$a_{t+1}-a_t=y_t-c_t+v_t$ の$v_t$は別計上の評価損益である。生産・投資・信用・資産価格・政府を追加すれば貨幣保存の単純な交換系にはとどまらない。
+
+Bewley–Huggett–Aiyagariでは
+$$
+V(a,z)=\max_{c,a'}\{u(c)+\beta_HE[V(a',z')\mid z]\},\quad
+c+a'\le(1+r)a+wz,\quad a'\ge\underline a
+$$
+を解き、所得・資産分布の不変性と市場清算から均衡利子率を求める。ランダム交換が生成する分布はそれだけでは消費・貯蓄の最適性や政策効果を説明しない。
+
+## 3. Ising-Type Models：社会的相互作用と群集行動
+
+### 3.1 Hamiltonian、Gibbs測度、平均場
+
+個人の二値選択$s_i\in\{-1,+1\}$に対し、集計選択$m_N=N^{-1}\sum_is_i$を定義する。Curie–Weiss型Hamiltonianは
+$$
+\mathcal H(\mathbf s)=
+-\frac J{2N}\left(\sum_is_i\right)^2-h\sum_is_i,\qquad
+P_N(\mathbf s)=Z_N^{-1}e^{-\beta_T\mathcal H(\mathbf s)}.
+$$
+$m$に対応する正の選択者数は$N(1+m)/2$。Stirling公式によって集計状態の対数確率の主要項は
+$$
+N\Phi(m),\quad
+\Phi(m)=H_B(m)+\beta_T(Jm^2/2+hm),
+$$
+$$
+H_B(m)=-\frac{1+m}2\log\frac{1+m}2
+-\frac{1-m}2\log\frac{1-m}2.
+$$
+一階条件は $-\operatorname{arctanh}(m)+\beta_T(Jm+h)=0$ であり、
+$$
+\boxed{m=\tanh[\beta_T(Jm+h)]}.
+$$
+
+### 3.2 臨界条件、安定性、履歴依存
+
+$h=0$のとき$m=0$は常に解であり、傾き$\beta_TJ$が1を超えると非ゼロ解$\pm m^*$が現れる。臨界条件は$\beta_TJ=1$、近傍の非ゼロ解は
+$$
+m^*\simeq\pm\sqrt{\frac{3(\beta_TJ-1)}{(\beta_TJ)^3}}.
+$$
+調整則 $\dot m=-m+\tanh[\beta_T(Jm+h)]$ の局所安定条件は $\beta_TJ(1-m^2)<1$。比較静学は
+$$
+\boxed{\frac{dm}{dh}=
+\frac{\beta_T(1-m^2)}{1-\beta_TJ(1-m^2)}}.
+$$
+$h(m)=\tau\operatorname{arctanh}(m)-Jm$、$\tau=\beta_T^{-1}$と書くと、$J>\tau$の折り返し点は
+$$
+m_{\rm fold}=\pm\sqrt{1-\tau/J},\quad
+h_c=J\sqrt{1-\tau/J}-\tau\operatorname{arctanh}\sqrt{1-\tau/J}.
+$$
+局所安定枝の追跡でヒステリシスが起こり得る。有限人数の既約過程の定常分布の一意性と、極限での対称性の破れは区別する。
+
+### 3.3 Random UtilityとBrock–Durlauf
+
+$U_i(s_i)=s_i(Jm+h)+\epsilon_i(s_i)$、$\epsilon_i(\pm1)$を独立な尺度$\tau$のType-I Extreme Valueとする。Logit公式から
+$$
+P(s_i=+1\mid m)=\frac{e^{(Jm+h)/\tau}}
+{e^{(Jm+h)/\tau}+e^{-(Jm+h)/\tau}},
+\quad
+E[s_i\mid m]=\tanh((Jm+h)/\tau).
+$$
+したがってIsing型の平均場方程式はランダム効用の最適選択から導ける。非対称なネットワークに同じGibbs測度が存在するとは限らない。Brock and Durlauf (2001) は社会的相互作用を含む離散選択を経済理論として研究した。標準的なCoordination Gamesとの違いは、確率的選択・有限サイズ・臨界感応度を分析できる点にある。銀行取り付けへの応用には銀行の資産・負債と契約条件も必要である。
+
+## 4. Minority Game：適応的競争と市場
+
+### 4.1 主体・戦略・情報・利得
+
+奇数の$N$人が$a_i(t)\in\{-1,+1\}$を選び、集計行動を$A(t)=\sum_ia_i(t)$とする。少数派が得する利得は$u_i=-a_i\operatorname{sign}A$、解析に用いる線形型なら$u_i=-a_iA/N$であり、
+$$
+\sum_i u_i=-A^2/N.
+$$
+公開情報$\mu(t)\in\{1,\ldots,P\}$に対し、各人は戦略$a_{ig}^{\mu}\in\{-1,+1\}$を複数保持する。仮想利得スコアを
+$$
+U_{ig}(t+1)=U_{ig}(t)-a_{ig}^{\mu(t)}A(t)/N
+$$
+と更新して高得点戦略を選ぶ。これは通常、合理的期待ではなくAdaptive Learningである。
+
+### 4.2 Spin Glass、予測可能性、変動性
+
+二戦略について
+$$
+\omega_i^\mu=(a_{i1}^\mu+a_{i2}^\mu)/2,\quad
+\xi_i^\mu=(a_{i1}^\mu-a_{i2}^\mu)/2
+$$
+と置くと、$A^\mu=\Omega^\mu+\sum_i\xi_i^\mu s_i$、$\Omega^\mu=\sum_i\omega_i^\mu$。情報に基づく予測可能性
+$$
+H=\frac1P\sum_\mu(E[A\mid\mu])^2
+$$
+とVolatility $\sigma_A^2=E[A^2]$の間には、情報パターンが一様なら
+$$
+\boxed{\sigma_A^2=
+H+\frac1P\sum_\mu\operatorname{Var}(A\mid\mu)}
+$$
+が成立する。**情報からの予測可能性の消失は変動性の消失を意味しない。**
+
+長期平均戦略$m_i$に対して
+$$
+H(\mathbf m)=P^{-1}\sum_\mu
+(\Omega^\mu+\sum_i\xi_i^\mu m_i)^2,\quad
+J_{ij}=P^{-1}\sum_\mu\xi_i^\mu\xi_j^\mu
+$$
+というランダム結合が現れる。この結合はGram行列であり、一般の任意のスピングラス結合と同一ではない。外生的な一様情報を用いて平均化したスコア差$q_i=U_{i1}-U_{i2}$については
+$$
+E[\Delta q_i]=-\frac1N\frac{\partial H}{\partial m_i}
+$$
+が得られるが、完全なオンライン動学が常に$H$の勾配法と一致するわけではない。
+
+### 4.3 相転移と解析方法の限界
+
+$\alpha=P/N$が主要な情報比率である。標準的な二戦略・外生ランダム情報モデルでは典型的な臨界値$\alpha_c\simeq0.3374$が報告される。値はモデル変種・更新ルール・初期条件に依存し、普遍定数ではない。Replica法は$E_{\rm dis}[\log Z]$を形式的に$\lim_{n\to0}(E_{\rm dis}[Z^n]-1)/n$で扱うが、解析接続やReplica Symmetryには正当化が必要である。Generating Functional Analysisは
+$$
+\mathcal Z[\psi]=E[\exp(i\sum_{i,t}\psi_i(t)s_i(t))]
+$$
+の微分で時間相関・応答を扱い、非エルゴード性や市場履歴の影響を調べる。
+
+### 4.4 Rational Expectations・市場ミクロ構造との違い
+
+$H=0$は条件付き平均注文の予測不能性であり、リスク調整した資産超過収益が予測不能であることとは異なる。価格・配当・最適ポートフォリオ・予算制約を追加しなければ金融資産価格の一般均衡にはならない。Minority Gameの学習による競争と、Noise Traders、Evolutionary Games、Market Microstructureの関係は、情報構造・利得・約定制度を揃えて比較する必要がある。
+
+## 5. Statistical Equilibrium：最大エントロピーと市場均衡
+
+連続変数$x\ge0$の分布について
+$$
+\max_f-\int_0^\infty f\log f\,dx,\quad
+\int f\,dx=1,\quad\int xf\,dx=\mu
+$$
+のLagrangianを変分すると$f(x)=Ce^{-\beta x}$。正規化と平均制約から
+$$
+\boxed{f(x)=\mu^{-1}e^{-x/\mu}}.
+$$
+Section 2と同じ指数分布が現れるが、**こちらは推論原理、Section 2は交換過程からの不変分布**である。
+
+エントロピー正則化 $\max_p\sum_ip_iu_i+\tau H(p)$ では $p_i\propto e^{u_i/\tau}$。Quantal Response Equilibrium（QRE）は各主体の選択確率が他者の確率分布に対する期待利得のLogit応答と整合する固定点である。一方、Walrasian Competitive Equilibriumは最適化と市場清算を要求する。統計的定常性だけではPareto効率性を保証しない。Foley (1994) は統計的市場均衡を理論化したが、各経済の資源制約・価格と目的関数を具体的に検証する必要がある。
+
+## 6. Random Matrix Theory：金融相関構造
+
+### 6.1 Wishart、Marchenko–Pastur
+
+$N$資産、$T$観測の中心化収益率行列 $X\in\mathbb R^{N\times T}$ から$S=XX^\top/T$を作る。各要素が独立で分散$\sigma^2$の白色雑音の下、$N,T\to\infty$、$N/T\to q>0$なら固有値分布は
+$$
+\rho_{\rm MP}(\lambda)=
+\frac{\sqrt{(\lambda_+-\lambda)(\lambda-\lambda_-)}}{2\pi q\sigma^2\lambda}
+\mathbf1_{[\lambda_-,\lambda_+]}(\lambda),
+\quad\lambda_\pm=\sigma^2(1\pm\sqrt q)^2.
+$$
+$q>1$にはゼロ固有値の質量$1-1/q$もある。Stieltjes変換$m(z)=\lim N^{-1}\operatorname{Tr}(S-zI)^{-1}$は
+$$
+z=-1/m(z)+\frac{\sigma^2}{1+q\sigma^2m(z)}
+$$
+を満たす。その二次式の判別式は$(z-\lambda_-)(z-\lambda_+)$。反転公式 $\rho(\lambda)=\pi^{-1}\lim_{\eta\downarrow0}\operatorname{Im}m(\lambda+i\eta)$ から密度を得る。収束証明にはresolventの集中などの追加の技術的条件が必要である。
+
+数値例：$N=200,T=800,\sigma^2=1$なら$q=0.25$、支持区間は$[0.25,2.25]$。真の共分散が$I_N$でも標本固有値は広がる。正しい密度の例は$\rho_{\rm MP}(1)=\sqrt{1.25\cdot0.75}/(0.5\pi)\simeq0.6164$である。
+
+### 6.2 RMT、Factor Models、Shrinkage
+
+$S=U\Lambda U^\top$の固有値をノイズ除去し$\widehat\Sigma=U\widehat\Lambda U^\top$とする方法は、高次元推定誤差を処理する。Factor Modelsの$\Sigma=BB^\top+D$、Shrinkageの$\widehat\Sigma=(1-\delta)S+\delta F$と比較する。最小分散ポートフォリオは
+$$
+w^*=\frac{\widehat\Sigma^{-1}\mathbf1}
+{\mathbf1^\top\widehat\Sigma^{-1}\mathbf1}
+$$
+であるから小固有値の推定誤差が増幅され得る。MP区間外の固有値だけでは、経済ショックの因果的な源泉や金融感染を識別できない。
+
+## 7. Agent-Based Econophysics：注文・バブル・クラッシュ
+
+### 7.1 Fundamentalists、Chartists、Noise Traders
+
+対数価格$p_t=\log P_t$、基礎的価値$v_t$とし、Fundamentalistsの需要$D_t^F=\kappa_F(v_t-p_t)$、Chartistsの需要$D_t^C=\kappa_C(p_t-p_{t-1})$、Noise Tradersの需要$D_t^N=\varepsilon_t$とする。Chartists比率$n_t$なら総超過注文は
+$$
+D_t=(1-n_t)\kappa_F(v_t-p_t)+n_t\kappa_C(p_t-p_{t-1})+\varepsilon_t.
+$$
+価格インパクト型$p_{t+1}-p_t=\lambda D_t$、市場清算型$D_t(p_t)=0$、指値注文板の約定ルールは異なる価格制度である。需要関数が最適化から導かれるかどうかも別の仮定である。
+
+### 7.2 安定性の導出
+
+$v_t=v$、$n_t=n$、ショックなしとする。$x_t=p_t-v$、$k=\lambda(1-n)\kappa_F$、$b=\lambda n\kappa_C$なら
+$$
+x_{t+1}=(1-k+b)x_t-bx_{t-1}.
+$$
+特性多項式$r^2-(1-k+b)r+b=0$の根が単位円内にあるための条件は
+$$
+\boxed{k>0,\quad b<1,\quad k<2(1+b)}.
+$$
+トレンド追随の増大は不安定化し得るが、線形系の不安定性だけでは有界なバブルとクラッシュの生成を証明できない。戦略の過去利益$\Pi_t^C,\Pi_t^F$で
+$$
+n_{t+1}=\frac{e^{\eta\Pi_t^C}}{e^{\eta\Pi_t^C}+e^{\eta\Pi_t^F}}
+$$
+と参加を内生化すると、正のフィードバックがあり得る。
+
+### 7.3 Stylized Factsと識別
+
+Fat Tails、Volatility Clustering、Long Memory、Excess Volatility、Bubbles、Crashesは同一のメカニズムから必ず発生するわけではない。例えば$ r_t=\sqrt{V_t}\varepsilon_t$というStochastic Volatilityだけでも厚い裾を生み得る。シミュレーションが実証的モーメントに一致しても相互作用の因果的識別にはならない。
+
+注文フローの符号$\epsilon_s$、注文量$v_s$、価格インパクト核$G$を用いた
+$$
+p_t=p_0+\sum_{s<t}G(t-s)\epsilon_sv_s^\psi
+$$
+は注文の持続性と収益率予測可能性の違いを検討できる。資産価格の合理的期待条件 $P_t=E_t[M_{t,t+1}(P_{t+1}+D_{t+1})]$ とは対象とする機構が異なる。市場ミクロ構造では約定・流動性・在庫制約が不可欠である。
+
+## 8. 統計力学とマクロ経済一般均衡の接続
+
+### 8.1 Mean-Field GamesとMcKean–Vlasov
+
+状態$x$、制御$a$、集計分布$\mu_t$を持つ主体が$dX_t=b(X_t,a_t,\mu_t)dt+\sigma dW_t$に従う。割引率$\rho$、終期$T$の価値関数は
+$$
+V(t,x)=\sup_a E_{t,x}\left[
+\int_t^Te^{-\rho(s-t)}u(X_s,a_s,\mu_s)ds+
+e^{-\rho(T-t)}G(X_T,\mu_T)\right].
+$$
+HJBとForward Equationは
+$$
+0=V_t+\sup_a\{u+bV_x+\tfrac12\sigma^2V_{xx}-\rho V\},
+$$
+$$
+\partial_t\mu_t=-\partial_x[b(x,a^*,\mu_t)\mu_t]
++\tfrac12\sigma^2\partial_{xx}\mu_t
+$$
+であり、最適政策$a^*$と分布$\mu_t$は固定点を形成する。合理的主体の最適化と統計力学の分布動学は数学的に両立する。
+
+### 8.2 Aiyagari–HANKのHJB–KFE
+
+資産$a$、所得状態$z$、所得のMarkov生成行列$Q$、資産動学$da=(ra+wz-c)dt$に対して
+$$
+\rho V(a,z)=\max_c\{u(c)+(ra+wz-c)V_a+\sum_{z'}q_{zz'}V(a,z')\}.
+$$
+内点で$u'(c)=V_a$。最適消費$c^*(a,z)$を与えた分布のForward Equationは
+$$
+\partial_tg(a,z)=
+-\partial_a[(ra+wz-c^*(a,z))g(a,z)]
++\sum_{z'}q_{z'z}g(a,z').
+$$
+借入制約では状態制約・境界流束を処理する。債券市場なら$\sum_z\int a g(a,z)da=B$で価格が決まる。MFGは分布への効用・遷移の直接依存を、競争均衡は価格を介した相互作用を中心に扱う。Representative-Agent DSGE、Search and Matching、Strategic Complementarities、HANKも状態分布と相互作用を扱える。したがって**Forward Equationの採用それ自体は新規性ではない**。
+
+## 9. Statistical-Mechanical New Keynesian Model：一般均衡の構築
+
+### 9.1 家計と社会的離散選択
+
+家計の状態は実質金融資産$a$、生産性$z$、消費形態$s\in\{-1,+1\}$で、期首分布は$\mu_t$。消費形態の平均$m_t$を他者からの外部性とし、
+$$
+u(c,n,s;m_t)=
+\chi_s\frac{c^{1-\gamma}}{1-\gamma}
+-\psi\frac{n^{1+\nu}}{1+\nu}+Jsm_t+hs
+$$
+を仮定する（$\gamma=1$は対数効用）。形態選択費用$\kappa_s$を実物財で支払い、予算制約は
+$$
+c_t+\kappa_{s_t}+a_{t+1}
+=\frac{R_{t-1}}{\Pi_t}a_t+w_tz_tn_t+d_t-T_t,\quad
+a_{t+1}\ge\underline a.
+$$
+ここで$\Pi_t=P_t/P_{t-1}$。各形態には独立な尺度$\tau$のType-I Extreme Valueショックがある。将来の集計変数は**均衡に整合する合理的期待**によって予想する。選択肢$s$のショックを除いた価値関数は
+$$
+\begin{aligned}
+W_t^s(a,z;\mathcal S_t,m_t)=
+\max_{c,n,a'}\big\{&
+\chi_s\frac{c^{1-\gamma}}{1-\gamma}
+-\psi\frac{n^{1+\nu}}{1+\nu}+Jsm_t+hs\\
+&+\beta_HE_t[V_{t+1}(a',z';\mathcal S_{t+1})]\big\}
+\end{aligned}
+$$
+であり、Bellman価値は共通の位置定数を除き
+$$
+V_t=\tau\log(e^{W_t^+/\tau}+e^{W_t^-/\tau}),\quad
+\pi_t^+=\frac{e^{W_t^+/\tau}}{e^{W_t^+/\tau}+e^{W_t^-/\tau}}.
+$$
+社会的整合条件は
+$$
+\boxed{m_t=\int(2\pi_t^+(a,z)-1)\mu_t(da,dz)}.
+$$
+所得状態の遷移$Q_z(z,z')$、条件付き最適資産政策$g_{a,t}^s$に対して
+$$
+\boxed{
+\mu_{t+1}(A,z')=
+\sum_z\int\sum_s\pi_t^s(a,z)
+\mathbf1\{g_{a,t}^s(a,z)\in A\}Q_z(z,z')\mu_t(da,z)
+}
+$$
+がForward Equationとなる。
+
+### 9.2 中間財企業、Calvo価格設定、価格分布
+
+最終財は $Y_t=(\int y_{jt}^{(\epsilon-1)/\epsilon}dj)^{\epsilon/(\epsilon-1)}$ で集計され、需要は $y_{jt}=(p_{jt}/P_t)^{-\epsilon}Y_t$。中間財企業の生産は$y_{jt}=A_tz_{jt}^Fn_{jt}$、実質限界費用は$mc_{jt}=w_t/(A_tz_{jt}^F)$とする。
+
+各期確率$1-\theta$で価格を改定できる。企業の価値を評価する共通の実質確率的割引因子$M_{t,t+k}$が資産価格・所有構造と整合するものと仮定すると、同質企業の場合の最適名目改定価格は
+$$
+p_t^*=\frac{\epsilon}{\epsilon-1}
+\frac{E_t\sum_{k\ge0}\theta^k M_{t,t+k}Y_{t+k}P_{t+k}^{\epsilon}mc_{t+k}}
+{E_t\sum_{k\ge0}\theta^k M_{t,t+k}Y_{t+k}P_{t+k}^{\epsilon-1}}.
+$$
+$M$は時間割引を含む。企業異質性を残す場合は企業固有状態による条件付き期待を用いる。
+
+相対価格$x=p_j/P_t$と生産性$z^F$の企業分布$\Phi_t(dx,dz^F)$は、独立なCalvo改定機会・生産性遷移$Q_F$の下で
+$$
+\begin{aligned}
+\Phi_{t+1}(dx',dz')=\int Q_F(dz'|z)\big[
+&\theta\delta_{x/\Pi_{t+1}}(dx')\\
+&+(1-\theta)\delta_{x_{t+1}^*(z')}(dx')\big]\Phi_t(dx,dz).
+\end{aligned}
+$$
+企業の価格分布を状態変数として維持するので、価格分散を含む非線形な動学が残る。
+
+### 9.3 市場清算・財政・貨幣政策
+
+集計消費と選択費用を
+$$
+C_t=\int\sum_s\pi_t^s c_t^s\,d\mu_t,\qquad
+K_t^s=\int\sum_s\pi_t^s\kappa_s\,d\mu_t
+$$
+とする。資本なし経済の財市場は $Y_t=C_t+K_t^s+G_t$。労働市場は
+$$
+\int\sum_s\pi_t^s z n_t^s\,d\mu_t
+=\int\frac{y_{jt}}{A_tz_{jt}^F}dj.
+$$
+新規政府債券の名目額を$B_{t+1}$とすれば
+$$
+\int\sum_s\pi_t^s g_{a,t}^s\,d\mu_t=B_{t+1}/P_t,
+\qquad
+B_{t+1}/P_t+T_t=R_{t-1}B_t/P_t+G_t.
+$$
+金融政策は例として
+$$
+R_t=\bar R(\Pi_t/\bar\Pi)^{\phi_\pi}
+(Y_t/\bar Y)^{\phi_y}e^{\nu_t}
+$$
+とする。企業配当、家計資産価格付け、共通の割引因子を支える市場構造、予想と実現の一致も均衡条件であり、省略して最適化と一般均衡の達成を主張しない。
+
+### 9.4 相転移、局所安定性、反例
+
+家計分布と価格を固定し、二形態の非社会的な価値差が対称で $W^+-W^-=2(Jm+h)$となる部分模型なら
+$$
+m=\tanh((Jm+h)/\tau).
+$$
+$J<\tau$は縮小写像で選択が一意、$J>\tau$は$h=0$で非ゼロの安定解を持つ。折り返し点は
+$$
+m_{\rm fold}=\pm\sqrt{1-\tau/J}.
+$$
+しかし一般均衡で$m=F(m,X;\theta)$、$X=G(m,X;\theta)$なら
+$$
+\frac{dF}{dm}=F_m+F_X(I-G_X)^{-1}G_m.
+$$
+他の市場によるフィードバックが臨界条件と安定性を変えるため、部分模型の$J>\tau$をそのまま一般均衡の相転移条件にしてはならない。動学系のJacobian固有値と均衡の存在を検証する。
+
+**反例：** $\chi_+=\chi_-$、$\kappa_+=\kappa_-$で二形態が実物配分に影響しなければ、社会的選択に相転移があっても集計消費・インフレは不変になり得る。
+
+### 9.5 State-Dependent Pricing
+
+固定価格変更費用$\xi$を導入すると企業のBellman式は
+$$
+V_t(x,z^F)=\max\{V_t^K(x,z^F),V_t^A(z^F)\},\quad
+V_t^A(z^F)=\max_{x'}\{\mathcal W_t(x',z^F)-\xi\}.
+$$
+価格改定政策$d_t=\mathbf1\{V_t^A>V_t^K\}$の下で価格分布を更新する。Calvoとの比較は価格改定の内生的選択の役割を分離できるが、金融政策の実質効果の符号・大きさは解析なしに仮定できない。
+
+## 10. 識別、理論的評価、研究課題
+
+Kinetic Exchange、Kesten Processes、企業成長模型は同じPareto Tailを生成し得る。ABM、GARCH、Stochastic VolatilityはVolatility Clusteringを生成し得る。**観測された分布形やStylized Factsへの適合だけではミクロメカニズムの識別にならない。**
+
+統計的定常分布と経済学的な定常一般均衡が一致するには
+$$
+g\in\arg\max\{\text{個人の継続効用}\},\quad
+\mu^*=\mathcal K(g,p,\mu^*),\quad
+\mathcal E(p,g,\mu^*)=0,\quad
+\text{期待法則}=\text{実現法則}
+$$
+が同時に必要である。統計的な相転移とNash均衡の複数性も同義ではない。
+
+社会的相互作用の識別はManski (1993)のReflection Problemを伴う。個人選択$s_i$と他者の平均$\bar s_{-i}$の相関は、因果的模倣と共通ショックを区別しない。理想実験は社会的に接続した他者の情報・選択に外生変化を与え、本人への直接効果を排除し、本人の選択と消費を観測するものである。
+
+**未検証の研究仮説：** HANKに社会的選択を加えると、同じ資産分布と政策ショックでも初期の社会的選択状態が消費・インフレ反応を変え得る。基準模型$J=0$を保持し、$J>0$との差を比較する。条件付き消費差 $\Delta c(a,z)=c^+(a,z)-c^-(a,z)$ とすると、分布・条件付き政策を固定した直接構成効果は
+$$
+\frac{\partial C}{\partial m}
+=\int\Delta c(a,z)
+\frac{\partial\pi^+(a,z)}{\partial m}\mu(da,dz).
+$$
+$\Delta c\equiv0$ならこの効果は消える。借入制約家計の比率$\ell$と相互作用$J$が政策乗数$M(J,\ell)$に与える交差効果
+$$
+\frac{\partial^2M(J,\ell)}{\partial J\,\partial\ell}
+$$
+はHANKと社会的相互作用の組合せの候補となる。非ゼロ性・符号は**未導出**であり、モデル全体の計算と反例で検証する必要がある。
+
+## 11. 主要文献：研究課題・メカニズム別
+
+### 分布・交換・富の蓄積
+- Chakraborti, A. & Chakrabarti, B. K. (2000), “Statistical mechanics of money: How saving propensity affects its distribution,” *European Physical Journal B*, 17, 167–170. https://doi.org/10.1007/s100510070173
+- Patriarca, M., Chakraborti, A. & Kaski, K. (2004), “Statistical model with a standard Gamma distribution,” *Physical Review E*, 70, 016104. https://doi.org/10.1103/PhysRevE.70.016104
+- Chatterjee, A., Chakrabarti, B. K. & Manna, S. S. (2004), “Pareto law in a kinetic model of market with random saving propensity,” *Physica A*, 335, 155–163. https://doi.org/10.1016/j.physa.2003.11.014
+- Bouchaud, J.-P. & Mézard, M. (2000), “Wealth condensation in a simple model of economy,” *Physica A*, 282, 536–545. https://doi.org/10.1016/S0378-4371(00)00205-3
+- Yakovenko, V. M. & Rosser, J. B. (2009), “Colloquium: Statistical mechanics of money, wealth, and income,” *Reviews of Modern Physics*, 81, 1703–1725. https://doi.org/10.1103/RevModPhys.81.1703
+
+### 社会的相互作用・適応学習・Minority Game
+- Kirman, A. (1993), “Ants, Rationality, and Recruitment,” *Quarterly Journal of Economics*, 108, 137–156. https://doi.org/10.2307/2118498
+- Brock, W. A. & Durlauf, S. N. (2001), “Discrete Choice with Social Interactions,” *Review of Economic Studies*, 68, 235–260. https://doi.org/10.1111/1467-937X.00168
+- Challet, D. & Zhang, Y.-C. (1997), “Emergence of cooperation and organization in an evolutionary game,” *Physica A*, 246, 407–418. https://doi.org/10.1016/S0378-4371(97)00419-6
+- Challet, D. & Zhang, Y.-C. (1998), “On the minority game: Analytical and numerical studies,” *Physica A*, 256, 514–532. https://doi.org/10.1016/S0378-4371(98)00260-X
+- Challet, D., Marsili, M. & Zecchina, R. (2000), “Statistical Mechanics of Systems with Heterogeneous Agents: Minority Games,” *Physical Review Letters*, 84, 1824–1827. https://doi.org/10.1103/PhysRevLett.84.1824
+- Coolen, A. C. C. (2005), “Generating functional analysis of minority games with real market histories,” *Journal of Physics A*, 38, 2311–2347. https://doi.org/10.1088/0305-4470/38/11/002
+
+### 金融市場の複雑系・ミクロ構造
+- Lux, T. (1995), “Herd Behaviour, Bubbles and Crashes,” *Economic Journal*, 105, 881–896. https://doi.org/10.2307/2235156
+- Brock, W. A. & Hommes, C. H. (1998), “Heterogeneous beliefs and routes to chaos in a simple asset pricing model,” *Journal of Economic Dynamics and Control*, 22, 1235–1274. https://doi.org/10.1016/S0165-1889(98)00011-6
+- Gopikrishnan, P., Meyer, M., Amaral, L. A. N. & Stanley, H. E. (1998), “Inverse cubic law for the distribution of stock price variations,” *European Physical Journal B*, 3, 139–140. https://doi.org/10.1007/s100510050292
+- Lux, T. & Marchesi, M. (1999), “Scaling and criticality in a stochastic multi-agent model of a financial market,” *Nature*, 397, 498–500. https://doi.org/10.1038/17290
+- Farmer, J. D. & Joshi, S. (2002), “The price dynamics of common trading strategies,” *Journal of Economic Behavior & Organization*, 49, 149–171. https://doi.org/10.1016/S0167-2681(02)00065-3
+- Farmer, J. D., Gillemot, L., Lillo, F., Mike, S. & Sen, A. (2004), “What really causes large price changes?” *Quantitative Finance*, 4, 383–397. https://doi.org/10.1080/14697680400008627
+- Bouchaud, J.-P., Farmer, J. D. & Lillo, F. (2009), “How Markets Slowly Digest Changes in Supply and Demand,” *Handbook of Financial Markets: Dynamics and Evolution*, 57–160. https://doi.org/10.1016/B978-012374258-2.50006-3
+- Farmer, J. D. & Foley, D. (2009), “The economy needs agent-based modelling,” *Nature*, 460, 685–686. https://doi.org/10.1038/460685a
+
+### Random Matrix・高次元共分散
+- Marchenko, V. A. & Pastur, L. A. (1967), “Distribution of eigenvalues for some sets of random matrices,” *Mathematics of the USSR-Sbornik*, 1, 457–483. https://doi.org/10.1070/SM1967v001n04ABEH001994
+- Laloux, L., Cizeau, P., Bouchaud, J.-P. & Potters, M. (1999), “Noise Dressing of Financial Correlation Matrices,” *Physical Review Letters*, 83, 1467–1470. https://doi.org/10.1103/PhysRevLett.83.1467
+- Plerou, V. et al. (1999), “Universal and Nonuniversal Properties of Cross Correlations in Financial Time Series,” *Physical Review Letters*, 83, 1471–1474. https://doi.org/10.1103/PhysRevLett.83.1471
+- Plerou, V. et al. (2002), “Random matrix approach to cross correlations in financial data,” *Physical Review E*, 65, 066126. https://doi.org/10.1103/PhysRevE.65.066126
+- Ledoit, O. & Wolf, M. (2004), “A well-conditioned estimator for large-dimensional covariance matrices,” *Journal of Multivariate Analysis*, 88, 365–411. https://doi.org/10.1016/S0047-259X(03)00096-4
+
+### 経済均衡・HANK・NK・識別
+- Gode, D. K. & Sunder, S. (1993), “Allocative Efficiency of Markets with Zero-Intelligence Traders,” *Journal of Political Economy*, 101, 119–137. https://doi.org/10.1086/261868
+- Foley, D. K. (1994), “A Statistical Equilibrium Theory of Markets,” *Journal of Economic Theory*, 62, 321–345. https://doi.org/10.1006/jeth.1994.1018
+- Aiyagari, S. R. (1994), “Uninsured Idiosyncratic Risk and Aggregate Saving,” *Quarterly Journal of Economics*, 109, 659–684. https://doi.org/10.2307/2118417
+- Calvo, G. A. (1983), “Staggered prices in a utility-maximizing framework,” *Journal of Monetary Economics*, 12, 383–398. https://doi.org/10.1016/0304-3932(83)90060-0
+- Golosov, M. & Lucas, R. E. Jr. (2007), “Menu Costs and Phillips Curves,” *Journal of Political Economy*, 115, 171–199. https://doi.org/10.1086/512625
+- Kaplan, G., Moll, B. & Violante, G. L. (2018), “Monetary Policy According to HANK,” *American Economic Review*, 108, 697–743. https://doi.org/10.1257/aer.20160042
+- Auclert, A. (2019), “Monetary Policy and the Redistribution Channel,” *American Economic Review*, 109, 2333–2367. https://doi.org/10.1257/aer.20160137
+- Gabaix, X. (2020), “A Behavioral New Keynesian Model,” *American Economic Review*, 110, 2271–2327. https://doi.org/10.1257/aer.20162005
+- Achdou, Y., Han, J., Lasry, J.-M., Lions, P.-L. & Moll, B. (2022), “Income and Wealth Distribution in Macroeconomics: A Continuous-Time Approach,” *Review of Economic Studies*, 89, 45–86. https://doi.org/10.1093/restud/rdab002
+- Manski, C. F. (1993), “Identification of Endogenous Social Effects: The Reflection Problem,” *Review of Economic Studies*, 60, 531–542. https://doi.org/10.2307/2298123
+- Gallegati, M., Keen, S., Lux, T. & Ormerod, P. (2006), “Worrying trends in econophysics,” *Physica A*, 370, 1–6. https://doi.org/10.1016/j.physa.2006.04.029
+
+## 12. 結論と実装の順序
+
+統計力学の追加価値は、最適化の放棄ではなく、異質性と相互作用が生む**分布動学・非線形性・臨界的な集計反応**を、マクロ経済の最適化・市場清算と整合させて分析することにある。Kinetic Exchange、Ising、Minority Game、Statistical Equilibrium、RMT、Agent-Based Modelsはそれぞれ対象も均衡概念も異なり、無条件に統合すべきではない。
+
+研究の優先順位は、(1) HANKにLogit型の社会的離散選択を加え定常解と安定性を分析、(2) Calvo企業の価格分布を含めた金融政策反応を計算、(3) State-Dependent Pricingとの比較、(4) 金融取引・価格インパクト・資金制約への拡張とする。既存HANK・Behavioral NK・Strategic Complementarities Modelsで既に生成できる結果と、新モデル固有の交差効果を比較して初めて独自の経済学的貢献を主張できる。
