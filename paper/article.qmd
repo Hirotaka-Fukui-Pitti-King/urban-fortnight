@@ -6,7 +6,7 @@ author:
   - name: "Author to be confirmed"
 lang: en
 abstract: |
-  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report Python solutions for a stationary Aiyagari equilibrium and a restricted, optimizing, monetary-search service economy in which an endogenous quadratic Boltzmann gain-loss operator and finite-agent simulations agree. We distinguish this constrained example from the still-unresolved nonseparable integration of money, capital savings, bargaining and rational price determination.
+  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report numerical solutions for the stationary Aiyagari benchmark and a restricted, optimizing, monetary-search economy. A subsequent joint capital--money portfolio and discrete Nash bargaining prototype solves its private dynamic program, but fails to clear capital, fiat-money, labor, and goods markets at tested prices; it is not a general equilibrium. The literature already contains nondegenerate money--capital optimization models, importantly Molico and Zhang (2006). Our research contribution remains conditional on deriving new kinetic properties from a verified general equilibrium.
 keywords:
   - heterogeneous-agent general equilibrium
   - econophysics
@@ -167,10 +167,10 @@ The next conceptual step is to ask whether a Boltzmann-like bilateral collision 
 
 Let $V_i(a_i)$ and $V_j(a_j)$ be strictly increasing continuation values and suppose the only contract is $(a_i,a_j)\mapsto (a_i+\Delta,a_j-\Delta)$, without goods, liquidity service, promises, externalities or other contractual terms. Bilateral voluntary participation requires
 
-$
+$$
 V_i(a_i+\Delta)\geq V_i(a_i),\qquad
 V_j(a_j-\Delta)\geq V_j(a_j).
-$
+$$
 
 By strict monotonicity the first requires $\Delta\geq0$ and the second $\Delta\leq0$. Hence $\Delta=0$. Any nonzero, exogenously random zero-sum pure transfer violates at least one participation constraint. This proposition does not exclude potentially optimal insurance, heterogeneous commodity exchange, or payments for productive services.
 
@@ -180,18 +180,21 @@ Our first economically feasible alternative takes the simplest possible monetary
 
 With common discount factor $\beta$, the gains conditional on a prospective successful match are
 
-$
+$$
 G_B(m)=b+\beta[V(m-1)-V(m)],\qquad
 G_S(m)=-c+\beta[V(m+1)-V(m)].
-$
+$$
 
 Thus the chosen match is voluntary when both gains are nonnegative. Agents correctly forecast stationary $f$, which determines the probability of encountering each counterparty token balance. Writing $P(f,\chi)$ for the optimal match-induced transition of the individual token state, the stationary Bellman and distributional consistency equations are
 
-$
-V = u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V,
-\qquad fP(f,\chi)=f,\qquad
-\sum_m f_m=1,\quad\sum_m m f_m=\bar m.
-$
+$$
+V = u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V.
+$$
+
+$$
+fP(f,\chi)=f,\qquad
+\sum_m f_m=1,\qquad \sum_m m f_m=\bar m.
+$$
 
 The right to reject is evaluated *after solving* the value equation. A stationary fixed point of $f$ alone cannot certify optimality. Under the illustrative parameters $M=5$, $\bar m=2$, $\beta=0.96$, $b=5$, $c=0.15$, matching intensity $0.45$, an active full-trade candidate passes all participation inequalities. A **separate zero-trade equilibrium** also exists: if all sellers refuse, tokens provide no consumption services, and a token shadow value of zero makes refusal optimal. We have not selected among these equilibria.
 
@@ -199,21 +202,23 @@ The right to reject is evaluated *after solving* the value equation. A stationar
 
 Let the matching exposure depend on buyer and seller balances through $w(m_b,m_s)$, with contact probability $\lambda w$ not exceeding one. Conditional on a fixed optimal acceptance policy $\chi(m_b,m_s)$, the mean number of successful buyer-seller matches per household is
 
-$
+$$
 q_{b,s}(f)=\frac{\lambda}{2}
 w(b,s)\chi(b,s)f_bf_s.
-$
+$$
 
 For any test function $\varphi$ of token holdings, the exactly implied quadratic collision operator is
 
-$
+$$
 \sum_m\varphi(m)Q_m[f]
 =\sum_{b=1}^{M}\sum_{s=0}^{M-1}q_{b,s}(f)
-\left[
-\varphi(b-1)-\varphi(b)+
-\varphi(s+1)-\varphi(s)
-\right].
-$
+\,\Delta\varphi_{b,s}.
+$$
+
+$$
+\Delta\varphi_{b,s}
+=\varphi(b-1)-\varphi(b)+\varphi(s+1)-\varphi(s).
+$$
 
 The discrete forward equation is $f_{t+1}=f_t+Q[f_t]$. Taking $\varphi=1$ and $\varphi(m)=m$ gives population and token conservation. Since the one-period individual transition $P=I+L$ is stochastic, the distribution also preserves nonnegativity. Every successful trade delivers exactly one service from a producer to a consumer; the service-market clearing condition holds separately. Holding optimal policies fixed, $Q$ is quadratic in $f$; policies that respond to $f$ generate additional nonlinear feedback.
 
@@ -229,18 +234,18 @@ We implemented a numerical **product-economy verification** at 200 Aiyagari asse
 
 Under uniform matching and acceptance of all feasible trades, the birth rate of tokens for an eligible seller is $\lambda(1-f_0)/2$, and the death rate for an eligible buyer is $\lambda(1-f_M)/2$. The detailed-balance recursion becomes
 
-$
+$$
 \frac{f_{m+1}}{f_m}
 =\frac{1-f_0}{1-f_M},\qquad m=0,\ldots,M-1.
-$
+$$
 
 Consequently the stationary money distribution is truncated geometric. That family also maximizes Shannon entropy of the **money distribution** under total mass and average money constraints. This is a property of the particular equilibrium transition rates; it is not Foley's statement about transaction entropy.
 
 To test robustness, we use an economically explicit nonuniform matching technology,
 
-$
+$$
 w(m_b,m_s)=1+\gamma\frac{m_bm_s}{M^2}.
-$
+$$
 
 At $\gamma=3$ and $\lambda=0.2$, optimal bilateral participation still holds, but the stationary money distribution no longer equals that same max-entropy distribution: $D_{\mathrm{KL}}(f\Vert f_{\mathrm{ME}})=0.00606267$. We also compare realized trading probabilities with a constructed Foley-*style* entropy program over feasible token changes $-1,0,+1$ that excludes the actual role and matching constraints. Its KL divergences are 0.192400 and 0.359797 under uniform and nonuniform matching, respectively. Because the admissible offer sets differ, **this is not a refutation of Foley's finite-offer entropy theorem**.
 
@@ -257,6 +262,104 @@ At $\gamma=3$ and $\lambda=0.2$, optimal bilateral participation still holds, bu
 For each monetary regime, four independently seeded Monte Carlo experiments were conducted at populations 1,500, 6,000 and 20,000. The matching mechanism is the same as that used in the analytic collision equation, and each simulated transaction moves precisely one token and produces one service. After 1,800 burn-in periods, 700 measurement periods were used. The average Wasserstein distance at 20,000 agents was 0.000903 for uniform matching and 0.000877 for assortative matching. These simulation comparisons corroborate the *conditional stationary submodel*, not global equilibrium uniqueness.
 
 This is a **partial Stage 2 success**. The productive Aiyagari baseline and the optimizing search economy can coexist under strong separability. A unified nonseparable general equilibrium with household portfolio choice, conversion between financial assets and money, jointly constrained labor resources, and endogenous bargaining prices remains unresolved. In particular the solution cannot be presented as a demonstrated new HANK equilibrium, and Foley's entropy solution cannot be imposed as an extra market-clearing condition.
+
+
+# Stage 2-B: Joint capital and money choice — a failed equilibrium attempt
+
+## Canonical literature and the contribution boundary
+
+Lagos and Wright (2005) [@lagoswright2005] introduce a powerful two-market timing convention in which anonymous decentralized exchange motivates money and centralized trade makes dynamic solutions tractable. However, standard quasilinear centralized-market preferences eliminate money-holding wealth effects across otherwise identical households. This shortcut is unsuitable as the sole starting point for the *joint distribution* of capital and liquid money that our question requires. Rocheteau and Wright (2005) [@rocheteauwright2005] additionally show that bargaining, price taking and competitive search are different economic institutions with different allocations.
+
+Crucially, **a substantial part of the purported research question has already been answered**. @molico2006 allows agents to bargain over amounts of money and goods, producing endogenous distributions of money and transaction prices. @molicozhang2006 jointly models endogenous capital and money portfolio holdings with uninsurable search and production risk and nondegenerate wealth distributions. @aruoba2011 connects monetary exchange, capital accumulation and endogenous bargaining in a two-market economy. Joint money--capital optimization, therefore, cannot be asserted as this paper's novelty. A viable research objective must instead establish a distinct theorem or empirical consequence about *the kinetic representation of an existing optimal exchange equilibrium*, relative to its standard recursive distributional equation.
+
+## A nonseparable numerical prototype
+
+As a diagnostic exercise, we implemented a finite-grid joint savings problem with household state $s=(a,m,z)$. A household in the centralized market jointly chooses next-period productive assets $a'$ and nominal money $m'$, with common budget
+
+$$
+c+a'+\phi m'=(1+r)a+\phi m^{\mathrm{DM}}+wz(1-q_s),
+$$
+
+where $\phi$ is the real value of one nominal token, $q_s$ is a seller's decentralized service-production time, and the same time endowment supplies centralized production. Cobb--Douglas competitive firms price capital and market labor at $r=F_K-\delta$ and $w=F_L$. Unlike the previous separable product example, money and productive assets enter the same household budget constraint.
+
+The centralized value is the optimal expected value over a *finite* choice set $(a',m')$, with specified independent Type-I extreme-value portfolio taste shocks. With buyer service utility $\xi\log(1+q)$, the surpluses for a bilateral decentralized meeting with token payment $d$ and service quantity $q$ are
+
+$$
+\Delta_B=\xi\log(1+q)+W(a_b,m_b-d,z_b;0)-W(a_b,m_b,z_b;0),
+$$
+
+$$
+\Delta_S=W(a_s,m_s+d,z_s;q)-W(a_s,m_s,z_s;0).
+$$
+
+The code maximizes $\Delta_B^\eta\Delta_S^{1-\eta}$ over every admissible **discrete** $(d,q)$ pair and the refusal option. Thus it checks true Nash optimality on the declared discrete menu, not a continuous bargaining first-order condition. The resulting conditional bilateral trades define a gain--loss transition for $f(a,m,z)$. For test functions $\varphi$, its decentralized component satisfies
+
+$$
+\langle\varphi,Q[f]\rangle
+=\frac{\lambda}{2}\sum_{b,s}f_bf_s\chi(b,s)
+[\varphi(b')+\varphi(s')-\varphi(b)-\varphi(s)].
+$$
+
+This preserves population mass and money/asset positions *within decentralized bilateral exchanges*. The subsequent centralized saving decisions need not preserve nominal money or clear capital markets at arbitrary assumed prices.
+
+## Executed numerical accuracy and failed general equilibrium
+
+The test uses six asset choices, four nominal money states, two productivity states, and three positive service quantities. The selected **assumed**, not cleared, aggregate prices correspond to $K^{\mathrm{guess}}=4.5$, $L^{\mathrm{guess}}=0.97$ and $\phi=0.65$. Bellman and stationary-distribution sup residuals fall below $10^{-8}$ and $10^{-14}$ respectively. All 1,296 accepted buyer--seller state-pair contracts satisfy participation constraints and no strictly better contract exists on the specified grid.
+
+| Tested object | Result |
+|---|---:|
+| Bellman residual (sup) | $9.66\times10^{-9}$ |
+| Stationary distribution residual (sup) | $7.56\times10^{-16}$ |
+| DM nominal token change | $2.08\times10^{-17}$ |
+| DM productive asset change | $-2.60\times10^{-17}$ |
+| Capital supply minus demand | $-3.880104$ |
+| Money demand minus nominal supply | $+0.197646$ |
+| Actual minus assumed labor | $-0.053913$ |
+| Goods residual $Y-C-\delta K$ | $+0.583097$ |
+
+The goods discrepancy is not an independent fourth failure. Stationary portfolio budget accounting and constant returns imply
+
+$$
+Y(K^d,L^d)-C-\delta K^s
+=(r+\delta)(K^d-K^s)+w(L^d-L^s).
+$$
+
+The two sides agree to within $1.67\times10^{-15}$ at the executed candidate. We therefore count the **capital, labor and money markets** as the independent equilibrium conditions, with the goods discrepancy as an accounting implication.
+
+**Therefore, the computed point is not a general equilibrium.** A multi-parameter price search was attempted but evaluated some unconverged private fixed points and did not produce a fully market-clearing candidate. This is a numerical failure of the attempted implementation, not a theorem that the equilibrium does not exist.
+
+Independent finite-agent simulations reproduce the *conditional one-period* distributional law. Average total variation distance across four seeds decreases from 0.03227 at $N=2{,}500$, to 0.01723 at $N=10{,}000$ and 0.00842 at $N=40{,}000$. Money is conserved exactly in each simulated decentralized transaction. These conditional checks do not repair missing equilibrium price conditions.
+
+There is a further **structural limitation**: randomized portfolio taste shocks give households a direct preference for money positions even when decentralized meetings are disabled. Consequently this prototype does **not** derive money's essentiality solely from search and limited commitment; nor does it recover the deterministic Aiyagari model as the meeting rate goes to zero. We retain the result as a falsified full-GE claim and a tested computational component, and place the next implementation priority on a replication of @molicozhang2006 before seeking new Boltzmann or entropy propositions.
+
+
+
+## Stage 2-B: Updated originality test and collision-distribution feedback
+
+We compare our research question against its closest intellectual competitors rather than treating each new modeling ingredient as novel. Optimization-based exchange equations were derived by @chakrabarti2009new; Pareto-improving Cobb--Douglas goods exchange produces a nonlinear Boltzmann-type equation in @toscani2013new. Endogenous monetary holdings and trade prices arise in the random-matching equilibrium of @greenzhou2002. Capital, labor, production, search-based money and a conditional neoclassical dichotomy already appear in @aruobawright2003. Inflation, bargaining and capital accumulation are analyzed by @aruoba2011, while @molicozhang2006 explicitly computes a joint distribution of money and capital and studies monetary-policy effects on investment and welfare. @farmer2024new also investigates monetary and nonmonetary equilibria in heterogeneous-agent incomplete markets. Therefore, our current combination of these ingredients is not yet a novel economic general-equilibrium mechanism.
+
+The narrower research question is whether the **endogenous joint liquidity distribution alters capital accumulation and monetary-policy transmission beyond the implications of existing monetary-search GE models**, in a way that can be distinguished using an otherwise identical economy. A gain--loss representation of an established Markov law alone does not change its economic content.
+
+As a first numerical check, **only conditional on the previously computed fixed-price stationary household distribution and fixed policy**, we implemented a conservative partner-distribution feedback diagnostic. Define $B(f,g)$ as the ordered buyer--seller collision mapping under rate $\lambda f_b g_s/2$, with the same Nash contract as the reference economy. The actual fixed-policy matching operator and an explicitly artificial one-factor-frozen comparison are
+
+$$
+Q(f)=B(f,f),\qquad
+DQ(f^*)[h]=B(h,f^*)+B(f^*,h).
+$$
+
+$$
+Q^{\mathrm{ref}}(f)
+=\frac{B(f,f^*)+B(f^*,f)}{2}.
+$$
+
+Both operators coincide at $f=f^*$, conserve total tokens, productive assets and population mass for every bilateral event, and are not asserted to be individually optimal away from $f^*$. The second mapping suppresses part of the matching distribution feedback. It is a **diagnostic comparison law, not a new equilibrium institution or an estimated policy counterfactual**.
+
+Starting from a perturbation of 0.01 units of household probability mass that changes only asset--money dependence and leaves initial asset and money means unchanged, the numerical derivative of $Q$ matches its exact bilinear derivative with sup error $8.78\times10^{-13}$. The two mappings imply a next-period distribution total variation difference of 0.00236518 and a next-period capital supply difference of 0.000110128, keeping the household continuation values and prices fixed. This is a nonzero distributional sensitivity but is **not** a monetary transmission multiplier or a claim of novel macroeconomic causation.
+
+A complementary feasibility-region diagnostic shows why the old outer price search cannot yet substantiate a GE claim. At assumed labor $L=0.94$ and fiat token value $\phi=0.8$, $K^{\mathrm{guess}}=1$ leads to 99.9915% probability at the **maximum capital-grid point** (asset supply 9.9997), while guesses $K=2$ and $2.8$ do not yield converged private problems. At $K=4$, the private solution converges but aggregate capital supplied is only 0.5877. This pattern reveals severe grid-boundary sensitivity and failing inner fixed points, not a theorem that a full equilibrium does not exist. All previous market-clearing failures and the nonessential money issue due to portfolio taste shocks remain unresolved.
+
+Our proposed submission gate requires a high-accuracy **canonical monetary search joint portfolio GE**, microfounded essentiality of money, consistent asset and labor issuer accounts, and a policy shock comparison with endogenous prices and optimal policies recalculated for both matching specifications. Any claim that this adds a mechanism beyond @molicozhang2006 or @aruoba2011 would then require a specific comparative-static distinction; otherwise the project should be represented as a computational kinetic reformulation of an already existing model.
+
 
 # Research sequence and precommitted acceptance criteria
 

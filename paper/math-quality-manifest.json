@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "documents": {
+    "paper/article.qmd": {
+      "display": 21,
+      "inline": 122,
+      "minimum_pages": 10,
+      "minimum_extracted_chars": 8000,
+      "math_font_required": true
+    },
+    "slides/research-agenda.qmd": {
+      "display": 0,
+      "inline": 0,
+      "minimum_pages": 7,
+      "minimum_extracted_chars": 800,
+      "math_font_required": false
+    }
+  }
+}

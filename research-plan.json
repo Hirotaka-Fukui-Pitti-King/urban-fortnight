@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "status": "stage2_restricted_optimal_kinetic_submodel",
+  "status": "stage2b_literature_verified_conditional_kinetic_feedback_full_ge_open",
   "created": "2026-11-03",
   "project": "Statistical Mechanics within Optimizing Heterogeneous-Agent General Equilibrium",
   "central_question": "Can statistical-mechanical mechanisms be embedded in heterogeneous-agent general equilibrium with individual optimization, rational expectations and market clearing, before introducing New Keynesian nominal rigidity?",
@@ -154,5 +154,16 @@
     "full_nonseparable_general_equilibrium": "not yet constructed",
     "paper": "paper/article.qmd",
     "numerical_results": "research/02-kinetic-exchange-yakovenko/results/reference_stage2_summary.json"
+  },
+  "stage2b": {
+    "status": "fixed_price_only_full_GE_not_verified",
+    "branch": "research/stage2b-integrated-monetary-ge",
+    "critical_competitor": "Molico and Zhang (2006), Monetary Policy and the Distribution of Money and Capital",
+    "code": "research/02-kinetic-exchange-yakovenko/stage2b/src/joint_model.py",
+    "full_GE": "FAILED_NUMERICALLY_NOT_NONEXISTENCE_THEOREM",
+    "novelty_note": "research/02-kinetic-exchange-yakovenko/stage2b/notes/literature_current_assessment.md",
+    "main_literature_sources": "lectures/literature/",
+    "feedback": "research/02-kinetic-exchange-yakovenko/stage2b/results/reference_conditional_feedback.json",
+    "claimed_new_GE_mechanism": false
   }
 }

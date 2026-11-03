@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-03",
+  "model": "Finite-grid CM joint (a,m) portfolio, DM discrete Nash bargaining, same time resource",
+  "status": "FIXED_PRICE_ONLY_NOT_GE",
+  "calibration": {
+    "beta": 0.93,
+    "alpha": 0.36,
+    "delta": 0.08,
+    "buyer_strength": 6,
+    "eta": 0.5,
+    "meeting_rate": 0.5,
+    "mean_money": 1.2,
+    "taste_scale": 0.15,
+    "asset_grid": [
+      0,
+      0.8,
+      2,
+      4,
+      6.5,
+      10
+    ],
+    "money_states": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "z": [
+      0.8,
+      1.2
+    ],
+    "q": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "prices": {
+      "K": 4.5,
+      "L": 0.97,
+      "real_value_per_token": 0.65
+    }
+  },
+  "convergence": {
+    "bellman_sup": 9.659798294592292e-9,
+    "distribution_sup": 7.563394355258879e-16,
+    "iterations": 628
+  },
+  "bargaining": {
+    "accepted_contract_state_pairs": 1296,
+    "min_buyer_surplus": 0.14992170189605858,
+    "min_seller_surplus": 0.07483983001107752
+  },
+  "kinetic": {
+    "mass_change": -2.7755575615628914e-17,
+    "capital_change": -2.6020852139652106e-17,
+    "money_change": 2.0816681711721685e-17,
+    "service_output": 0.08873642061833112,
+    "labor_diverted": 0.08391272503523176
+  },
+  "market_failure": {
+    "K_supply": 0.619896276630923,
+    "K_excess": -3.880103723369077,
+    "money_demand": 1.3976459637840328,
+    "money_excess": 0.19764596378403287,
+    "labor_real": 0.916087274964733,
+    "labor_excess": -0.053912725035267006,
+    "goods_residual": 0.5830971013337501
+  },
+  "particle_one_step_total_variation_mean": {
+    "N2500": 0.03227114999353922,
+    "N10000": 0.01722960263953282,
+    "N40000": 0.00842277516269441
+  },
+  "seed_count": 4,
+  "main_limitations": [
+    "No full price-cleared GE",
+    "Portfolio taste shocks give token direct utility absent matching",
+    "Finite asset/money/contract grids",
+    "No continuous bargaining FOC",
+    "Initial price attempts did not converge to cleared equilibrium"
+  ]
+}

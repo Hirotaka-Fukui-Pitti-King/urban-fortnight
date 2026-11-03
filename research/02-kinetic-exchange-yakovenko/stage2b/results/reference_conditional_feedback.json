@@ -1,0 +1,17 @@
+{
+  "perturbation": 0.01,
+  "initial_asset_mean_change": 0,
+  "initial_money_mean_change": 0,
+  "maximum_bilinear_derivative_error": 8.777423232686488e-13,
+  "kinetic_feedback_sup": 0.002605727855785278,
+  "mass_change_actual": -4.163336342344337e-17,
+  "money_change_actual": 4.85722573273506e-17,
+  "money_change_reference": 6.245004513516506e-17,
+  "capital_change_actual": -1.9081958235744878e-17,
+  "capital_change_reference": -1.734723475976807e-17,
+  "next_capital_actual": 0.620410980548898,
+  "next_capital_reference": 0.6203008524427629,
+  "next_capital_difference": 0.00011012810613498204,
+  "next_distribution_tv": 0.0023651832580206303,
+  "caveat": "One-step fixed-price, fixed-policy sensitivity only; not an equilibrium comparative static."
+}
