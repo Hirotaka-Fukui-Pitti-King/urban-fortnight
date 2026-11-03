@@ -39,6 +39,8 @@ jobs:
       - name: Optional higher-resolution grid check
         if: github.event_name == 'workflow_dispatch' && inputs.high_grid == true
         run: python research/02-kinetic-exchange-yakovenko/stage2d/scripts/run_stage2d.py --high-grid --stationary-steps 30
+      - name: Reproduce and audit the old active private fixed point
+        run: python research/02-kinetic-exchange-yakovenko/stage2d/scripts/audit_old_CM_interpolation.py
       - name: Independently reject false general equilibrium certification
         run: |
           python - <<'PY'
