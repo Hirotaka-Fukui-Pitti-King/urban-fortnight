@@ -1,0 +1,88 @@
+name: Validate Economics-First Lectures
+
+on:
+  pull_request:
+    paths:
+      - 'lectures/economics-first/**'
+      - 'lectures/literature/**'
+      - '.github/workflows/validate-economics-first.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: economics-first-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  lecture-qa:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scientific dependencies
+        run: python -m pip install -r lectures/economics-first/requirements.txt
+      - name: Recompute pedagogical equilibria and SVG figures
+        run: python lectures/economics-first/scripts/generate_figures.py --output lectures/economics-first/figures
+      - name: Synchronize checked-in SVG with reproducible Python output
+        shell: bash
+        run: |
+          set -euo pipefail
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          # Stale CI runs must never push artifacts computed from outdated code.
+          git fetch origin "$BRANCH"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
+            echo "A newer commit exists; skipping stale SVG sync"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add lectures/economics-first/figures/*.svg lectures/economics-first/figures/numerical-validation.json
+            if ! git diff --cached --quiet; then
+              git commit -m 'figures: synchronize SVG and validation JSON with checked source'
+              git push origin "HEAD:$BRANCH"
+            fi
+          fi
+      - name: Audit every named proposition and its written proof
+        run: python lectures/economics-first/scripts/audit_proofs.py
+      - name: Mathematical and artifact tests
+        run: python -m unittest discover -s lectures/economics-first/tests -v
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render HTML versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in lectures/economics-first/*.qmd; do
+            quarto render "$file" --to html
+          done
+      - name: Install Japanese font and render Typst
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-noto-cjk
+          set -euo pipefail
+          for file in lectures/economics-first/*.qmd; do
+            quarto render "$file" --to typst
+          done
+      - name: Render and inspect every PDF page
+        shell: bash
+        run: |
+          python lectures/economics-first/scripts/check_pdf_render.py \
+            --directory lectures/economics-first \
+            --snapshots lectures/economics-first/pdf-qa-snapshots
+      - name: Upload typst PDFs and page-by-page QA snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: economics-first-pdfs-and-qa
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            lectures/economics-first/*.pdf
+            lectures/economics-first/pdf-qa-snapshots/*.png
+            lectures/economics-first/pdf-qa-snapshots/qa-results.json
+

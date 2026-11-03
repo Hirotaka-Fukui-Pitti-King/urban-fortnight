@@ -1,0 +1,72 @@
+{
+  "aiyagari": {
+    "r": 0.03417377707778388,
+    "K_supply": 6.0155331951208915,
+    "K_demand": 6.015548139490337,
+    "wage": 1.2210095151623954,
+    "capital_error": -1.4944369445935024e-05,
+    "mass_error": 6.639133687258436e-14,
+    "upper_cap_stationary_mass": 3.128208314074129e-05,
+    "distribution_first_moment_transfer_error": 0.0,
+    "bellman_policy_evaluation_sup": 7.105427357601002e-15,
+    "bellman_one_step_deviation_gain_sup": 7.073028793769254e-06,
+    "budget_sup": 0.0,
+    "euler_kkt_sup": 3.893458649464074e-06,
+    "euler_interior_sup": 3.893458649464074e-06,
+    "euler_lower_violation": 0.0,
+    "euler_upper_violation": 0.0,
+    "upper_cap_nodes": 1,
+    "lower_cap_nodes": 3
+  },
+  "ising": {
+    "N": 100,
+    "coupling_modes": {
+      "0.7": [
+        0.0
+      ],
+      "1.45": [
+        -0.86,
+        0.86
+      ]
+    },
+    "finite_detailed_balance_max_error": 3.2526065174565133e-19
+  },
+  "monetary_matching": {
+    "uniform": {
+      "stationarity_sup": 3.122502256758253e-17,
+      "buyer_min_gain": 1.6292969941782833,
+      "seller_min_gain": 0.3724891716347667,
+      "bellman_sup": 3.552713678800501e-15,
+      "conservation_mass": 2.7755575615628914e-17,
+      "conservation_money": 7.632783294297951e-17,
+      "transition_row_sum_sup": 0.0,
+      "transition_negative_part": 0.0,
+      "distribution": [
+        0.24678237923367716,
+        0.20724008691110063,
+        0.1740337124404366,
+        0.1461480426747411,
+        0.12273053351641962,
+        0.10306524522362481
+      ]
+    },
+    "assortative": {
+      "stationarity_sup": 9.71445146547012e-17,
+      "buyer_min_gain": 1.4207299035020013,
+      "seller_min_gain": 0.7589149021391369,
+      "bellman_sup": 1.7763568394002505e-15,
+      "conservation_mass": 3.469446951953614e-18,
+      "conservation_money": 1.0408340855860843e-17,
+      "transition_row_sum_sup": 0.0,
+      "transition_negative_part": 0.0,
+      "distribution": [
+        0.27727517560821474,
+        0.19174839336407778,
+        0.15231177133195345,
+        0.13285152763654937,
+        0.12399217923365624,
+        0.12182095282554839
+      ]
+    }
+  }
+}

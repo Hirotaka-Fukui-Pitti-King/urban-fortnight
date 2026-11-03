@@ -11,3 +11,5 @@
 Quarto CLIで `quarto render lectures/literature/literature-review.qmd --to html` または `--to typst` を実行します。ビルドはまだ未検証です。
 - [Stage 2-Bと先行研究の直接比較（Markdown）](stage2b-branch-comparison.md)：Green–Zhou、Aruoba–Wright、Toscani等との新規性比較。
 - [同（Quarto版）](stage2b-branch-comparison.qmd)：HTML/Typst組版用。
+
+- [Economics-First Literature Matrix](economics-first-literature-matrix.md)：Aiyagari、Blume、Brock–Durlauf、Monetary Search、Foley、Networks、HANKなどを9次元で比較。 [Quarto](economics-first-literature-matrix.qmd)。
