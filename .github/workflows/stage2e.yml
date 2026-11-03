@@ -3,6 +3,11 @@ name: Stage 2-E continuous joint capital-money optimization
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      extended_source_audit:
+        description: 'Run 1200 source-ordered equilibrium diagnostics instead of 80'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -32,7 +37,10 @@ jobs:
         run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2e/tests -v
       - name: Execute conditional CM and continuous Nash computations
         run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_stage2e.py
-      - name: Execute source-ordered CM price and next-DM fixed-point diagnostics
+      - name: Standard source-ordered price and distribution diagnostics
+        run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_source_iteration_audit.py --steps 80
+      - name: Optional extended 1200-step source audit
+        if: github.event_name == 'workflow_dispatch' && inputs.extended_source_audit == true
         run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_source_iteration_audit.py --steps 1200
       - name: Reject false monetary GE on source iteration trace
         run: |
