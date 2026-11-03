@@ -38,6 +38,8 @@ class TestJointPrototype(unittest.TestCase):
         self.assertEqual(a['dm_money_conservation_error'],0)
         self.assertLess(a['total_variation_next_distribution'],.05)
         self.assertLess(a['max_next_distribution_abs_error'],.015)
+    def test_walras_goods_gap_is_implied_by_factor_market_gaps(self):
+        self.assertLess(abs(self.s['info']['goods_accounting_identity_error']),1e-10)
     def test_must_not_call_fixed_prices_ge(self):
         x=self.s['info']
         self.assertGreater(abs(x['capital_price_consistency']),.1)

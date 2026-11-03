@@ -312,6 +312,15 @@ The test uses six asset choices, four nominal money states, two productivity sta
 | Actual minus assumed labor | $-0.053913$ |
 | Goods residual $Y-C-\delta K$ | $+0.583097$ |
 
+The goods discrepancy is not an independent fourth failure. Stationary portfolio budget accounting and constant returns imply
+
+$
+Y(K^d,L^d)-C-\delta K^s
+=(r+\delta)(K^d-K^s)+w(L^d-L^s).
+$
+
+The two sides agree to within $1.67\times10^{-15}$ at the executed candidate. We therefore count the **capital, labor and money markets** as the independent equilibrium conditions, with the goods discrepancy as an accounting implication.
+
 **Therefore, the computed point is not a general equilibrium.** A multi-parameter price search was attempted but evaluated some unconverged private fixed points and did not produce a fully market-clearing candidate. This is a numerical failure of the attempted implementation, not a theorem that the equilibrium does not exist.
 
 Independent finite-agent simulations reproduce the *conditional one-period* distributional law. Average total variation distance across four seeds decreases from 0.03227 at $N=2{,}500$, to 0.01723 at $N=10{,}000$ and 0.00842 at $N=40{,}000$. Money is conserved exactly in each simulated decentralized transaction. These conditional checks do not repair missing equilibrium price conditions.

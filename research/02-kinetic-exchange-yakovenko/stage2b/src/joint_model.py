@@ -184,6 +184,9 @@ class Model:
             capital_money_cov=float(f@(self.a[self.ia]*self.m[self.im])-Kreal*Mreal),
             max_boundary_asset_mass=float(f[self.ia==self.na-1].sum()),
             max_boundary_money_mass=float(f[self.im==self.nm-1].sum()))
+        info['goods_accounting_identity_error'] = (
+            info['goods_residual']
+            - ((r+self.p.delta)*(K-Kreal)+w*(L-Lreal)))
         return {'f':f,'V':V,'pi':pi,'W':W,'cash_consumption':c,'d':d,
                 'q':q,'events':events,'mass':mass,'next_f':fnew,'info':info}
 

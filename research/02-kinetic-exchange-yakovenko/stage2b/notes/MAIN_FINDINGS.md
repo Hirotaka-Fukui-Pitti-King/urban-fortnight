@@ -42,3 +42,15 @@ Four independent Monte Carlo seeds: average one-step total-variation forecast er
 ## Decision rule
 
 Retain these results as a transparent numerical and theoretical failure diagnosis, not a claim of a fully integrated optimizing kinetic GE. Reconstruct Molico–Zhang (2006) with its actual primitives; confirm money essentiality without portfolio taste money utility; clear capital, fiat-money, labor, and goods markets; then derive the Boltzmann weak operator from their optimal trading kernel. Only then compare with Foley's transaction-entropy program on matching-compatible offer sets.
+
+
+## Walras-law-style accounting identity (new independently tested result)
+
+At a stationary privately optimal joint savings distribution (but potentially incorrect factor-market prices), the aggregate CM household budget implies $C=rK^s+wL^s$. Under constant-returns Cobb--Douglas firm optimization evaluated at an assumed pair $(K^d,L^d)$,
+
+$$
+Y(K^d,L^d)-C-\delta K^s
+=(r+\delta)(K^d-K^s)+w(L^d-L^s).
+$$
+
+This is an accounting identity **conditional on stationary household capital and money holdings**; it is not an extra independent equilibrium equation. At the executed price candidate the left side is 0.5830971013337501 and the right side is 0.5830971013337485, differing by 1.67e-15. Thus the goods mismatch cannot legitimately be counted as a fourth independent equilibrium defect: it is implied by the capital and labor mismatches. Our numerical solver still fails to clear both factor markets and the money market.

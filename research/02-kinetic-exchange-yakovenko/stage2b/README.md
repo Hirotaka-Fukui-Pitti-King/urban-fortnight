@@ -23,3 +23,5 @@ Seven Stage 2-B numerical/economic tests pass locally. Particle one-step distrib
 **Literature priority:** Molico and Zhang (2006), *Monetary Policy and the Distribution of Money and Capital*, is already an optimizing money-and-capital portfolio distribution model. Molico (2006), *The Distribution of Money and Prices in Search Equilibrium*, endogenizes monetary exchange and trade prices. The next step is to reconstruct that canonical environment rather than claim novelty for joint money-capital optimization. Read \`notes/MAIN_FINDINGS.md\`.
 
 Full outputs: \`results/fixed_price_diagnostics.json\`, GitHub CI artifacts and user-facing local reproducibility bundle.
+
+**Accounting correction:** In this stationary CM budget system, the goods-gap statistic is implied by capital and labor mismatches: $Y^d-C-\delta K^s=(r+\delta)(K^d-K^s)+w(L^d-L^s)$. The identity is verified to 1.67e-15. Do not count goods clearing as an independent additional equation in this specification.
