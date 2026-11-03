@@ -38,6 +38,22 @@ jobs:
         run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/benchmark_global_nash.py
       - name: Reoptimize all 17 relevant Nash pairs and independent 3x3 Bellman
         run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/validate_3x3_all_convex.py
+      - name: Strict all-pair convex Nash private Bellman acceptance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("research/02-kinetic-exchange-yakovenko/stage2h/results/private_3x3_all_convex.json")
+          z=json.loads(p.read_text())
+          assert z["candidate_private_3x3_passed"], z
+          assert z["all_convex_subproblems_reported_success"], z
+          assert z["relevant_pairs"]==17 and z["positive_pairs"]==11,z
+          assert z["full_Bellman_sup_after_all_convex_reoptimized"]<1e-8,z
+          assert z["max_Nash_log_objective_improvement"]<1e-8,z
+          assert z["roundoff_rigorous_global_Nash_certification"] is False
+          assert z["stationary_GE"] is False
+          print("Globally decomposed all-pair 3x3 private Bellman verified, no GE claim.")
+          PY
       - name: Upload Nash results
         if: always()
         uses: actions/upload-artifact@v4
