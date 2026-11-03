@@ -48,6 +48,8 @@ jobs:
               git push origin "HEAD:$BRANCH"
             fi
           fi
+      - name: Audit every named proposition and its written proof
+        run: python lectures/economics-first/scripts/audit_proofs.py
       - name: Mathematical and artifact tests
         run: python -m unittest discover -s lectures/economics-first/tests -v
       - uses: quarto-dev/quarto-actions/setup@v2
