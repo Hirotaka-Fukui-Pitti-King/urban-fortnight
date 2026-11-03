@@ -8,6 +8,10 @@ on:
       - '.github/workflows/validate-economics-first.yml'
   workflow_dispatch:
 
+concurrency:
+  group: economics-first-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -30,12 +34,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add lectures/economics-first/figures/*.svg lectures/economics-first/figures/numerical-validation.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'figures: synchronize SVG and validation JSON with checked source'
-            git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          # Stale CI runs must never push artifacts computed from outdated code.
+          git fetch origin "$BRANCH"
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse FETCH_HEAD)" ]; then
+            echo "A newer commit exists; skipping stale SVG sync"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add lectures/economics-first/figures/*.svg lectures/economics-first/figures/numerical-validation.json
+            if ! git diff --cached --quiet; then
+              git commit -m 'figures: synchronize SVG and validation JSON with checked source'
+              git push origin "HEAD:$BRANCH"
+            fi
           fi
       - name: Mathematical and artifact tests
         run: python -m unittest discover -s lectures/economics-first/tests -v
