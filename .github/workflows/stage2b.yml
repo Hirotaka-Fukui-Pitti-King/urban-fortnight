@@ -50,6 +50,10 @@ jobs:
         run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_sensitivity.py
       - name: Finite-N particle error versus population
         run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_particle_sizes.py
+      - name: Validate conservative pair feedback and derivative
+        run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_feedback.py
+      - name: Diagnose price regions, invalid inner roots and asset-grid boundary
+        run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_ge_admissibility.py
       - name: Upload Python test and simulation outputs
         uses: actions/upload-artifact@v4
         with:
