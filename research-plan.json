@@ -1,90 +1,143 @@
 {
-  "project": "Statistical-Mechanical New Keynesian Economics",
+  "schema_version": "2.0",
+  "status": "planned",
   "created": "2026-11-03",
-  "version": "0.1.0",
-  "status": "scaffold",
-  "central_research_question": "How do socially interacting expectations and endogenous wealth distributions change monetary transmission, fluctuations, and macroeconomic tipping points?",
-  "agent_based_method": "cross-cutting",
+  "project": "Statistical Mechanics within Optimizing Heterogeneous-Agent General Equilibrium",
+  "central_question": "Can statistical-mechanical mechanisms be embedded in heterogeneous-agent general equilibrium with individual optimization, rational expectations and market clearing, before introducing New Keynesian nominal rigidity?",
+  "ordering_principle": "Economic feasibility first, computational representation second, separate statistical-mechanical economic mechanisms from analytical diagnostics, nominal rigidity last.",
+  "economic_requirements": [
+    "household and firm dynamic optimality",
+    "rational-consistent aggregate forecasts conditional on information",
+    "goods labor asset and credit market clearing",
+    "individual and aggregate budget and balance sheet accounting",
+    "verified existence and selection for multiple equilibria",
+    "no maximum entropy without an invariant-measure derivation"
+  ],
   "stages": [
     {
-      "stage": 0,
-      "title": "New Keynesian and HANK Baseline",
-      "path": "stage-0-nk-hank-baseline",
-      "dependencies": [],
-      "status": "planned"
+      "id": 0,
+      "title": "Optimizing Heterogeneous-Agent General Equilibrium",
+      "directory": "research/00-heterogeneous-agent-ge",
+      "category": "benchmark",
+      "status": "planned",
+      "prerequisites": []
     },
     {
-      "stage": 1,
-      "title": "Ising Expectations and Social Interactions",
-      "path": "stage-1-ising-social-expectations",
-      "dependencies": [
+      "id": 1,
+      "title": "Agent-Based Econophysics as an Equilibrium Computation Method",
+      "directory": "research/01-agent-based-equilibrium",
+      "category": "method",
+      "status": "planned",
+      "prerequisites": [
         0
-      ],
-      "status": "planned"
+      ]
     },
     {
-      "stage": 2,
-      "title": "Kinetic Exchange and Wealth Distribution",
-      "path": "stage-2-kinetic-exchange-wealth",
-      "dependencies": [
+      "id": 2,
+      "title": "Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)",
+      "directory": "research/02-kinetic-exchange-yakovenko",
+      "category": "economic_mechanism",
+      "status": "planned",
+      "prerequisites": [
         0,
         1
-      ],
-      "status": "planned"
+      ]
     },
     {
-      "stage": 3,
-      "title": "Statistical Equilibrium and Entropy",
-      "path": "stage-3-statistical-equilibrium",
-      "dependencies": [
+      "id": 3,
+      "title": "Ising-Type Social Interactions from Optimal Choices",
+      "directory": "research/03-ising-optimizing-social-choice",
+      "category": "economic_mechanism",
+      "status": "planned",
+      "prerequisites": [
         0,
         1,
         2
-      ],
-      "status": "planned"
+      ]
     },
     {
-      "stage": 4,
-      "title": "Bouchaud-Inspired Firm Fragility",
-      "path": "stage-4-bouchaud-firm-fragility",
-      "dependencies": [
+      "id": 4,
+      "title": "Statistical Equilibrium and Maximum Entropy",
+      "directory": "research/04-statistical-equilibrium-entropy",
+      "category": "analytical_method",
+      "status": "planned",
+      "prerequisites": [
         0,
         1,
         2,
         3
-      ],
-      "status": "planned"
+      ]
     },
     {
-      "stage": 5,
-      "title": "Minority Game and Financial Markets",
-      "path": "stage-5-minority-game-financial-markets",
-      "dependencies": [
+      "id": 5,
+      "title": "Bouchaud-Inspired Firm Fragility with Optimal Firms",
+      "directory": "research/05-bouchaud-optimal-firm-finance",
+      "category": "economic_mechanism",
+      "status": "planned",
+      "prerequisites": [
         0,
         1,
         2,
         3,
         4
-      ],
-      "status": "planned"
+      ]
     },
     {
-      "stage": 6,
-      "title": "Random Matrix Methods and Systemic Risk",
-      "path": "stage-6-random-matrix-systemic-risk",
-      "dependencies": [
+      "id": 6,
+      "title": "Minority Game and Strategic Financial Trading (Challet)",
+      "directory": "research/06-minority-game-strategic-equilibrium",
+      "category": "economic_mechanism",
+      "status": "planned",
+      "prerequisites": [
         0,
         1,
         2,
         3,
         4,
         5
-      ],
-      "status": "planned"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Random Matrix Diagnostics of Endogenous Correlations",
+      "directory": "research/07-random-matrix-endogenous-risk",
+      "category": "analytical_method",
+      "status": "planned",
+      "prerequisites": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": 8,
+      "title": "New Keynesian Integration after General-Equilibrium Compatibility",
+      "directory": "research/08-new-keynesian-integration",
+      "category": "extension",
+      "status": "planned",
+      "prerequisites": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
     }
   ],
-  "paper_source": "paper/article.qmd",
-  "slides_source": "slides/research-agenda.qmd",
-  "slides_theme": "kazuyanagimoto/quarto-clean-typst",
-  "paper_format": "quarto built-in typst"
+  "paper": {
+    "source": "paper/article.qmd",
+    "format": "academic-typst",
+    "language": "en",
+    "build_workflow": ".github/workflows/build-paper.yml"
+  },
+  "presentation": {
+    "source": "slides/research-agenda.qmd",
+    "format": "clean-typst"
+  },
+  "superseded_plan": "archive/initial-nk-first-roadmap/",
+  "criteria": "A named economic mechanism is accepted only after optimality, RE and full equilibrium have been demonstrated or a concrete failure is recorded."
 }

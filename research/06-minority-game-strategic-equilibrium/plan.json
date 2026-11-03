@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0",
+  "stage": 6,
+  "folder": "research/06-minority-game-strategic-equilibrium",
+  "title": "Minority Game and Strategic Financial Trading (Challet)",
+  "category": "economic_mechanism",
+  "status": "planned",
+  "research_question": "Can contrarian strategic trading and price impact in Minority Game environments be represented as optimizing Nash or rational-expectations equilibria?",
+  "feasibility_hypothesis": "Conditional: a congestion/strategic trading equilibrium may exist, but original adaptive score-update algorithms need not satisfy rational expectations; do not equate these two objects.",
+  "prerequisites": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "mechanisms": [
+    "Strategic minority payoff from aggregate order flow",
+    "Heterogeneous information and optimal trading decisions",
+    "Endogenous security prices, market maker and inventory",
+    "Comparison with Challet-style boundedly rational adaptation"
+  ],
+  "state_variables": [
+    "traders' beliefs, signals and portfolio states",
+    "order imbalance, security returns and market-maker wealth",
+    "aggregate security supply and holdings"
+  ],
+  "required_equations": [
+    "Trader dynamic best responses/Nash conditions",
+    "Asset demand, inventory and security market clearing",
+    "Rational expectations for price mappings conditional on signals",
+    "Balance-sheet transfer and price impact identities"
+  ],
+  "comparison_baseline": "Competitive rational portfolio choice with no strategic crowding; original adaptive Minority Game reported separately",
+  "acceptance_tests": [
+    "One-agent deviations do not improve payoffs at claimed equilibrium",
+    "Market-clearing order quantities and dealer inventories",
+    "Trader and dealer cash/asset conservation",
+    "Information sets and forecast calibration consistency",
+    "Distinguish genuine strategic minority mechanism from heuristic learning"
+  ],
+  "stage_gate": "Accept a game-theoretic equilibrium variant if it is nondegenerate; retain original adaptive dynamics only as a clearly labeled relaxation.",
+  "reference_leads": [
+    "Challet, Marsili and Zhang (2005)",
+    "Minority Game literature",
+    "Strategic trading and price impact"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

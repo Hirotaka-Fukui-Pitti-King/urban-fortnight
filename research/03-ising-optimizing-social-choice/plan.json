@@ -1,0 +1,61 @@
+{
+  "schema_version": "2.0",
+  "stage": 3,
+  "folder": "research/03-ising-optimizing-social-choice",
+  "title": "Ising-Type Social Interactions from Optimal Choices",
+  "category": "economic_mechanism",
+  "status": "planned",
+  "research_question": "Can optimizing households display mean-field/Ising social complementarities while maintaining rational expectations about aggregate states and equilibrium prices?",
+  "feasibility_hypothesis": "Conditional: binary actions with complementarities and idiosyncratic taste shocks can generate logistic best responses; do not replace rational forecasts with unvalidated heuristic belief switching.",
+  "prerequisites": [
+    0,
+    1,
+    2
+  ],
+  "mechanisms": [
+    "Discrete participation, technology adoption, or labor choice",
+    "Peer payoff complementarity J s_i m",
+    "Private taste shocks and conditional optimal policies",
+    "Aggregate-consistent social fixed points and equilibrium selection"
+  ],
+  "state_variables": [
+    "binary individual action s_i",
+    "mean action m and possibly network structure",
+    "household assets/income and equilibrium prices"
+  ],
+  "required_equations": [
+    "Optimal Bellman value differences across actions",
+    "Logit choice probabilities under stated taste-shock law",
+    "Mean-field self-consistency m=E[s_i]",
+    "Rational forecast of aggregate motion conditional on information",
+    "All-market clearing with endogenous social choices"
+  ],
+  "comparison_baseline": "Same Heterogeneous-Agent GE with peer payoff J=0; separately a non-rational belief-update specification",
+  "acceptance_tests": [
+    "Derive rather than assert logit best responses",
+    "Verify household deviation inequalities and social fixed point",
+    "Locate multiple-equilibrium region under exact normalization",
+    "Account for multiplicity and an explicit equilibrium-selection rule",
+    "Peer interaction removal recovers Stage 0/2 counterparts"
+  ],
+  "stage_gate": "Accept optimal Ising-type strategic complementarity only when the equilibrium mapping, not just a behavioral fixed point, exists.",
+  "reference_leads": [
+    "Brock and Durlauf (2001)",
+    "Ising mean-field theory",
+    "Rational expectations heterogeneous-agent equilibrium"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

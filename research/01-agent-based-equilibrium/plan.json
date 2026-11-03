@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "stage": 1,
+  "folder": "research/01-agent-based-equilibrium",
+  "title": "Agent-Based Econophysics as an Equilibrium Computation Method",
+  "category": "method",
+  "status": "planned",
+  "research_question": "Can many-agent simulations of policy-optimal decisions replicate the stationary and transition distributions of the same heterogeneous-agent general equilibrium model?",
+  "feasibility_hypothesis": "Yes as a numerical representation, provided the simulated decision rules solve the same equilibrium and common/aggregate risk is consistently forecast.",
+  "prerequisites": [
+    0
+  ],
+  "mechanisms": [
+    "Individual agents use verified Bellman policies",
+    "Finite-N Markov evolution and seed-controlled Monte Carlo",
+    "Distribution operator and particle-method comparison"
+  ],
+  "state_variables": [
+    "individual asset and income state arrays",
+    "cross-sectional distribution and moments",
+    "prices and aggregate state"
+  ],
+  "required_equations": [
+    "Discrete Kolmogorov or histogram distribution evolution",
+    "Law of motion of aggregate states",
+    "Market-clearing identities in agent simulation"
+  ],
+  "comparison_baseline": "Distributional operator solution of Stage 0 at the same prices and shocks",
+  "acceptance_tests": [
+    "Particle distribution converges to stationary measure as N and time increase",
+    "Policies agree with Stage 0 over the state grid",
+    "Aggregate resource and financial asset accounting",
+    "Common-shock versus idiosyncratic-shock simulation distinction",
+    "Multiple-seed confidence intervals and reproducible run manifests"
+  ],
+  "stage_gate": "Treat ABM as an implementation method, not as a free-standing economic microfoundation.",
+  "reference_leads": [
+    "Aiyagari (1994)",
+    "Krusell and Smith (1998)",
+    "Numerical distribution simulation methods"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0",
+  "stage": 2,
+  "folder": "research/02-kinetic-exchange-yakovenko",
+  "title": "Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)",
+  "category": "economic_mechanism",
+  "status": "planned",
+  "research_question": "Can voluntary optimal bilateral trades generate a kinetic exchange operator consistent with household budgets, rational expectations and market clearing?",
+  "feasibility_hypothesis": "Conditional: exogenous random transfers conserve assets but do not generally arise from optimal trade; require gains from trade, matching frictions or a specified contractual market.",
+  "prerequisites": [
+    0,
+    1
+  ],
+  "mechanisms": [
+    "State-dependent bilateral matching with voluntary trade",
+    "Bargaining or price-taking mutually feasible exchanges",
+    "Transition kernel for pairwise post-trade holdings",
+    "Boltzmann gain-loss equation coupled with household saving"
+  ],
+  "state_variables": [
+    "liquid assets or money and consumption goods",
+    "partner state and contract choice",
+    "distribution f_t(a,z)",
+    "aggregate goods, money and asset supply"
+  ],
+  "required_equations": [
+    "Bilateral post-trade financial asset conservation, accounting for external issuance",
+    "Both partners' budget constraints and participation constraints",
+    "Bellman optimality or bilateral Nash bargaining",
+    "Boltzmann collision operator and other household transition terms",
+    "Goods and financial market clearing"
+  ],
+  "comparison_baseline": "Aiyagari/Huggett GE with kinetic matching shut off; separately exogenous Yakovenko exchange as non-optimal benchmark",
+  "acceptance_tests": [
+    "Realized matches satisfy participation and individual budget constraints",
+    "Asset transfers net to zero in a closed pair; goods flows clear",
+    "Particle operator matches nonlinear Boltzmann transition operator",
+    "Density remains normalized and nonnegative",
+    "Zero-matching-rate switch-off recovers baseline prices and distribution",
+    "No exchange theorem/counterexample under frictionless homogeneous preferences"
+  ],
+  "stage_gate": "Accept only if a microfounded, nondegenerate bilateral trading equilibrium exists and aggregate identities hold.",
+  "reference_leads": [
+    "Yakovenko and Rosser (2009)",
+    "Kinetic exchange and Boltzmann models",
+    "Search, matching and bargaining theory"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0",
+  "stage": 5,
+  "folder": "research/05-bouchaud-optimal-firm-finance",
+  "title": "Bouchaud-Inspired Firm Fragility with Optimal Firms",
+  "category": "economic_mechanism",
+  "status": "planned",
+  "research_question": "Can financial fragility, defaults and employment cascades from Bouchaud-inspired macro ABMs be reconstructed with optimizing firms and clearing credit, goods and labor markets?",
+  "feasibility_hypothesis": "Conditional: Mark-0-style heuristic behavioral rules are not automatically optimizing general equilibrium; compare the original heuristic benchmark to a separately microfounded firm model.",
+  "prerequisites": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "mechanisms": [
+    "Heterogeneous firm investment, employment and financing",
+    "Credit supply, collateral and endogenous default",
+    "Entry, exit and propagation of balance-sheet shocks",
+    "Economically closed intermediaries and losses"
+  ],
+  "state_variables": [
+    "firm net worth, debt, employment and productivity",
+    "bank equity and loan positions",
+    "household wealth and aggregate production"
+  ],
+  "required_equations": [
+    "Firm dynamic optimization and default/limited-liability constraints",
+    "Intermediary budget and loan market clearing",
+    "Household ownership and distribution of profits/losses",
+    "Aggregate resource and labor market clearing"
+  ],
+  "comparison_baseline": "Stage 0/4 equilibrium without frictions; original Bouchaud-style heuristic ABM as a labeled non-equilibrium comparator",
+  "acceptance_tests": [
+    "Firm and bank ledger reconciliation after default",
+    "No double count of credit, capital or dividend flows",
+    "Optimization/deviation residuals and credit-market clearing",
+    "Switch-off friction returns baseline equilibrium",
+    "Shock-induced tipping region stable across solvers and grids"
+  ],
+  "stage_gate": "Accept only an explicitly optimized firm/credit mechanism; document which original Bouchaud properties do and do not survive.",
+  "reference_leads": [
+    "Bouchaud and coauthors on Mark-0 macroeconomics",
+    "Gualdi et al. (2015)",
+    "Corporate default and financial accelerator literature"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}
