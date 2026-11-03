@@ -1,0 +1,154 @@
+---
+title: "既存の経済モデルIV：Minority Game、Networks、Entropy、RMTとNew Keynesian HANK"
+lang: ja
+date: 2026-11-03
+format:
+  html:
+    toc: true
+    number-sections: true
+    math: mathjax
+  typst:
+    toc: true
+    number-sections: true
+---
+
+**大学院研究講義 IV。** 個人の戦略的学習、市場価格形成、生産・金融ネットワーク、統計的市場均衡、高次元相関推定、New Keynesian HANKを、各モデルの経済的原始条件から導出する。講義I–IIIと異なり、すべてを同じGibbs測度・均衡概念に押し込まない。
+
+## 1. Minority Game：適応的な戦略競争と統計力学
+
+[Challet and Zhang (1997)](https://doi.org/10.1016/S0378-4371(97)00419-6)の起点となる経済は、奇数の$N$人が同時に$a_i(t)\in\{-1,+1\}$を選び、少数派に参加した人が利益を得る混雑ゲームである。総行動$A(t)=\sum_i a_i(t)$とすると、線形化した効用を$u_i=-a_i A/N$と置ける。すべての主体の利得和は
+$$
+\boxed{\sum_i u_i=-A(t)^2/N.}
+$$
+行動が均衡して$|A|$が小さいほど全体の混雑損失は少なくなる。しかし個人は公開情報$\mu(t)\in\{1,\ldots,P\}$と複数の戦略表$a_{ig}^{\mu}$しか観測せず、各戦略の仮想利得スコアを
+$$
+U_{ig}(t+1)=U_{ig}(t)-a_{ig}^{\mu(t)}A(t)/N
+$$
+で更新する。採用戦略は通常そのスコアが最大のもの。これは合理的期待の最適貯蓄ではなく**経験に基づくルール選択**である。
+
+二戦略モデルについて$\omega_i^\mu=(a_{i1}^\mu+a_{i2}^\mu)/2$、$\xi_i^\mu=(a_{i1}^\mu-a_{i2}^\mu)/2$と置くと、各情報パターンに対し
+$$
+A^\mu=\Omega^\mu+\sum_i\xi_i^\mu s_i,\quad
+\Omega^\mu=\sum_i\omega_i^\mu.
+$$
+平均スピン$m_i=E[s_i]$、情報ごとの期待総行動を$E[A\mid\mu]$とし、予測可能性$H=P^{-1}\sum_\mu(E[A\mid\mu])^2$、変動性$\sigma_A^2=E[A^2]$を定義する。情報パターンが一様なら全分散公式により
+$$
+\boxed{\sigma_A^2=H+\frac1P\sum_\mu\operatorname{Var}(A\mid\mu).}
+$$
+したがって$H=0$（条件付き平均が予測できない）でもVolatilityはゼロではない。収益率の裁定可能性とは別の対象である。
+
+戦略の組合せの乱雑さから、平均化後の$H(\mathbf m)$には$J_{ij}=P^{-1}\sum_\mu\xi_i^\mu\xi_j^\mu$というランダム結合が現れ、Spin-Glass的解析が可能になる。[Challet and Marsili (1999)](https://doi.org/10.1103/PhysRevE.60.R6271)は予測可能性の対称相と対称性の破れを研究した。[Heimel and Coolen (2001)](https://doi.org/10.1103/PhysRevE.63.056121)はGenerating Functional $\mathcal Z[\psi]=E[e^{i\sum_{it}\psi_i(t)s_i(t)}]$から応答・時間相関を計算し、非エルゴード性と初期状態依存を分析した。$\alpha=P/N$に関する臨界値は、戦略数・学習・情報制度に依存する。
+
+**比較対象：** Rational Expectationsの均衡資産価格式$P_t=E_t[M_{t,t+1}(P_{t+1}+D_{t+1})]$には割引因子・配当・最適ポートフォリオが必要。Minority Gameはそれらを自動的に与えない。混雑と学習のメカニズムを、貨幣市場清算や資産価格付けの同義語にしない。
+
+## 2. Heterogeneous-Belief Asset Pricing：最適需要とルール切替
+
+[Brock and Hommes (1998)](https://doi.org/10.1016/S0165-1889(98)00011-6)との対応を、特定の単純な需要式で示す。家計タイプ$h$は一期間の超過利得$E_{h,t}[p_{t+1}+d_{t+1}]-Rp_t$と分散$\sigma^2$を想定し、二次効用／Mean–Varianceの近似の下で
+$$
+z_{h,t}=\frac{E_{h,t}[p_{t+1}+d_{t+1}]-Rp_t}{a\sigma^2}
+$$
+という資産需要を持つ。各タイプの人口比$n_{h,t}$、外部供給$z_s=0$なら
+$$
+\sum_hn_{h,t}z_{h,t}=0
+\Longrightarrow
+Rp_t=\sum_hn_{h,t}E_{h,t}[p_{t+1}+d_{t+1}].
+$$
+タイプごとの予測ルール$E_{h,t}$は必ずしも均衡の真の条件付き期待と一致しない。予測実績$\Pi_{h,t}$からLogit選択
+$$
+n_{h,t+1}=\frac{e^{\eta\Pi_{h,t}}}{\sum_je^{\eta\Pi_{j,t}}}
+$$
+でタイプが変わると、需要・価格と選択の間の非線形なフィードバックが生じる。これがHeterogeneous Beliefsと複雑な価格動学の結合である。[Lux and Marchesi (1999)](https://doi.org/10.1038/17290)の群集行動ABMとは同じ観測的Stylized Factsを生成し得るが、主体の価格予想ルールと注文・約定制度が異なる。
+
+予測ルールの模倣がFat TailsやVolatility Clusteringに寄与するかを調べる場合、Stochastic VolatilityやGARCH、流動性への価格インパクトという既存の競合メカニズムとも比較する。似た収益率分布は固有の学習機構の識別にならない。
+
+## 3. Production Networks：相互作用行列とAggregate Fluctuations
+
+[Acemoglu, Carvalho, Ozdaglar and Tahbaz-Salehi (2012)](https://doi.org/10.3982/ECTA9623)は企業・産業の中間投入ネットワークが個別生産性ショックを集計変動に変える機構を研究した。Cobb–Douglas型の生産技術と費用最小化、均衡価格のゼロ利潤条件を対数線形化した**特定の多部門モデル**を想定する。部門の対数アウトプット変動ベクトル$y$が、ショック$\varepsilon$と非負の投入・伝播行列$A$により
+$$
+y=\varepsilon+Ay
+$$
+を満たすなら、$\rho(A)<1$のときLeontief逆行列が存在し、
+$$
+\boxed{y=(I-A)^{-1}\varepsilon=\sum_{k=0}^\infty A^k\varepsilon.}
+$$
+$A^k$は投入経路が$k$段階を経て波及する寄与である。集計アウトプット$Y^{agg}=\omega^\top y$について、ショック共分散$\Sigma_\varepsilon$なら
+$$
+\boxed{\operatorname{Var}(Y^{agg})
+=\omega^\top(I-A)^{-1}\Sigma_\varepsilon(I-A)^{-T}\omega.}
+$$
+等分散の独立ショックなら、実効集計ウェイト$v^\top=\omega^\top(I-A)^{-1}$と置いて$\operatorname{Var}(Y^{agg})=\sigma^2\sum_iv_i^2$。全ウェイトが$O(1/N)$なら変動は$O(1/N)$だが、非常に重要な供給部門へウェイトが集中すると消失速度が遅くなり得る。
+
+この式は実際のCobb–Douglas均衡を対数線形化した特定モデルに基づく**ネットワーク増幅の代数的表現**である。任意の生産ネットワークに対して$y=\varepsilon+Ay$がそのまま成立するわけではない。情報伝播・模倣を追加しなくてもミクロショックの集計効果は生じる。
+
+金融ネットワークでは、各銀行の対外・銀行間負債$\bar p_i$、資産$e_i$、債権重み$\Pi_{ji}$、実際の支払い$p_i$について
+$$
+p_i=\min\{\bar p_i,\max(0,e_i+\sum_j\Pi_{ji}p_j)\}
+$$
+のような有限責任の清算固定点を考えることができる（特定の清算制度）。[Acemoglu, Ozdaglar and Tahbaz-Salehi (2015)](https://doi.org/10.1257/aer.20130456)はショックの大きさによりネットワークの密度が安定性を高めたり感染を増幅したりすることを示した。「Phase Transition」に似た急変はこのような経済的な支払い制約からも発生する。
+
+## 4. Foley (1994)：取引分布の統計均衡
+
+[Foley (1994)](https://doi.org/10.1006/jeth.1994.1018)の統計均衡は、貨幣保有分布を一律に最大Entropy化する理論ではない。タイプ$k$の人口比$w_k$、許容取引集合$X_k$、そのタイプが取引$x$を選ぶ割合$h_k(x)$とする。各タイプの正規化$\sum_{x\in X_k}h_k(x)=1$、実物市場の実行可能性$\sum_kw_k\sum_{x\in X_k}h_k(x)x=0$を課し、
+$$
+\boxed{\max_h-\sum_kw_k\sum_{x\in X_k}h_k(x)\log h_k(x)}
+$$
+を考える。実行可能集合に内部点がありLagrange乗数が存在する場合、$h_k(x)$に関する一階条件から
+$$
+h_k^*(x)=
+\frac{e^{-\lambda^\top x}}{\sum_{y\in X_k}e^{-\lambda^\top y}},
+\quad x\in X_k
+$$
+が得られる。$\lambda$は実行可能性の影のEntropy priceであり、自動的に市場の競争価格とはならない。
+
+Shannon entropyの厳密凹性から実行可能な領域で一意の最頻取引分布が得られるが、それだけでは個人の動学的Bellman最適化、Pareto効率性、取引マッチング過程の不変分布は得られない。**統計的均衡と競争的一般均衡を区別するための先行研究**である。数量・人口比の離散化の境界条件は原著の定理に依存する。
+
+## 5. Random Matrix Theory：金融相関を推定する道具
+
+金融資産$N$銘柄の$T$期収益率（中心化済み）を$X\in\mathbb R^{N\times T}$とし、標本共分散$S=XX^\top/T$を計算する。各要素が独立、平均0、分散$\sigma^2$、$N/T\to q>0$で適切なモーメント条件が成立すると、[Marchenko–Pastur (1967)](https://doi.org/10.1070/SM1967v001n04ABEH001994)の極限固有値密度は
+$$
+\rho_{MP}(\lambda)=
+\frac{\sqrt{(\lambda_+-\lambda)(\lambda-\lambda_-)}}{2\pi q\sigma^2\lambda}
+\mathbf1_{[\lambda_-,\lambda_+]}(\lambda),
+\quad
+\lambda_\pm=\sigma^2(1\pm\sqrt q)^2.
+$$
+$q>1$なら原点に質量$1-1/q$の点質量がある。resolventのStieltjes変換$m(z)=\lim N^{-1}\operatorname{Tr}(S-zI)^{-1}$は
+$$
+z=-1/m+\frac{\sigma^2}{1+q\sigma^2m}
+$$
+を満たし、その二次方程式から支持の端点$\lambda_\pm$が現れる。白色雑音の仮定下でも標本固有値が真の分散$\sigma^2$から広く分散する理由が明らかになる。
+
+[Laloux et al. (1999)](https://doi.org/10.1103/PhysRevLett.83.1467)は金融相関行列のノイズを研究した。Shrinkage $\widehat\Sigma=(1-\delta)S+\delta F$、Factor Model $\Sigma=BB^\top+D$と比較する。ただし固有値がMP支持外にあることだけでは、金融機関同士の因果的感染や共通ショックを識別できない。RMTは**高次元推定の基準**であり、それ単独で個人最適化や均衡価格を生むモデルではない。
+
+## 6. New Keynesian HANK：家計分布と価格硬直性の連結
+
+[Kaplan, Moll and Violante (2018)](https://doi.org/10.1257/aer.20160042)、[Auclert (2019)](https://doi.org/10.1257/aer.20160137)らのHANKでは、家計の最適化、所得・資産分布、金融政策の直接・間接的な伝達を共同で解く。企業がCalvo (1983)の確率$\theta$で価格を据え置くと、同質企業の価格指数は
+$$
+\boxed{P_t^{1-\epsilon}=
+\theta P_{t-1}^{1-\epsilon}+
+(1-\theta)(P_t^*)^{1-\epsilon}.}
+$$
+各企業の相対価格分布も更新し、Aggregate Price Dispersion $\Delta_t$が実物の生産投入要件に影響する。家計の資産・所得分布$\mu_t$と企業価格分布$\Phi_t$を集計状態に含め、
+$$
+\mu_{t+1}=\mathcal K_{\rm HH}(\mu_t;\text{optimal policy},p_t),
+\quad
+\Phi_{t+1}=\mathcal K_{\rm Firm}(\Phi_t;\text{Calvo policy},p_t)
+$$
+を市場清算と合理的期待の下で同時に解く。
+
+[Auclert, Bardóczy, Rognlie and Straub (2021)](https://doi.org/10.3982/ECTA17434)はSequence-Space Jacobianを用いる既存の効率的な解法を確立した。この方法は分布動学の微分を均衡の集計変数系列に集約して解くものであり、「分布を使う」という意味だけで統計力学の新しい結果ではない。
+
+家計の社会的相互作用$J$や最適取引$K^*$を加える場合には、(i)個人の最適反応、(ii)市場清算、(iii)分布と価格の合理的予想、(iv)既存HANKから増える独立な比較静学を検証する。BoltzmannやGibbsの式の存在それ自体は経済的貢献の証拠ではない。
+
+## 7. 「同じ数学」と「新しい経済学」の区別
+
+| 経済モデル | 統計力学・数理概念 | 経済学的に既知の部分 | 新規性の判定対象 |
+|---|---|---|---|
+| Minority Game | Disorder、Spin Model、Generating Functional | 学習からの条件付き予測可能性・相転移 | 資産価格・参加制約に特有の予測 |
+| Brock–Hommes | 非線形動学・Logit Switching | 異質的期待から複雑な価格変動 | 他のSV/GARCH/インパクトとの識別 |
+| 生産ネットワーク | Interaction Matrix、Cascade | 入力連関が個別ショックを増幅 | 最適な企業の相互作用による追加効果 |
+| Foley | Maximum Entropy・Gibbs型配分 | 取引集合上の統計均衡 | Bellman最適性と異なる政策予測 |
+| RMT | Wishart、MP則、Covariance Cleaning | 高次元標本誤差とノイズ除去 | 因果的なリスク伝播との実証的区別 |
+| HANK/NK | Kolmogorov Forward、Mean Field | 最適化・分布・価格硬直性の均衡 | 新しい直接相互作用×流動性制約の政策効果 |
+
+これらの数理的対応は講義で用いる**教育的な整理**である。すべてのモデルを同じHamiltonian、同じEntropy最大化原理、同じGibbs測度で扱うことはできない。研究上重要なのは、既存の経済理論がすでに説明する現象を正確に取り除いた後に残る比較静学である。
