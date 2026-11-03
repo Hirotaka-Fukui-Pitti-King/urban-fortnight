@@ -27,7 +27,7 @@ $$
 
 **固定価格契約**は$d=1,q=1$にあらかじめ制限する。その場合は$G_B(1,1;b)\ge0,G_S(1,1;s)\ge0$のときだけ取引する。**内生的Nash Bargaining**は、交渉力$\eta\in(0,1)$に対して
 $
-\mathcal F_{b,s}(V)=\{(q,d):q\ge0,\ d\in\mathcal D_{b,s},\
+\mathcal F_{b,s}(V)=\{(q,d):q\ge0,\ d\in\mathcal D_{b,s},
 G_B(q,d;b)\ge0,\ G_S(q,d;s)\ge0\}.
 $
 
