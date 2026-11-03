@@ -136,6 +136,11 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
         except cp.SolverError:
             failed_branches+=1
             continue
+        # An economically infeasible triangle pair is not a numerical
+        # solver failure. Such cells are allowed by coarse surplus upper
+        # bounds but ruled out by joint participation/budget constraints.
+        if problem.status in ("infeasible","infeasible_inaccurate"):
+            continue
         if problem.status not in ("optimal","optimal_inaccurate"):
             failed_branches+=1
             continue
