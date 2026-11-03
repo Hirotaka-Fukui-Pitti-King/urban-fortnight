@@ -203,3 +203,6 @@ $E[s_i\mid X_i,\bar s_{-i}]$が$\bar s_{-i}$と相関しても、模倣の因果
 [有限人数の定常マクロ分布と相転移](figures/ising-finite-population.svg)は、上の$Z_N$を対数和指数関数で計算する**厳密な有限状態の理論分布**の可視化である。[再現Python](scripts/generate_figures.py)。有限人数の確率的更新のモンテカルロでは、観測時間の長さにより二峰性間の移動頻度が変わるため「観測されなかった移動」を不可逆な複数均衡と呼ばない。
 
 **既存の結果：** Logit社会選択と複数自己整合解は[Brock and Durlauf (2001)](https://doi.org/10.1111/1467-937X.00168)、確率的戦略更新は[Blume (1993)](https://doi.org/10.1006/game.1993.1023)の研究系列。有限人数の同調移動は[Kirman (1993)](https://doi.org/10.2307/2118498)。**追加的な研究の可能性：** 資産制約と同調便益を同時に持つ家計が、政策ショックにどのような非線形な消費反応を示すか。ただしBrock–DurlaufとHANKの単なる組み合わせでは不十分で、相互作用×流動性制約による新しい比較静学と反例が必要である。
+
+
+![Blume–Brock–Durlauf型の有限人数Gibbs定常分布](figures/ising-finite-population.svg)
