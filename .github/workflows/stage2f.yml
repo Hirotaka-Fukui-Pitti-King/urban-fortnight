@@ -50,6 +50,23 @@ jobs:
               assert abs(x['second_CM_budget'])<1e-8
           print('Adaptive-grid CM-to-DM transport verified; no stationary GE claim.')
           PY
+      - name: Execute measure-relevant continuous Nash contracts in Bellman and DM transition
+        run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_continuous_all_pairs.py
+      - name: Check full relevant-pair kernel and money/capital conservation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2f/results/continuous_all_pair_pilot.json').read_text())
+          assert x['stationary_GE'] is False
+          assert x['continuous_contracts_applied_to_actual_DM_operator']
+          assert x['relevant_pairs']>0
+          assert x['positive_continuous_contract_candidates']>0
+          assert abs(x['money_after']-x['money_before'])<1e-9
+          assert abs(x['money_after']-1)<1e-8
+          assert abs(x['capital_after']-(1-.07)*x['capital_before']-x['DM_production'])<1e-9
+          print('All measure-relevant matched states use continuous Nash candidates; GE unverified.')
+          PY
       - name: Audit numerical claims against generated data
         run: |
           python - <<'PY'
