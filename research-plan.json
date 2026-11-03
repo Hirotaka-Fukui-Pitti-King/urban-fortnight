@@ -165,5 +165,14 @@
     "main_literature_sources": "lectures/literature/",
     "feedback": "research/02-kinetic-exchange-yakovenko/stage2b/results/reference_conditional_feedback.json",
     "claimed_new_GE_mechanism": false
+  },
+  "stage2c": {
+    "branch": "research/stage2c-canonical-monetary-ge",
+    "status": "source_aligned_equations_executed_money_market_uncleared",
+    "working_dir": "research/02-kinetic-exchange-yakovenko/stage2c",
+    "source": "Molico and Zhang (November 2005), eqs 1-14",
+    "results": "research/02-kinetic-exchange-yakovenko/stage2c/results/reference_pilot.json",
+    "new_ge_claim": false,
+    "novelty_claim": false
   }
 }
