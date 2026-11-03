@@ -1,0 +1,41 @@
+{
+  "stage": "2-G",
+  "source_revision": "18d1c494a3271b41751ded85ad74da5d03b7968b",
+  "status": "CONDITIONAL_PRIVATE_3x3_LOCAL_PROTOTYPE_SOLVED_NOT_GE",
+  "calibration": {
+    "beta": 0.96,
+    "alpha": 0.36,
+    "delta": 0.07,
+    "eta": 5,
+    "b": 0.2,
+    "theta": 0.5,
+    "A": 1,
+    "Ntypes": 3,
+    "nk": 3,
+    "nm": 3,
+    "kmax": 3,
+    "mmax": 2
+  },
+  "price": 2.5,
+  "partner_state": {
+    "capital": 1.5,
+    "money": 1
+  },
+  "local_prototype": {
+    "bellman_residual": 9.094947017729282e-13,
+    "max_smooth_branch_KKT": 8.881784197001252e-16,
+    "relevant_pairs": 17,
+    "positive_contracts": 11,
+    "dense_search_nq": 201,
+    "dense_search_nx": 201,
+    "dense_search_improvement": 0,
+    "certified_continuous_global_optimality": false
+  },
+  "grid_5x5": {
+    "converged": false
+  },
+  "stationary_distribution": false,
+  "endogenous_money_price": false,
+  "stationary_GE": false,
+  "github_ci": "pending_independent_run"
+}
