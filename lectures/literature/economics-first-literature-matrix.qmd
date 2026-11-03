@@ -1,0 +1,71 @@
+---
+title: "Economics-First Literature Matrix"
+lang: ja
+date: 2026-11-03
+format:
+  html:
+    toc: true
+    number-sections: true
+    math: mathjax
+  typst:
+    toc: true
+    number-sections: true
+---
+
+*2026年11月3日。原著の公開本文、学術誌・出版社ページ、著者公開版を優先。要約・本文で確認できる結果と講義用の特定モデルの導出を分ける。*
+
+**比較の中心的な問い：** 統計力学的な表記が経済学に既存の最適化・分布動学を別の言語で書いているだけなのか、標準的な均衡では含まれない相互作用から独自の検証可能予測を生むのか。
+
+## 1. 最重要の原著：9次元の比較
+
+| 原著 | Economic primitives / Economic question | Individual optimization | Stochastic dynamics / Distribution equation | Equilibrium concept | Main result / Statistical mechanics | Limitation / Novelty implication |
+|---|---|---|---|---|---|---|
+| [Huggett (1993)](https://doi.org/10.1016/0165-1889(93)90024-M) | 不完備保険、個別所得、無リスク債券の純供給 | 最適な消費・貯蓄 | Markov所得・資産遷移の不変分布 | 家計のBellman＋債券市場清算 | 予備的貯蓄と低い均衡無リスク利子率 | 生産資本はなく、Gibbsは原著の基本結果でない |
+| [Aiyagari (1994)](https://doi.org/10.2307/2118417) | 借入制約、個別所得ショック、Cobb–Douglas生産 | Bellman・Euler/KKT | 最適貯蓄政策のPushforward | 企業価格＋資本市場・財市場清算 | 集計予備的貯蓄・所得/富分布 | HJB/Forward表示は別途の連続時間再定式化 |
+| [Krusell and Smith (1998)](https://doi.org/10.1086/250034) | 集計・個別生産性ショック、異質的家計 | 最適貯蓄と集計法則の予想 | 所得・富分布の条件付き動学 | 近似的な合理的集計期待の均衡 | 特定の較正で平均富が集計法則の良好な近似 | 分布を一般に平均へ厳密縮約できるという定理ではない |
+| [Achdou et al. (2022)](https://doi.org/10.1093/restud/rdab002) | Huggett/Aiyagariの連続時間版 | HJB、借入制約の状態制約 | Kolmogorov Forward | HJB＋定常分布＋価格清算 | 特定条件下の定常均衡一意性・特別ケースの富分布解析 | **Forward Equationの採用自体は新規でない** |
+| [Blume (1993)](https://doi.org/10.1006/game.1993.1023) | 近隣の戦略相互作用 | 確率的戦略改定、Myopic Best Response | 有限Markov Chain | 確率的更新の定常分布、均衡選択 | 統計力学と戦略的相互作用の直接接続 | 全ての非対称ゲームにGibbs詳細釣合いはない |
+| [Brock and Durlauf (2001)](https://doi.org/10.1111/1467-937X.00168) | Social Complementarity、離散選択 | ランダム効用のLogit Best Response | 社会平均の大人数の自己整合性 | 非協力均衡・自己整合平均 | 多重均衡と社会的乗数 | 社会的選択の相転移だけでは市場清算を含むGEを示さない |
+| [Kirman (1993)](https://doi.org/10.2307/2118498) | AntsのRecruitmentに似た個人模倣 | 意思決定のミクロ的相互作用 | 有限人数の模倣Markov過程 | 不変分布と状態間移動 | 群集・準安定性の典型 | 長期の二峰性を複数の競争均衡と同義にできない |
+| [Manski (1993)](https://doi.org/10.2307/2298123) | 社会的な参照集団と行動 | 個人の社会的反応を統計的にモデル化 | 観測された集団内行動の相関 | 構造的社会効果の識別 | Reflection Problem | 集団平均と個人行動の相関は$J$の因果識別にならない |
+| [Kiyotaki and Wright (1989)](https://doi.org/10.1086/261634) | 専門化、二重の欲求の不一致、貨幣受容 | 取引受容・貨幣の戦略的選択 | ランダムマッチング | 貨幣探索の戦略的均衡 | 交換手段としての貨幣 | Boltzmann表示は独自の貨幣価値の証明にならない |
+| [Green and Zhou (1998)](https://doi.org/10.1006/jeth.1997.2356) | 分割可能貨幣と価格 | 取引戦略 | ランダム遭遇と定常貨幣分布 | 貨幣探索の単一価格均衡 | 価格・貨幣分布の内生性と均衡の連続体 | 固定1トークン価格の模型より一般的 |
+| [Green and Zhou (2002)](https://doi.org/10.1111/1468-0262.00315) | 無限期間、双方向ダブルオークション、匿名貨幣取引 | 戦略的な取引と受容 | 個人・集計貨幣分布の動学 | 定常的な単一価格均衡 | 貨幣保有分布と価格決定 | **Stage 2-Bと貨幣分布で最も近い競合の一つ** |
+| [Lagos and Wright (2005)](https://doi.org/10.1086/429804) | 分散的取引と集中市場・貨幣摩擦 | 取引・資産・消費の選択 | マッチング、制度による分布の縮約 | Money Searchの貨幣政策GE | インフレ厚生効果をミクロ的取引から計算 | 経済的最適交換ができるだけでは新規でない |
+| [Rocheteau and Wright (2005)](https://doi.org/10.1111/j.1468-0262.2005.00568.x) | Bargaining、Price Posting、Competitive Search | 契約・参入の最適化 | Matching/Entry | 市場制度ごとの貨幣均衡 | 交渉方式とインフレ・厚生の差 | Nash bargainingの追加自体に独創性はない |
+| [Chakrabarti and Chakrabarti (2009)](https://doi.org/10.1016/j.physa.2009.06.038) | 経済的効用・貨幣交換 | ミクロ的最適化 | Kinetic Exchangeとモーメント | 消費者取引・財市場の一部 | 最適化から取引モデルの一部を説明 | 最適化付きKinetic Exchangeの直接的な先例 |
+| [Toscani, Brugna and Demichelis (2013)](https://doi.org/10.1007/s10955-012-0653-0) | 二財・Cobb–Douglas効用・Edgeworth Box | 双方改善を伴う交換領域 | 非線形Boltzmann、線形化と準不変取引 | ミクロ的な財交換過程 | Pareto型の裾を生む特定の極限近似 | 「自発的交換からBoltzmann」は**既知** |
+| [Aruoba, Waller and Wright (2011)](https://doi.org/10.1016/j.jmoneco.2011.03.003) | 貨幣、資本、企業、集中・分散市場 | 資本と貨幣、交渉 | 確率的交易機会 | 生産と貨幣の一般均衡 | 貨幣摩擦・交渉と資本形成の相互作用 | **Stage 2-Bの最も危険な資本・貨幣GE競合** |
+| [Foley (1994)](https://doi.org/10.1006/jeth.1994.1018) | タイプ別の許容取引集合 | Bellmanでなく取引集合の実行可能性 | 取引の組合せ的分布 | Statistical Equilibrium | Gibbs型の取引分布、Entropy prices | 貨幣保有分布と取引分布を混同しない |
+| [Challet and Marsili (1999)](https://doi.org/10.1103/PhysRevE.60.R6271) | Minority Game・予測ルール | 適応的戦略学習 | 情報パターンとスピン動学 | 学習の定常状態 | 情報予測可能性の相転移 | Rational Expectations・裁定なしと同一でない |
+| [Heimel and Coolen (2001)](https://doi.org/10.1103/PhysRevE.63.056121) | 情報を持つBatch Minority Game | スコア学習 | Generating Functional・時間相関 | エルゴード／非エルゴードな学習状態 | 初期条件依存・異常応答 | 結論は特定の学習制度に依存 |
+| [Brock and Hommes (1998)](https://doi.org/10.1016/S0165-1889(98)00011-6) | 異質な価格予想と資産需要 | Mean–Variance需要・予測ルールの切替 | 非線形価格・人口比の動学 | 適応的なHeterogeneous-Belief Asset Pricing | 複雑な価格・カオス | 多くの予測ルールは完全REではない |
+| [Acemoglu et al. (2012)](https://doi.org/10.3982/ECTA9623) | 中間投入の生産ネットワーク | 企業の投入・生産・価格 | 入力連関行列 | 多部門生産GE | ネットワークの集計ショック増幅 | 均一な分散とネットワーク構造の違いを識別 |
+| [Acemoglu et al. (2015)](https://doi.org/10.1257/aer.20130456) | 金融機関の債権・負債ネットワーク | 金融契約とリスクの制約 | 清算・デフォルトの伝播 | 金融ネットワーク均衡 | ショックによりネットワークの安定化が増幅へ反転 | 非線形な脆弱性はIsingだけの特徴でない |
+| [Laloux et al. (1999)](https://doi.org/10.1103/PhysRevLett.83.1467) | 金融収益率の相関行列 | 個人の最適化は**扱わない** | 標本共分散・Wishart行列 | 推定問題（市場均衡ではない） | RMTによるノイズ固有値診断 | 因果的感染・価格均衡は識別できない |
+| [Auclert et al. (2021)](https://doi.org/10.3982/ECTA17434) | 異質的主体GE・集計ショック | Bellman・企業・政府 | Sequence-Space Jacobianと分布の推移 | 集計市場清算とRE | 分布型GEの数値解法 | Forward Equationを使うだけの新規性はない |
+| [Kaplan, Moll and Violante (2018)](https://doi.org/10.1257/aer.20160042) | 借入制約と金融政策 | 最適消費・貯蓄 | 家計の富分布の動学 | HANKの金融政策GE | 間接的な所得・一般均衡経路 | 統計力学的相互作用の追加効果を別途示す必要 |
+
+## 2. 何が厳密で、何が近似か
+
+- **厳密な数学的同値性（条件付き）**：固定された家計Markov核とKolmogorov Forwardの対応。非同期Logit Best Responseが対称Potential Gameを持つ場合の有限人数Gibbs不変測度。Market Matchingの各成立取引を弱いGain–Loss方程式で数えること。
+- **数理極限・近似**：有限人数の経験測度がMean-Field極限に収束することには独立性・正則性等が必要。Quasi-Invariant TradeからFokker–Planckには頻度・小移転ショックのスケーリングが必要。Krusell–Smithの平均資産による集計法則は較正依存の近似。RMTのMP則は高次元極限の結果。
+- **経済学的に別の対象**：Foleyの取引Entropyと、家計の貨幣保有Entropy。Detailed Balanceと競争均衡。相転移と有限人数の準安定性。市場のVolatilityと情報予測可能性。金融相関と金融感染の因果効果。
+
+## 3. 研究実装との比較：Contributionの成立条件
+
+研究ブランチのStage 2は、固定1トークン価格のサービス交換、最適な双方の受容、Bellman不変分布、Boltzmann作用素、分離したAiyagariとの直積を数値検証した。これらは**正しい基準模型**であって、完全に非分離な貨幣・資本一般均衡を示す結果ではない。
+
+特に[Green and Zhou (2002)](https://doi.org/10.1111/1468-0262.00315)、[Aruoba, Waller and Wright (2011)](https://doi.org/10.1016/j.jmoneco.2011.03.003)、[Toscani et al. (2013)](https://doi.org/10.1007/s10955-012-0653-0)は最も危険な直接競合。原著の対象を比較すると、以下の「新規性」候補はいずれも弱い。
+
+1. 自発的交換からBoltzmann方程式を書いた。
+2. 交易者が異質的で、価格がある。
+3. 資本と貨幣を同じ経済に入れた。
+4. 取引価格をNash Bargainingで決めた。
+5. 定常分布・エントロピー・複数均衡を数値観測した。
+
+代わりに検証するのは、家計の状態$x=(a,m,z)$と最適取引核$K^*$を共同で内生化したとき、**流動性分布の内生的フィードバックが、資本蓄積・価格・厚生に既存モデルと区別できる影響を与えるか**である。制度・較正・資源制約を同じにした反実仮想で、分布を固定した応答と分布を再均衡した応答を比較する。符号と存在は未証明であり、新規性の認定は将来の結果に条件づけられる。
+
+## 4. 文献ソースの検証範囲
+
+出版社の本文・公開要約を確認した一次資料はAiyagari (1994)、Achdou et al. (2022)、Blume (1993)、Brock–Durlauf (2001)、Green–Zhou (1998, 2002)、Lagos–Wright (2005)、Rocheteau–Wright (2005)、Aruoba–Waller–Wright (2011)、Toscani et al. (2013)、Foley (1994)、Manski (1993)、Acemoglu et al. (2012, 2015)、Auclert et al. (2021)、Heimel–Coolen (2001)、Laloux et al. (1999) 等。公開本文まで読めたものとAbstract・書誌で研究対象を確認したものが混在しており、すべての有料論文の定理・仮定を逐一全文検証したとの主張はしない。個々の数学的導出は講義の明示されたモデル仕様に対して行ったもので、原著にない定理を原著著者の成果として帰属させない。
