@@ -40,6 +40,9 @@ class Equations(unittest.TestCase):
         mu,lottery=mod.stationary(ap,a,P)
         self.assertTrue(np.all(c>0))
         self.assertTrue(np.all(ap>=0))
+        diag=mod.aiyagari_policy_diagnostics(.03409789470820705,a,z,P,c,ap)
+        self.assertLess(diag["budget_sup"],1e-9)
+        self.assertLess(diag["euler_kkt_sup"],.05)
         self.assertAlmostEqual(float(mu.sum()),1.,places=9)
         self.assertLess(float(np.max(abs(mod.forward(mu,*lottery,P)-mu))),1e-8)
 
@@ -51,6 +54,10 @@ class Equations(unittest.TestCase):
             self.assertLess(d["stationarity_sup"],1e-10)
             self.assertGreaterEqual(d["buyer_min_gain"],-1e-9)
             self.assertGreaterEqual(d["seller_min_gain"],-1e-9)
+            self.assertLess(d["bellman_sup"],1e-10)
+            self.assertLess(d["conservation_money"],1e-10)
+            self.assertLess(d["transition_row_sum_sup"],1e-10)
+            self.assertEqual(d["transition_negative_part"],0.)
 
 
 class Artifacts(unittest.TestCase):
