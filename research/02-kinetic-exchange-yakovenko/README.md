@@ -32,3 +32,8 @@ See notes/source_audit_and_propositions.md and results/reference_stage2_summary.
 ## Executed segmented product-equilibrium check
 
 A further Python experiment now combines the Aiyagari capital-income stationary measure and optimal-policy value evaluation with the monetary service-search measure under strong separability and nonconvertibility. Stationary joint-distribution sup residual: 2.45e-13. Joint additive Bellman policy-evaluation sup residual: 9.22e-12. Capital-market relative residual: 1.79e-9. Goods-resource residual: 7.11e-10. Token, service and labor resources are accounted separately. Run the additional product_embedding.py tests or scripts/run_product_embedding.py. **Do not interpret this construction as fully integrated capital-money portfolio choice or endogenous service-price bargaining.**
+
+
+## Stage 2-B: Current research attempt
+
+[Stage 2-B](stage2b/README.md) documents a Python joint capital--money Bellman/bargaining prototype and its **failure to clear all markets**. It does not change this earlier restricted Stage 2 benchmark and should not be cited as a completed general equilibrium. Molico and Zhang (2006) is now treated as the closest prior work.

@@ -154,5 +154,12 @@
     "full_nonseparable_general_equilibrium": "not yet constructed",
     "paper": "paper/article.qmd",
     "numerical_results": "research/02-kinetic-exchange-yakovenko/results/reference_stage2_summary.json"
+  },
+  "stage2b": {
+    "status": "joint_bellman_and_discrete_bargaining_verified_prices_not_cleared",
+    "branch": "research/stage2b-integrated-monetary-ge",
+    "critical_competitor": "Molico and Zhang (2006), Monetary Policy and the Distribution of Money and Capital",
+    "code": "research/02-kinetic-exchange-yakovenko/stage2b/src/joint_model.py",
+    "full_GE": "FAILED_NUMERICALLY_NOT_NONEXISTENCE_THEOREM"
   }
 }

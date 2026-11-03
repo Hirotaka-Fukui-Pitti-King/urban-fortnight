@@ -67,5 +67,12 @@
       "goods_error": 7.111644606538903e-10,
       "caveat": "No capital-money convertibility, shared service labor, bargaining or nonseparable portfolio problem"
     }
+  },
+  "stage2b": {
+    "status": "non_equilibrium_fixed_price_diagnostics",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2b",
+    "result": "stage2b/results/reference_failed_ge.json",
+    "critical_competitor": "Molico and Zhang 2006; Aruoba Waller Wright 2011",
+    "no_full_equilibrium": true
   }
 }
