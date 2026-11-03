@@ -96,7 +96,7 @@ def run(folder=ROOT/"results", max_nfev=140):
           least_squares_cost=float(ans.cost),objective_evaluations=evaluations,
           seed_path=path,full_reoptimization=fine,wall_seconds=time.monotonic()-start,
           Nash_global_optimality_verified=False,
-          5x5_private_root_certified=False,stationary_GE=False)
+          private_5x5_root_certified=False,stationary_GE=False)
     (folder/"5x5_trust_region.json").write_text(json.dumps(report,indent=2)+"\n")
     print("TRUST_FINAL",json.dumps(report),flush=True)
     return report
