@@ -67,6 +67,9 @@ def check_pdf(pdf: Path, destination: Path) -> dict:
         })
     if sum(map(len,texts)) < 2000:
         raise AssertionError(f"Insufficient extractable text in {pdf}")
+    if len(texts[-1].strip()) < 140:
+        raise AssertionError(f"Orphaned near-empty final page: {pdf}; "
+                             f"final page characters={len(texts[-1].strip())}")
     return {
         "pdf":pdf.name,"bytes":pdf.stat().st_size,"pages":len(document),
         "extractable_text_characters":sum(map(len,texts)),
