@@ -107,7 +107,7 @@ def audit(maxit=4,alpha_v=.035,alpha_distribution=.035):
     print(json.dumps(dict(status=status,rows=len(hist),failure=failure,
         history_summary=[{k:v for k,v in x.items() if k in
             ("iteration","price","bellman_sup","entrant_distribution_sup",
-             "money_grid_top_mass","capital_grid_top_mass")} for x in hist]),indent=2))
+             "money_grid_top_mass","capital_grid_top_mass")} for x in (hist[:5]+hist[-5:] if len(hist)>10 else hist)]),indent=2))
     assert all(abs(x["fiat_post_DM"]-1)<1e-8 and abs(x["mass_error"])<1e-8 for x in hist)
     assert all(abs(x["CM_budget_gap"])<1e-8 for x in hist)
     assert status!="CANDIDATE_NOT_CERTIFIED", "Candidate needs separate independent certification"
