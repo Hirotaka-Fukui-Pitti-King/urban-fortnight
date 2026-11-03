@@ -1,0 +1,57 @@
+name: Stage 2 optimal kinetic exchange checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "research/02-kinetic-exchange-yakovenko/**"
+      - ".github/workflows/stage2.yml"
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      precision:
+        type: choice
+        default: quick
+        options: [quick, full]
+
+permissions:
+  contents: read
+
+jobs:
+  kinetic-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install scientific packages
+        run: python -m pip install -r requirements.txt
+      - name: Compile Python
+        run: python -m compileall -q research/02-kinetic-exchange-yakovenko
+      - name: Revalidate Aiyagari benchmark
+        run: python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v
+      - name: Test voluntary trading, Boltzmann and entropy claims
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/tests -v
+      - name: Run stationary equilibrium and finite-agent tests
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]] && [[ "$(jq -r '.inputs.precision // "quick"' "$GITHUB_EVENT_PATH")" == "full" ]]; then
+            python research/02-kinetic-exchange-yakovenko/scripts/run_stage2.py
+          else
+            python research/02-kinetic-exchange-yakovenko/scripts/run_stage2.py --quick
+          fi
+      - name: Save distinct SVG exhibits
+        run: python research/02-kinetic-exchange-yakovenko/scripts/make_figures.py
+      - name: Upload data and figures
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-optimal-kinetic-results
+          path: |
+            research/02-kinetic-exchange-yakovenko/results/*.csv
+            research/02-kinetic-exchange-yakovenko/results/*.json
+            research/02-kinetic-exchange-yakovenko/results/figures/*.svg
+          if-no-files-found: error
+          retention-days: 30
