@@ -1,0 +1,50 @@
+name: Build paper and Typst presentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Verify Quarto
+        run: quarto --version
+      - name: Validate research plans
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          root = json.loads(Path("research-plan.json").read_text())
+          assert len(root["stages"]) == 7
+          for i, s in enumerate(root["stages"]):
+              assert s["stage"] == i
+              d = Path(s["path"])
+              p = json.loads((d / "plan.json").read_text())
+              assert p["stage"] == i and p["status"] == "planned"
+              for f in ("README.md", "RESEARCH.me", "results/.gitkeep"):
+                  assert (d / f).is_file(), d / f
+          print("All seven stages verified.")
+          PY
+      - name: Render English paper
+        run: quarto render paper/article.qmd --to typst
+      - name: Render Clean Typst slides
+        run: quarto render slides/research-agenda.qmd --to clean-typst
+      - name: Save PDFs as workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-and-slides
+          path: |
+            paper/article.pdf
+            slides/research-agenda.pdf
+          if-no-files-found: error
+          retention-days: 30

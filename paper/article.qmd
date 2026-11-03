@@ -1,0 +1,65 @@
+---
+title: "Social Interactions, Wealth Distributions, and Monetary Policy in a Statistical-Mechanical New Keynesian Economy"
+subtitle: "Research Design and Model Architecture"
+date: "2026-11-03"
+lang: en
+format:
+  typst:
+    toc: true
+    number-sections: true
+    keep-typ: true
+---
+
+# The economic question
+
+How do social interactions in expectation formation and endogenous wealth distributions jointly affect monetary transmission, aggregate fluctuations, and macroeconomic tipping points? The project develops nested equilibrium models and compares each added mechanism with the same model in which that mechanism is disabled.
+
+**Status:** This is an initial research design, not a completed theoretical or quantitative paper. No empirical or simulation findings are claimed.
+
+# New Keynesian benchmark
+
+The first economy combines household optimization, firm price setting, nominal rigidity, a monetary policy rule, and complete goods, labor and asset-market clearing. A representative-agent New Keynesian system is followed by a heterogeneous-agent incomplete-market benchmark. For orientation, the representative-agent log-linear expressions are
+
+$$
+x_t = \mathbb{E}_t x_{t+1} -
+\frac{1}{\sigma} (i_t - \mathbb{E}_t\pi_{t+1} - r_t^n),
+$$
+
+$$
+\pi_t = \beta\mathbb{E}_t\pi_{t+1} + \kappa\widehat{mc}_t.
+$$
+
+These aggregate expressions are not imposed unchanged on the HANK economy: they must be reconciled with its actual distributional household and firm problems.
+
+# Social expectations
+
+An illustrative Ising-type binary belief is $s_{i,t}\in\{-1,+1\}$, with average belief $m_t$. A possible behavioral rule is
+
+$$
+\Pr(s_{i,t}=+1\mid m_{t-1},h_{i,t})
+=\frac{1}{1+\exp[-2(Jm_{t-1}+h_{i,t})/T]}.
+$$
+
+The stationary homogeneous mean-field condition is $m=\tanh((Jm+h)/T)$. When $h=0$ and $J/T>1$, multiple nonzero fixed points may arise. A social-belief fixed point is not in itself a general equilibrium. We will specify what is forecast, how beliefs enter household choices, and which market-clearing restrictions hold.
+
+# Kinetic exchange and distributions
+
+Pairwise transfers of financial assets obey
+
+$$
+a^{\mathrm{post}}_i=a^{\mathrm{pre}}_i+\Delta_{ij},
+\qquad
+a^{\mathrm{post}}_j=a^{\mathrm{pre}}_j-\Delta_{ij}.
+$$
+
+Thus the pair's combined financial asset holdings are conserved. Labor income, production, fiscal transfers and net asset issuance enter separately. The target object is the joint distribution of assets, individual income states, and beliefs. We compare its dynamics with conventional HANK savings dynamics.
+
+# Statistical equilibrium and later financial mechanisms
+
+Stationary measures and maximum-entropy characterizations will be used only where the transition kernel and constraints warrant them. Later stages add firm financial fragility and default in the spirit of Bouchaud's agent-based macroeconomics, adaptive trading and asset-price impact in the spirit of the Minority Game, and random-matrix analysis of cross-asset correlations. Financial securities prices and Calvo-set goods prices are different economic objects.
+
+# Research design and acceptance criteria
+
+Every extension must recover a well-defined nested benchmark when disabled. Research claims require explicit balance-sheet, budget and market-clearing checks; numerical convergence with respect to tolerances, grids and agent count; simulation-seed robustness; and comparative statics whose direction differs from the matched reference model.
+
+The seven independent stage contracts are stored in the repository. None of the planned results is presented here as established.

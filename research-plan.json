@@ -1,0 +1,90 @@
+{
+  "project": "Statistical-Mechanical New Keynesian Economics",
+  "created": "2026-11-03",
+  "version": "0.1.0",
+  "status": "scaffold",
+  "central_research_question": "How do socially interacting expectations and endogenous wealth distributions change monetary transmission, fluctuations, and macroeconomic tipping points?",
+  "agent_based_method": "cross-cutting",
+  "stages": [
+    {
+      "stage": 0,
+      "title": "New Keynesian and HANK Baseline",
+      "path": "stage-0-nk-hank-baseline",
+      "dependencies": [],
+      "status": "planned"
+    },
+    {
+      "stage": 1,
+      "title": "Ising Expectations and Social Interactions",
+      "path": "stage-1-ising-social-expectations",
+      "dependencies": [
+        0
+      ],
+      "status": "planned"
+    },
+    {
+      "stage": 2,
+      "title": "Kinetic Exchange and Wealth Distribution",
+      "path": "stage-2-kinetic-exchange-wealth",
+      "dependencies": [
+        0,
+        1
+      ],
+      "status": "planned"
+    },
+    {
+      "stage": 3,
+      "title": "Statistical Equilibrium and Entropy",
+      "path": "stage-3-statistical-equilibrium",
+      "dependencies": [
+        0,
+        1,
+        2
+      ],
+      "status": "planned"
+    },
+    {
+      "stage": 4,
+      "title": "Bouchaud-Inspired Firm Fragility",
+      "path": "stage-4-bouchaud-firm-fragility",
+      "dependencies": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "status": "planned"
+    },
+    {
+      "stage": 5,
+      "title": "Minority Game and Financial Markets",
+      "path": "stage-5-minority-game-financial-markets",
+      "dependencies": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "status": "planned"
+    },
+    {
+      "stage": 6,
+      "title": "Random Matrix Methods and Systemic Risk",
+      "path": "stage-6-random-matrix-systemic-risk",
+      "dependencies": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "planned"
+    }
+  ],
+  "paper_source": "paper/article.qmd",
+  "slides_source": "slides/research-agenda.qmd",
+  "slides_theme": "kazuyanagimoto/quarto-clean-typst",
+  "paper_format": "quarto built-in typst"
+}

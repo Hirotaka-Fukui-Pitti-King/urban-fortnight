@@ -1,0 +1,48 @@
+---
+title: "Statistical-Mechanical New Keynesian Economics"
+subtitle: "Research Architecture"
+date: "2026-11-03"
+lang: en
+format: clean-typst
+---
+
+# Central question
+
+## Interactions, distributions, and monetary policy
+
+How do socially interacting expectations and endogenous wealth distributions change policy transmission and macroeconomic tipping points?
+
+## Economic constraints
+
+- Households and firms satisfy budget identities
+- Goods, labor, credit, and financial assets clear
+- Calvo nominal rigidity remains explicit
+- Every mechanism has a matched switch-off benchmark
+
+# Research sequence
+
+## Stage 0--2: Core economy
+
+- **0:** New Keynesian / HANK benchmark
+- **1:** Ising-type social expectations
+- **2:** Boltzmann-type kinetic wealth exchange
+
+## Stage 3--4: Distribution and production
+
+- **3:** Statistical equilibrium and conditional entropy characterization
+- **4:** Bouchaud-inspired firm fragility, default and employment
+
+## Stage 5--6: Finance and risk
+
+- **5:** Minority Game and endogenous asset-price impact
+- **6:** Random matrix diagnostics and systemic risk
+
+# Validation
+
+## What counts as a contribution?
+
+A new economic prediction must persist after imposing feasibility and market clearing, recovering the nested benchmark, and checking numerical convergence.
+
+## Status
+
+This is a research plan. Simulations and empirical results have not yet been completed.

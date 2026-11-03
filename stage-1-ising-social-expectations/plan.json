@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "stage": 1,
+  "folder": "stage-1-ising-social-expectations",
+  "title": "Ising Expectations and Social Interactions",
+  "status": "planned",
+  "research_question": "Do peer interactions produce belief coordination and new nonlinear policy responses beyond ordinary heterogeneous expectations?",
+  "dependencies": [
+    0
+  ],
+  "mechanisms": [
+    "Economically defined binary expectation states",
+    "Network or mean-field interaction term",
+    "Probabilistic belief transitions and macro feedback",
+    "Household decisions conditional on beliefs"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Specify precisely what is forecast and how information and beliefs enter choices.",
+    "An Ising fixed point is not automatically a rational-expectations general equilibrium.",
+    "Restore the Stage 0 rational-expectations rule in a matched no-social-interaction benchmark."
+  ],
+  "comparators": [
+    "rational-expectations baseline",
+    "heterogeneous independent beliefs",
+    "interacting beliefs"
+  ],
+  "acceptance_tests": [
+    "Finite-agent versus mean-field belief moments",
+    "Fixed-point stability and multiplicity under stated parameter normalization",
+    "Household feasibility and general equilibrium residuals",
+    "Nested benchmark recovery"
+  ],
+  "deliverables": [
+    "Belief dynamics with economic interpretation",
+    "Phase diagrams and policy responses"
+  ],
+  "literature_leads_to_verify": [
+    "Brock and Durlauf (2001)",
+    "Branch and McGough (2009)"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-1-ising-social-expectations/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}
