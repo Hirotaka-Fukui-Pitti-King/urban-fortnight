@@ -140,3 +140,6 @@ $$
 新しい研究の中心的な問いは、**最適な二者間取引が生む内生的な流動性分布の変化によって、既存のMonetary Search経済にない資本蓄積・厚生の比較静学が発生するか**である。マッチング強度$\lambda$に対する$K^*$の反応のうち、貨幣分布を固定した場合には現れないフィードバックを識別する。非ゼロの資本反応やNash bargainingの導入だけでは新規性の根拠にならない。
 
 [最適受容を伴う貨幣分布の数値図](figures/monetary-matching.svg)と[再現用Python](scripts/generate_figures.py)は限定された固定価格取引の教育用例であり、Nash bargainingや完全統合一般均衡の計算結果とは区別する。
+
+
+![双方の最適受容の下での定常貨幣保有分布](figures/monetary-matching.svg)
