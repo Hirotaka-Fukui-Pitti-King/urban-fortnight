@@ -17,10 +17,10 @@ STEMS={
     "IV":"04-other-economic-models",
 }
 EXPECTED={
-    "I":{"I.1","I.2","I.3","I.4","I.5"},
-    "II":{"II.1","II.2","II.3","II.4"},
-    "III":{"III.1","III.2","III.3","III.4"},
-    "IV":{"IV.1","IV.2"},
+    "I":{"I.1","I.2","I.3","I.4","I.5","I.6"},
+    "II":{"II.1","II.2","II.3","II.4","II.5","II.6","II.7"},
+    "III":{"III.1","III.2","III.3","III.4","III.5"},
+    "IV":{"IV.1","IV.2","IV.3","IV.4"},
 }
 PROPOSITION=re.compile(r"\*\*命題\s*([IVX]+\.\d+)")
 UNSUPPORTED_TEX=re.compile(r"\\rm(?:\s|(?=[A-Z]))")
