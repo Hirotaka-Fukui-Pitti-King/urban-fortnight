@@ -23,3 +23,16 @@ Accept only if a microfounded, nondegenerate bilateral trading equilibrium exist
 The project reports negative feasibility results when a kinetic, entropy, adaptive-trading, or heuristic-firm mechanism cannot be reconciled with optimization and equilibrium. Do not silently weaken rational expectations or drop clearing equations.
 
 Evidence status: no derived theorems, numerical solutions or validated simulations committed yet.
+
+
+Stage 0–1 computed benchmark, 2026-11-03:
+Stationary Aiyagari equilibrium: capital 5.706221, interest rate 0.038097, Gini 0.493914; market-clearing and Euler residuals checked. Finite agents N=40,000 at fixed GE prices: mean K 5.669039 across three seeds. Agent-level policies are optimal, without random bilateral transfers.
+
+Candidate economic mechanism for Stage 2:
+1. Model idiosyncratic liquidity or preference shocks producing gains from bilateral exchange of economically distinct claims or services.
+2. Specify search/matching meeting rates, partner states, feasible contracts and acceptance inequalities.
+3. Derive optimal joint or Nash bargaining trades from conditional continuation values.
+4. Write wealth and goods ledgers and show the trade operator conserves claims under each bilateral match, with issuer liabilities handled separately.
+5. Derive gain-loss equation for a joint state distribution f(a,z,liquidity), then compare particle simulations and the Boltzmann equation.
+6. Contrast to an exogenous Yakovenko random-wealth-transfer kernel explicitly labeled non-optimal.
+Potential counterexample: when preferences and marginal values are identical and markets frictionless, an arbitrary random zero-sum money transfer need not be mutually beneficial.

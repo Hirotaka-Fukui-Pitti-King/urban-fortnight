@@ -36,6 +36,23 @@ Can we generate econophysics mechanisms with:
 6. Challet-inspired strategic minority-game trading
 7. Random-matrix diagnostics of return correlations
 
+# Stage 0: Verified numerical benchmark
+
+## Stationary Aiyagari economy
+
+- Capital: **5.706221**
+- Net interest rate: **3.8097%**
+- Wage: **1.198024**
+- Wealth Gini: **0.493914**
+- Relative asset-market error: **2.31e-8**
+
+## Stage 1: First particle comparison
+
+- N = 2,500 / 10,000 / 40,000, three seeds each
+- Mean capital at N = 40,000: **5.669039**
+- Infinite-agent reference: **5.706221**
+- Fixed equilibrium prices, **not** a re-cleared finite-N GE
+
 # Only then: Stage 8
 
 ## New Keynesian integration
@@ -50,4 +67,4 @@ A mechanism must survive budget feasibility, deviations from optimality, rationa
 
 ## Status
 
-Research design only. No existence theorem, simulation output, or empirical finding is claimed.
+Stage 0 numerical equilibrium and Stage 1 particle simulations have been executed. No statistical-mechanical mechanism has yet been validated; no existence theorem or empirical calibration is claimed.
