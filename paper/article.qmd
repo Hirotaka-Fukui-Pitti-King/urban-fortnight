@@ -2,6 +2,8 @@
 title: "Can Statistical-Mechanical Models Be Reconciled with Heterogeneous-Agent General Equilibrium?"
 subtitle: "Optimization, Rational Expectations, Market Clearing, and a Research Design"
 date: "2026-11-03"
+author:
+  - name: "Author to be confirmed"
 lang: en
 abstract: |
   We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. This manuscript is a preregistered research design; it reports no numerical or empirical results.
