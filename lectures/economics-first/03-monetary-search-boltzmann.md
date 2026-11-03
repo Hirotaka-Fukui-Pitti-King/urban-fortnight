@@ -28,18 +28,19 @@ $$
 **固定価格契約**は$d=1,q=1$にあらかじめ制限する。その場合は$G_B(1,1;b)\ge0,G_S(1,1;s)\ge0$のときだけ取引する。**内生的Nash Bargaining**は、交渉力$\eta\in(0,1)$に対して
 $$
 \boxed{
-(q^*,d^*)\in\arg\max_{\substack{q,d\text{ feasible}\\G_B\ge0,\ G_S\ge0}}
-G_B(q,d;b)^\eta G_S(q,d;s)^{1-\eta}.
+\mathcal F_{b,s}(V)=\{(q,d):q\ge0,\ d\in\mathcal D_{b,s},\ G_B\ge0,\ G_S\ge0\},\\
+(q^*,d^*)\in\arg\max_{(q,d)\in\mathcal F_{b,s}(V)}
+G_B(q,d;b)^\eta\cdot G_S(q,d;s)^{1-\eta}.
 }
 $$
 この最大化は連続・非分割貨幣、価格付けのタイミング、交渉失敗時の外部オプション、ゼロ利得の処理を指定して初めて完成する。内生交渉を追加するだけなら[Rocheteau and Wright (2005)](https://doi.org/10.1111/j.1468-0262.2005.00568.x)という先例が存在する。
 
 ## 3. Bellman方程式と合理的な分布期待
 
-固定の最適取引政策$\chi(b,s)\in\{0,1\}$が個人にとって最適かを調べる。分布$f$は相手との遭遇率、したがって各状態での効用と遷移を決める。受容・交渉政策が導く一期間の遷移行列を$P(f,\chi)$、期待効用フローを$u_{\rm flow}(f,\chi)$とすれば
+固定の最適取引政策$\chi(b,s)\in\{0,1\}$が個人にとって最適かを調べる。分布$f$は相手との遭遇率、したがって各状態での効用と遷移を決める。受容・交渉政策が導く一期間の遷移行列を$P(f,\chi)$、期待効用フローを$u_{\mathrm{flow}}(f,\chi)$とすれば
 $$
 \boxed{
-V=u_{\rm flow}(f,\chi)+\beta P(f,\chi)V,
+V=u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V,
 \qquad fP(f,\chi)=f.
 }
 $$
