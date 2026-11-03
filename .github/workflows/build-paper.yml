@@ -56,16 +56,22 @@ jobs:
         run: python research/01-agent-based-equilibrium/scripts/run_particles.py --quick
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-      - name: Validate QMD display math syntax
-        run: python scripts/check_paper_math.py
+      - name: Verify Pandoc and Quarto versions
+        run: |
+          quarto --version
+          pandoc --version | head -n 1
+      - name: Test the math quality gate against intentionally broken equations
+        run: python -m unittest discover -s scripts/tests -p test_math_quality.py -v
+      - name: Validate all QMD math with Pandoc AST and equation inventory
+        run: python scripts/check_paper_math.py --source-check
       - name: Render English academic research paper
         run: quarto render paper/article.qmd --to academic-typst
-      - name: Reject raw math delimiters in generated paper PDF
-        run: |
-          command -v pdftotext >/dev/null || (sudo apt-get update && sudo apt-get install -y poppler-utils)
-          python scripts/check_paper_math.py --pdf paper/article.pdf
       - name: Render research slides
         run: quarto render slides/research-agenda.qmd --to clean-typst
+      - name: Inspect all generated PDFs and render math-heavy previews
+        run: |
+          command -v pdftotext >/dev/null || (sudo apt-get update && sudo apt-get install -y poppler-utils)
+          python scripts/check_paper_math.py --pdf-check --preview-dir math-previews
       - name: Save model data, SVG figures, and PDF papers
         uses: actions/upload-artifact@v4
         with:
@@ -78,5 +84,6 @@ jobs:
             research/01-agent-based-equilibrium/results/*.csv
             paper/article.pdf
             slides/research-agenda.pdf
+            math-previews/*.png
           if-no-files-found: error
           retention-days: 30
