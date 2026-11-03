@@ -1,5 +1,7 @@
 # 経済物理学・統計力学の研究講義
 
+**新しい経済学モデル起点の講義：** [Economics-First（全4講、Markdown・Quarto、Python数値図）](economics-first/README.md)。既存講義は引き続き下に保存しています。
+
 このフォルダには博士課程向け研究講義「統計力学と経済物理学：理論・数理モデル・経済学的基礎」を保存しています。
 
 - [Markdown版](statistical-mechanics-econophysics.md)：GitHub上で閲覧する講義ノート。
