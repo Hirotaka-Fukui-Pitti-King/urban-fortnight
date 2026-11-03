@@ -46,6 +46,31 @@ class Equations(unittest.TestCase):
         self.assertAlmostEqual(float(mu.sum()),1.,places=9)
         self.assertLess(float(np.max(abs(mod.forward(mu,*lottery,P)-mu))),1e-8)
 
+    def test_asset_lottery_mass_and_first_moment(self):
+        a = np.array([0., 1., 2., 3.])
+        ap = np.array([[.2, .5], [1.25, 1.75], [2.25, 2.8], [2.5, 2.95]])
+        mu = np.array([[.1,.1],[.2,.1],[.1,.2],[.1,.1]])
+        mu = mu / mu.sum()
+        P = np.array([[.91,.09],[.12,.88]])
+        moved = mod.forward(mu,*mod.lottery(ap,a),P)
+        self.assertAlmostEqual(float(moved.sum()),float(mu.sum()),places=12)
+        self.assertAlmostEqual(float(np.sum(a[:,None]*moved)),
+                               float(np.sum(ap*mu)),places=12)
+        with self.assertRaises(ValueError):
+            mod.lottery(np.array([[3.05,.2]]),a)
+        with self.assertRaises(ValueError):
+            mod.lottery(np.array([[-.1,1.5]]),a)
+
+    def test_aiyagari_bellman_fixed_policy(self):
+        a = 30 * np.linspace(0,1,240)**1.7
+        z = np.array([.7,1.3])
+        P = np.array([[.94,.06],[.06,.94]])
+        r = .03409789470820705
+        c,ap,_,wage = mod.egm(r,a,z,P)
+        d = mod.evaluate_aiyagari_bellman(a,z,P,r,wage,c,ap)
+        self.assertLess(d["bellman_policy_evaluation_sup"],1e-9)
+        self.assertLess(d["bellman_one_step_deviation_gain_sup"],.02)
+
     def test_voluntary_monetary_exchange(self):
         for meeting,assort in ((.45,0.),(.2,3.)):
             f,d=mod.money_candidate(meeting,assort)
