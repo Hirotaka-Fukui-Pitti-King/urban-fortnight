@@ -1,7 +1,6 @@
 name: Stage 2-H diagnostic trust-region 5x5 private root
 
 on:
-  pull_request:
   workflow_dispatch:
 
 permissions:
