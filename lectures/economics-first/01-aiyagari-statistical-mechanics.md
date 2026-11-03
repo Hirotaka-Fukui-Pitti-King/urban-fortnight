@@ -386,8 +386,8 @@ $$
 
 $$
 \begin{aligned}
-(fP)_j\log\frac{(fP)_j}{(\pi P)_j}
-&\le\sum_if_iP_{ij}\log\frac{f_iP_{ij}}{\pi_iP_{ij}}\\
+\left[(fP)_j\right]\cdot\log\left(\frac{(fP)_j}{(\pi P)_j}\right)
+&\le\sum_i\left[f_iP_{ij}\right]\cdot\log\left(\frac{f_iP_{ij}}{\pi_iP_{ij}}\right)\\
 &=\sum_if_iP_{ij}\log\frac{f_i}{\pi_i}.
 \end{aligned}
 $$
