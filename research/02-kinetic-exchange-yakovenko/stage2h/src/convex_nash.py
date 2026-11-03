@@ -165,6 +165,32 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
                               solved,successes,(ib,is_),True)
     result.triangles_solved=solved
     result.successes=successes
+    # Polish the globally selected convex-branch incumbent in the original
+    # continuous (quantity,payment) contract space. This is a NUMERICAL
+    # accuracy step following (not replacing) the global branch enumeration.
+    # It matters because 1e-7 quantity/payment errors can produce a
+    # Bellman residual over 1e-6 when the continuation value is steep.
+    if result.y>0:
+        from private_nash_bellman import nash_polish,nash_score
+        from continuous_core import cm_opt
+        from molico_grid import g
+        newy,newd,kkt=nash_polish(buyer,seller,result.y,result.d,
+                                  model,V,price)
+        if newy>0 and newd>0:
+            adjusted=nash_score(newy,newd,buyer,seller,model,V,price)
+            if np.isfinite(adjusted) and adjusted>=result.log_nash-1e-10:
+                nb=float(cm_opt(wb+newy-newd/price,price,model.k,
+                      model.m,V,model.edges,p.beta,p.b,p.eta)[0])
+                ns=float(cm_opt(ws+newd/price,price,model.k,model.m,
+                      V,model.edges,p.beta,p.b,p.eta)[0])
+                B=nb-Wb
+                S=ns-Ws-float(g(newy,model.k[seller],p.alpha,p.A))
+                if B>0 and S>0:
+                    result.y=float(newy)
+                    result.d=float(newd)
+                    result.buyer_surplus=float(B)
+                    result.seller_surplus=float(S)
+                    result.log_nash=float(adjusted)
     # Failed convex branches cannot be silently certified.
     if failed_branches:
         result.dcp_pass=False
