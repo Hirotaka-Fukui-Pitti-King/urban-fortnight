@@ -33,7 +33,7 @@ jobs:
       - name: Execute conditional CM and continuous Nash computations
         run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_stage2e.py
       - name: Execute source-ordered CM price and next-DM fixed-point diagnostics
-        run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_source_iteration_audit.py --steps 80
+        run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_source_iteration_audit.py --steps 1200
       - name: Reject false monetary GE on source iteration trace
         run: |
           python - <<'PY'
