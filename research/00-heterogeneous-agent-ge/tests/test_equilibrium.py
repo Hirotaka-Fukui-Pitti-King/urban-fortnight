@@ -37,6 +37,21 @@ class TestAiyagari(unittest.TestCase):
         s=self.eq["summary"]
         self.assertLess(s["weighted_p99_kkt_or_log_euler"],5e-5)
         self.assertLess(s["weighted_mean_kkt_or_log_euler"],5e-5)
+    def test_invariant_distribution_independent_of_initial_wealth(self):
+        e=self.eq
+        for idx in (30,100):
+            mu=np.zeros_like(e["mu"])
+            mu[:,idx]=e["pi"]
+            for _ in range(6000):
+                nxt,flag=histogram_step(mu,e["a"],e["g"],e["P"])
+                self.assertEqual(flag,0)
+                err=float(np.max(abs(nxt-mu)))
+                mu=nxt
+                if err<1e-12:
+                    break
+            else:
+                self.fail("Alternative initial asset distribution did not settle")
+            self.assertLess(float(np.max(abs(mu-e["mu"]))),1e-8)
     def test_firm_prices(self):
         s=self.eq["summary"];K,w=firm_from_r(s["r"],self.c,s["L"])
         self.assertAlmostEqual(K,s["K_demand"],places=11)

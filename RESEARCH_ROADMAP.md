@@ -50,7 +50,7 @@ quarto render slides/research-agenda.qmd --to clean-typst
 
 ## Stage 0–1 computed results (November 3, 2026)
 
-The stationary Aiyagari model has now been implemented and executed in Python. With beta=0.96, alpha=0.36, delta=0.08, 360 asset points and 5 income states, the locally verified solution has capital K=5.706221, net interest rate r=0.038097, wage w=1.198024, asset Gini=0.493914, and relative capital-market residual 2.31e-8. Five Stage 0 tests passed; five numerical-grid and shock-grid specifications were solved.
+The stationary Aiyagari model has now been implemented and executed in Python. With beta=0.96, alpha=0.36, delta=0.08, 360 asset points and 5 income states, the locally verified solution has capital K=5.706221, net interest rate r=0.038097, wage w=1.198024, asset Gini=0.493914, and relative capital-market residual 2.31e-8. Six Stage 0 tests passed; five numerical-grid and shock-grid specifications were solved.
 
 Stage 1 simulates the same optimal policy functions at fixed equilibrium prices. In three Monte Carlo seeds with N=40,000, mean capital was 5.669039 versus deterministic K=5.706221. This is a preliminary finite-agent comparison and not a finite-N re-cleared general equilibrium. The results, CSV reference files, and executable scripts are located in Stage 0–1 folders; GitHub Actions additionally uploads complete generated distributions, policies, SVG figures and PDFs as build artifacts.
 

@@ -53,9 +53,9 @@
       "matched ablation comparisons"
     ],
     "tests": [
-      "5 unittest checks passed",
       "na 200,360,520; nz 5,7; amax 600,900",
-      "EGM Euler/KKT and all accounting conditions"
+      "EGM Euler/KKT and all accounting conditions",
+      "6 unittest checks passed, including alternative initial wealth distributions"
     ]
   }
 }
