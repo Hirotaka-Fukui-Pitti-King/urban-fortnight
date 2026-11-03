@@ -44,6 +44,14 @@ class TestJointPrototype(unittest.TestCase):
         x=self.s['info']
         self.assertGreater(abs(x['capital_price_consistency']),.1)
         self.assertGreater(abs(x['money_supply_excess']),.01)
+    def test_price_root_rejects_unconverged_household_fixed_point(self):
+        from unittest.mock import patch
+        dummy={'info': {'converged':False,'value_residual':.2,
+                        'max_boundary_asset_mass':0.}}
+        with patch.object(self.m,'solve_inner',return_value=dummy):
+            with self.assertRaisesRegex(RuntimeError,'household/distribution'):
+                self.m.solve_prices(start=(4.5,.97,.65))
+
     def test_no_meetings_no_service(self):
         p=Params(lambda_meet=0,max_inner=1000)
         m=Model(p);x=m.solve_inner(4.5,.97,.65)

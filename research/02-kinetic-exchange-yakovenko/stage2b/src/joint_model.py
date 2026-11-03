@@ -199,9 +199,18 @@ class Model:
             key=tuple(np.round(x,9))
             if key not in cache:
                 sol=self.solve_inner(K,L,phi,initial=last)
+                if not sol['info']['converged']:
+                    raise RuntimeError(
+                        "Cannot evaluate GE excess demand: household/distribution "
+                        + "fixed point not converged at K,L,phi="
+                        + str((K,L,phi))
+                        + "; value residual="
+                        + str(sol['info']['value_residual']))
+                if sol['info']['max_boundary_asset_mass'] > .01:
+                    raise RuntimeError(
+                        "More than 1% probability at asset grid maximum; GE price candidate unreliable")
                 cache[key]=sol
-                if sol['info']['converged']:
-                    last=sol
+                last=sol
             else:
                 sol=cache[key]
             d=sol['info']
@@ -213,6 +222,9 @@ class Model:
         fit=least_squares(obj,np.array(start),bounds=([.4,.35,.03],[25.,1.05,5.]),
             max_nfev=80,xtol=1e-9,ftol=1e-9,gtol=1e-9,diff_step=1e-3)
         sol=self.solve_inner(*fit.x,initial=last)
+        if (not sol['info']['converged']
+                or sol['info']['max_boundary_asset_mass'] > .01):
+            raise RuntimeError("Final candidate violates inner convergence/asset grid GE gate")
         sol['info']['prices_solver']={
             'success':bool(fit.success),'message':str(fit.message),
             'iterations':int(fit.nfev),'outer_residuals':obj(fit.x).tolist(),
