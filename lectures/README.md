@@ -4,6 +4,9 @@
 
 - [Markdown版](statistical-mechanics-econophysics.md)：GitHub上で閲覧する講義ノート。
 - [Quarto版](statistical-mechanics-econophysics.qmd)：同じ講義をHTMLまたはTypstで組版する原稿。
+- [詳細Literature Review](literature/literature-review.md)：最適化付きKinetic Exchange、Monetary Search、HANK等の直接競合・研究上の差分。
+- [Literature Review（Quarto版）](literature/literature-review.qmd)：HTML/Typstで組版できる文献レビュー。
+- [BibTeX（主要39件）](literature/references.bib)：論文・書籍章の書誌データ。
 
 講義には統計力学の数学的基礎、Kinetic Exchange、Ising、Minority Game、Statistical Equilibrium、Random Matrix Theory、Agent-Based Markets、HANK・Mean-Field Games、統計力学的New Keynesian一般均衡モデル、識別・先行研究を含みます。
 
