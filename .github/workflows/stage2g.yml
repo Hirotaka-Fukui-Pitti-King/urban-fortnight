@@ -62,6 +62,20 @@ jobs:
           assert not z['global_optimality_proven'], z
           print('All relevant Nash pairs beat 201x201 independent deterministic benchmark')
           PY
+      - name: Independent monotone upper/lower Nash bound for one actual pair
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_one_pair.py --gap 0.02 --max-boxes 50000
+      - name: Reject false full-global / GE claim in certificate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2g/results/nash_monotone_bound_one_pair.json').read_text())
+          assert d['numerical_only'] is True
+          assert d['undiscretized_Nash_optimum_certified'] is False
+          assert d['stationary_GE_certified'] is False
+          assert d['upper_log_nash'] >= d['lower_log_nash']-1e-10
+          print('Bounded to tolerance:',d['bounded_to_tolerance'],'gap:',d['gap_log_nash'])
+          PY
       - name: Upload private-problem evidence
         if: always()
         uses: actions/upload-artifact@v4
