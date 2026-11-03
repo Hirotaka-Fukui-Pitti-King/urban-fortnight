@@ -118,7 +118,7 @@ def aiyagari_policy_diagnostics(r, a, z, trans, c, ap, beta=.96, gamma=2., alpha
 
 
 def aiyagari_figures(out):
-    a = np.linspace(0, 30, 180)
+    a = 30 * np.linspace(0, 1, 240) ** 1.7
     z = np.array([.7, 1.3])
     trans = np.array([[.94, .06], [.06, .94]])
     def excess(r):
