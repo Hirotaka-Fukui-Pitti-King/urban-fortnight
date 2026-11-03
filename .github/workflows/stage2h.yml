@@ -55,7 +55,7 @@ jobs:
           python-version: "3.13"
           cache: pip
           cache-dependency-path: requirements.txt
-      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install -r requirements.txt 'cvxpy>=1.6,<1.8' 'clarabel>=0.9,<0.12'
       - name: Execute 3x3 reproduction and 5x5 direct/continuation roots
         run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_private_5x5.py --nq 9 --nx 7 --maxfev 500
       - name: Report private fixed-point status without false certification
@@ -69,6 +69,8 @@ jobs:
           print("Stages:",d["stages"])
           assert d["stationary_GE"] is False
           PY
+      - name: Independently globally reoptimize any saved 5x5 candidate
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/validate_private_5x5.py
       - name: Upload executed 5x5 evidence
         if: always()
         uses: actions/upload-artifact@v4
