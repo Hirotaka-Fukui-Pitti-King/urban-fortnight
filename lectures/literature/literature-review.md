@@ -280,3 +280,8 @@ Nirei (2015) やAcemoglu et al. (2012, 2015) などの**最適化・一般均衡
 ## 10. 文献情報
 
 主要論文のタイトル、著者、年、出版社DOIは本文の直接リンクで追跡できる。Quartoおよび文献管理用に、同じディレクトリに検証した主要文献のBibTeXデータ \`references.bib\` を置く。プロジェクト全体の講義との関係は親ディレクトリのREADMEを参照する。
+
+
+## 11. Economics-First講義への対応（2026年11月3日追補）
+
+この講義改訂では、統計力学の概念からではなく、既存の経済モデルの原始的な選好・生産・制約と個人最適化から導出する構成へ変更した。対応する原著と数学的な区別は[Economics-First Literature Matrix](economics-first-literature-matrix.md)にまとめた。Aiyagari／AchdouのHJB–Forward、Blume／Brock–DurlaufのLogit・Potential Game・Gibbs測度、Monetary Searchの最適取引とBoltzmann弱形式を中心にする。原著の単なる数学的別表現を新規な経済メカニズムと呼ばず、Stage 2-Bの研究主張はGreen–Zhou (2002)、Aruoba–Waller–Wright (2011)、Toscani et al. (2013)と比較する。
