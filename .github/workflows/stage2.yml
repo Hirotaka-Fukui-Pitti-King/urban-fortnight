@@ -35,6 +35,8 @@ jobs:
         run: python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v
       - name: Test voluntary trading, Boltzmann and entropy claims
         run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/tests -v
+      - name: Validate separable production-and-money product equilibrium
+        run: python research/02-kinetic-exchange-yakovenko/scripts/run_product_embedding.py
       - name: Run stationary equilibrium and finite-agent tests
         shell: bash
         run: |
