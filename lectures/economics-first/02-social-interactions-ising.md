@@ -206,3 +206,47 @@ $E[s_i\mid X_i,\bar s_{-i}]$が$\bar s_{-i}$と相関しても、模倣の因果
 
 
 ![Blume–Brock–Durlauf型の有限人数Gibbs定常分布](figures/ising-finite-population.svg)
+
+## Appendix A. 有限人数のGibbs法則と選択感応度の厳密な計算
+
+有限$N$のポテンシャル$\Phi_N(\mathbf s)$と分配関数
+$$
+Z_N(h,J,\tau)=\sum_{\mathbf s}\exp[\Phi_N(\mathbf s)/\tau]
+$$
+を考える。$S=\sum_i s_i$なら$\partial\Phi_N/\partial h=S$なので
+$$
+\frac{\partial\log Z_N}{\partial h}=\frac{E_{\pi_N}[S]}{\tau},
+\qquad
+\frac{\partial^2\log Z_N}{\partial h^2}
+=\frac{\operatorname{Var}_{\pi_N}(S)}{\tau^2}.
+$$
+ゆえに**有限人数の平均行動**について
+$$
+\boxed{\frac{\partial E_{\pi_N}[m_N]}{\partial h}
+=\frac{\operatorname{Var}_{\pi_N}(S)}{N\tau}\ge0.}
+$$
+分配関数は有限個の正の解析的な指数項の和なので、$\tau>0$、有限$N$なら非解析的な相転移は発生しない。本文の$J/\tau=1$という臨界点は、$N\to\infty$の大偏差・自己整合方程式に関する結果である。
+
+有限状態の詳細釣合いの証明では、状態$\mathbf s$から$i$だけを変更する条件付きLogit確率の比が
+$$
+\frac{P(\mathbf s,\mathbf s^i)}{P(\mathbf s^i,\mathbf s)}
+=\exp\left\{\frac{u_i(-s_i,\mathbf s_{-i})-
+u_i(s_i,\mathbf s_{-i})}{\tau}\right\}
+$$
+となり、Exact Potential性により$\exp[(\Phi_N(\mathbf s^i)-\Phi_N(\mathbf s))/\tau]$に一致する。したがって可逆である。相互作用が非対称なネットワークでは、このポテンシャル差の等式を満たす関数が一般に存在せず、同じ証明は使えない。
+
+## Appendix B. 大域的な典型状態と局所的な準安定性
+
+$h=0$でレート関数を$I(m)=\sup_x\Psi(x)-\Psi(m)$と書くと、$\Psi''(0)=J/\tau-1$。$J/\tau<1$で$m=0$が大域最大、$J/\tau>1$で非ゼロ対称枝$\pm m^*$が大域最大となる。$\Psi'(m)=0$の任意の解が**大域最大**とは限らない。とくに$J/\tau>1$で$m=0$は自己整合式を満たすが典型的な安定分布ではない。
+
+$\tau>0$、有限$N$の非同期Logit鎖は既約なので定常測度は常に一意である。それでも低温相では$\pm m^*$の山を跨ぐ移行時間が非常に長くなり得る。長い期間に一方のモードだけを観測しても、そのことは二つの有限人数の不変測度を意味しない。
+
+## Appendix C. 厚生と識別の対象
+
+確率的に選ぶ個人の**ショックを除いた利得**の和は
+$$
+\sum_i u_i(\mathbf s)=hS+\frac{J}{N-1}(S^2-N),
+$$
+ポテンシャルは$hS+\frac{J}{2(N-1)}(S^2-N)$である。従って、個人の外部効果が計画者に内部化されないことを示せる。ただしGumbel選択ショックを計画者が事前に観測するか否かにより、厚生の期待値や最適配分は変わる。「Gibbs測度の最頻値＝社会的最適」という一般的な結論は出ない。
+
+社会的乗数$dm/dh$は、相関の推定量ではなく、$J$と$\tau$が識別済みであることを前提としたモデルの比較静学である。Manski (1993)のReflection Problemから、集団平均の行動と個人の行動の回帰だけで$J$は識別できない。
