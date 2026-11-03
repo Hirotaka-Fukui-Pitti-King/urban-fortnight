@@ -129,11 +129,13 @@ $$
 (1-\theta)(P_t^*)^{1-\epsilon}.}
 $$
 各企業の相対価格分布も更新し、Aggregate Price Dispersion $\Delta_t$が実物の生産投入要件に影響する。家計の資産・所得分布$\mu_t$と企業価格分布$\Phi_t$を集計状態に含め、
-$$
-\mu_{t+1}=\mathcal K_{\rm HH}(\mu_t;\text{optimal policy},p_t),
-\quad
-\Phi_{t+1}=\mathcal K_{\rm Firm}(\Phi_t;\text{Calvo policy},p_t)
-$$
+$
+\mu_{t+1}=\mathcal K_{\mathrm{H}}(\mu_t;g_t,p_t)
+$
+
+$
+\Phi_{t+1}=\mathcal K_{\mathrm{F}}(\Phi_t;h_t,p_t)
+$
 を市場清算と合理的期待の下で同時に解く。
 
 [Auclert, Bardóczy, Rognlie and Straub (2021)](https://doi.org/10.3982/ECTA17434)はSequence-Space Jacobianを用いる既存の効率的な解法を確立した。この方法は分布動学の微分を均衡の集計変数系列に集約して解くものであり、「分布を使う」という意味だけで統計力学の新しい結果ではない。
