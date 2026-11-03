@@ -46,6 +46,10 @@ jobs:
           assert all(x['dm_money_conservation_error']==0 for x in result['particles'])
           print('Prototype is privately solved, but full equilibrium FAILED as documented.')
           PY
+      - name: Fixed-price matching and bargaining sensitivity
+        run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_sensitivity.py
+      - name: Finite-N particle error versus population
+        run: python research/02-kinetic-exchange-yakovenko/stage2b/scripts/run_particle_sizes.py
       - name: Upload Python test and simulation outputs
         uses: actions/upload-artifact@v4
         with:
