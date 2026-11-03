@@ -42,7 +42,7 @@ class Equations(unittest.TestCase):
         self.assertTrue(np.all(ap>=0))
         diag=mod.aiyagari_policy_diagnostics(.03409789470820705,a,z,P,c,ap)
         self.assertLess(diag["budget_sup"],1e-9)
-        self.assertLess(diag["euler_kkt_sup"],.05)
+        self.assertLess(diag["euler_kkt_sup"],1e-3)
         self.assertAlmostEqual(float(mu.sum()),1.,places=9)
         self.assertLess(float(np.max(abs(mod.forward(mu,*lottery,P)-mu))),1e-8)
 
