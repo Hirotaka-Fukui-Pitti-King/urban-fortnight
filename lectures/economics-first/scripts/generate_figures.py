@@ -41,7 +41,13 @@ def egm(r, a, z, trans, beta=.96, gamma=2., alpha=.36, delta=.08):
             break
     else:
         raise RuntimeError("EGM failed to converge")
-    ap = np.clip((1 + r) * a[:, None] + wage * z - c, a[0], a[-1])
+    resources = (1 + r) * a[:, None] + wage * z
+    # If the finite savings grid binds at its upper edge, the realized budget
+    # must be recomputed. Clipping a' without updating c violates feasibility.
+    ap = np.clip(resources - c, a[0], a[-1])
+    c = resources - ap
+    if np.min(c) <= 0 or np.max(np.abs(c + ap - resources)) > 1e-10:
+        raise RuntimeError("EGM budget or consumption feasibility failed")
     return c, ap, kd, wage
 
 
@@ -75,6 +81,42 @@ def stationary(ap, a, trans):
     raise RuntimeError("invariant wealth distribution failed")
 
 
+def aiyagari_policy_diagnostics(r, a, z, trans, c, ap, beta=.96, gamma=2., alpha=.36, delta=.08):
+    """Audit budget, Euler/KKT inequalities, and the artificial upper asset cap.
+
+    EGM Euler checks use interpolation of next-period c at the chosen a'.
+    For the lower (upper) active bound, the correct Euler inequality is
+    u'(c) >= (<=) beta*(1+r)*E[u'(c')].
+    """
+    kd = (alpha/(r+delta))**(1/(1-alpha))
+    wage = (1-alpha)*kd**alpha
+    resources=(1+r)*a[:,None]+wage*z[None,:]
+    budget=float(np.max(np.abs(c+ap-resources)))
+    rhs=np.zeros_like(c)
+    for iz in range(len(z)):
+        for jz in range(len(z)):
+            c_future=np.interp(ap[:,iz],a,c[:,jz])
+            rhs[:,iz]+=trans[iz,jz]*np.maximum(c_future,1e-14)**(-gamma)
+    rhs*=beta*(1+r)
+    lhs=c**(-gamma)
+    residual=(lhs-rhs)/np.maximum(np.maximum(lhs,rhs),1e-14)
+    lower=ap<=a[0]+1e-8
+    upper=ap>=a[-1]-1e-8
+    interior=~(lower|upper)
+    violations=np.zeros_like(residual)
+    violations[interior]=np.abs(residual[interior])
+    violations[lower]=np.maximum(-residual[lower],0)
+    violations[upper]=np.maximum(residual[upper],0)
+    if budget>1e-9 or np.any(ap<a[0]-1e-10) or np.any(ap>a[-1]+1e-10):
+        raise RuntimeError("Aiyagari policy violates budget or asset feasibility")
+    return {"budget_sup":budget, "euler_kkt_sup":float(violations.max()),
+            "euler_interior_sup":float(np.max(abs(residual[interior]))) if interior.any() else None,
+            "euler_lower_violation":float(np.max(np.maximum(-residual[lower],0))) if lower.any() else 0.,
+            "euler_upper_violation":float(np.max(np.maximum(residual[upper],0))) if upper.any() else 0.,
+            "upper_cap_nodes":int(upper.sum()), "lower_cap_nodes":int(lower.sum()),
+            "upper_cap_mask":upper}
+
+
 def aiyagari_figures(out):
     a = np.linspace(0, 30, 180)
     z = np.array([.7, 1.3])
@@ -87,8 +129,10 @@ def aiyagari_figures(out):
     _, ap, kd, wage = egm(r, a, z, trans)
     mu, op = stationary(ap, a, trans)
     k = float(np.sum(a[:, None] * mu))
-    if abs(k - kd) > .005 or abs(mu.sum() - 1) > 1e-8:
-        raise RuntimeError("Aiyagari market clearing or mass failed")
+    diagnostics=aiyagari_policy_diagnostics(r,a,z,trans,_,ap)
+    upper_mass=float(mu[diagnostics.pop("upper_cap_mask")].sum())
+    if abs(k-kd) > .005 or abs(mu.sum()-1)>1e-8 or upper_mass>1e-4:
+        raise RuntimeError("Aiyagari market clearing, mass, or upper-grid cap failed")
     fig, ax = plt.subplots(figsize=(6.8, 4.2))
     for iz, zi in enumerate(z):
         ax.plot(a, ap[:, iz], label=rf"$g(a,z={zi:.1f})$")
@@ -120,7 +164,8 @@ def aiyagari_figures(out):
     plt.close(fig)
     return {"r": float(r), "K_supply": k, "K_demand": float(kd),
             "wage": float(wage), "capital_error": float(k - kd),
-            "mass_error": float(abs(mu.sum() - 1))}
+            "mass_error": float(abs(mu.sum() - 1)),
+            "upper_cap_stationary_mass":upper_mass, **diagnostics}
 
 
 def ising_figure(out):
@@ -204,10 +249,20 @@ def money_candidate(meeting_rate, assortativity):
     buyers = [buyer_u+beta*(V[b-1]-V[b]) for b in range(1,M+1)]
     sellers = [-seller_cost+beta*(V[s+1]-V[s]) for s in range(M)]
     error = float(np.max(abs(L.T@f)))
-    if min(buyers+sellers) < -1e-8 or error > 1e-8:
-        raise RuntimeError("stationarity or voluntary acceptance failed")
+    P = np.eye(M+1)+L
+    bellman = float(np.max(np.abs(V-utility-beta*P@V)))
+    trans_mass = float(abs(np.sum(L.T@f)))
+    trans_money = float(abs(np.arange(M+1)@(L.T@f)))
+    transition_negative = float(max(0.,-np.min(P)))
+    if (min(buyers+sellers)<-1e-8 or error>1e-8 or bellman>1e-9
+        or trans_mass>1e-10 or trans_money>1e-10 or transition_negative>1e-12):
+        raise RuntimeError("stationarity, Bellman, transition, or voluntary acceptance failed")
     return f, {"stationarity_sup":error, "buyer_min_gain":float(min(buyers)),
-               "seller_min_gain":float(min(sellers))}
+               "seller_min_gain":float(min(sellers)),
+               "bellman_sup":bellman, "conservation_mass":trans_mass,
+               "conservation_money":trans_money, "transition_row_sum_sup":
+               float(np.max(abs(P.sum(axis=1)-1))),
+               "transition_negative_part":transition_negative}
 
 
 def monetary_figure(out):
