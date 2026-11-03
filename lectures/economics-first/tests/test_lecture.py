@@ -33,7 +33,7 @@ class Equations(unittest.TestCase):
         self.assertGreater(D(q),D(p))
 
     def test_aiyagari_policy_and_stationary_measure(self):
-        a=np.linspace(0,30,180)
+        a=30*np.linspace(0,1,240)**1.7
         z=np.array([.7,1.3])
         P=np.array([[.94,.06],[.06,.94]])
         c,ap,k,w=mod.egm(.03409789470820705,a,z,P)
