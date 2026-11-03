@@ -1,0 +1,70 @@
+{
+  "status": "NO_VERIFIED_MONETARY_GENERAL_EQUILIBRIUM",
+  "reference": "Molico and Zhang November 2005 draft",
+  "source_equations": "1-14",
+  "description": "finite-grid equation reconstruction, not original numerical replication",
+  "table1": {
+    "N": 3,
+    "beta": 0.96,
+    "eta": 5,
+    "b": 0.2,
+    "alpha": 0.36,
+    "A": 1,
+    "delta": 0.07,
+    "theta": 0.5
+  },
+  "tests_passed_local": 7,
+  "scans": [
+    {
+      "grid": [
+        5,
+        5
+      ],
+      "p_k": 0.5,
+      "converged": true,
+      "money": 6.917e-15,
+      "money_excess": -1,
+      "trade": 1.8459034356189327e-28
+    },
+    {
+      "grid": [
+        5,
+        5
+      ],
+      "p_k": 1.4,
+      "converged": true,
+      "money": 2.5837777517301697e-19,
+      "money_excess": -1,
+      "trade": 1.798831802061942e-41
+    },
+    {
+      "grid": [
+        5,
+        5
+      ],
+      "p_k": 2,
+      "converged": true,
+      "money": 0.3338039580287326,
+      "money_excess": -0.6661960419712674,
+      "trade": 8.227699052123517e-13
+    },
+    {
+      "grid": [
+        7,
+        7
+      ],
+      "p_k": 1.4,
+      "converged": false,
+      "value_residual": 3.9276219373030017,
+      "money": 0.5262490725716856,
+      "money_excess": -0.4737509274283144,
+      "trade": 0.09217752823237862
+    }
+  ],
+  "limits": [
+    "No stationary monetary equilibrium price",
+    "No algorithm equivalent to original 100x100 spline and 10000 samples",
+    "Finite money grid constrains contracts",
+    "No claims of GE welfare effects or novel collision mechanism"
+  ]
+}

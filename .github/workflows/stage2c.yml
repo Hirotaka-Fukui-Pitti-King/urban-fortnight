@@ -1,0 +1,50 @@
+name: Stage 2-C canonical monetary-search equation audit
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2c/**'
+      - '.github/workflows/stage2c.yml'
+permissions:
+  contents: read
+jobs:
+  canonical-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install Python numerics
+        run: python -m pip install -r requirements.txt
+      - name: Compile Stage 2-C Python
+        run: python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2c
+      - name: Run 7 original-equation economics tests
+        env:
+          PYTHONPATH: research/02-kinetic-exchange-yakovenko/stage2c/src
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2c/tests -v
+      - name: Rerun previous Aiyagari model tests
+        run: python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v
+      - name: Execute price and grid audit
+        run: python research/02-kinetic-exchange-yakovenko/stage2c/scripts/run_canonical_benchmark.py
+      - name: Prevent false stationary equilibrium claims
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2c/results/audit.json').read_text())
+          assert x['status']=='NO_VERIFIED_MONETARY_GENERAL_EQUILIBRIUM'
+          assert len(x['grid_and_price_scans'])==4
+          assert all(abs(r['mass']-1)<1e-8 and r['invalid_transition_count']==0 for r in x['grid_and_price_scans'])
+          assert not any(r['status']=='candidate_further_validation_required' for r in x['grid_and_price_scans'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage2c-original-equation-non-GE-audit
+          path: research/02-kinetic-exchange-yakovenko/stage2c/results/
+          if-no-files-found: error
+          retention-days: 30
