@@ -91,6 +91,7 @@ def run(out=HERE/"results", nq=9,nx=7,maxfev=500):
                        baseline["value"].reshape(3,3),bounds_error=True)
     z0=rgi(np.column_stack((big.k,big.m)))
     z0=z0-z0[0]
+    z0=z0[1:]  # relative-value root has n-1 independent coordinates
     stages=[]
     # Initial direct solve: the desired economy, without changing primitives.
     for label, schedule in [
