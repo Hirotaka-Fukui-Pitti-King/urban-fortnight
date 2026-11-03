@@ -1,0 +1,39 @@
+{
+  "status": "CONDITIONAL_CM_MONEY_CLEARED_STATIONARY_GE_UNSOLVED",
+  "date": "2026-11-03",
+  "source_implementation": "research/stage2d-monetary-equilibrium-selection",
+  "source_lecture": "Molico and Zhang (Nov 2005) original indexed PDF text; graphic equation audit unavailable",
+  "grid_prices": [
+    {
+      "grid": "5x5",
+      "p_k": 3.1107843540926297,
+      "mean_money": 1,
+      "budget_abs_error": 2.582378755278114e-13
+    },
+    {
+      "grid": "7x7",
+      "p_k": 3.053066415611738,
+      "mean_money": 1,
+      "budget_abs_error": 3.352873534367973e-14
+    },
+    {
+      "grid": "9x9",
+      "p_k": 2.979536020781962,
+      "mean_money": 1,
+      "budget_abs_error": 2.864375403532904e-14
+    }
+  ],
+  "old_cm_interpolation": {
+    "Bellman_sup_difference": 356.4258728956727,
+    "weighted_difference": 16.878814115402307,
+    "Nash_contract_changes": 181,
+    "next_distribution_TV": 0.07486677003469122
+  },
+  "stationary_price_value_distribution": {
+    "status": "FAILED",
+    "money_cleared_each_of_first_N_iterations": 15,
+    "stationary_Bellman_and_distribution_tolerances_met": false
+  },
+  "economic_conclusion": "A one-period money-clearing auction does not imply stationary monetary GE; prices exhibit grid sensitivity, original algorithm is not replicated.",
+  "user_facing_zip": "generated separately"
+}
