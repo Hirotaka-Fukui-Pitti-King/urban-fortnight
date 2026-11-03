@@ -35,6 +35,12 @@ def egm(r, a, z, trans, beta=.96, gamma=2., alpha=.36, delta=.08):
             c_next[:, iz] = np.interp(a, a_end, c_end)
             constraint = a < a_end[0]
             c_next[constraint, iz] = (1 + r) * a[constraint] + wage * zi - a[0]
+        # Enforce the finite-grid upper (and lower) savings constraints inside
+        # EVERY EGM fixed-point iteration, not only after convergence. Otherwise
+        # c at a_max is inconsistent with next-period Euler expectations.
+        resources_iter = (1+r)*a[:,None] + wage*z[None,:]
+        c_next = resources_iter - np.clip(
+            resources_iter-c_next, a[0], a[-1])
         error = np.max(np.abs(c_next - c))
         c = .75 * c_next + .25 * c
         if error < 2e-10:
