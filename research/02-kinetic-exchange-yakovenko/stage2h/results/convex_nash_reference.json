@@ -1,0 +1,23 @@
+{
+  "status": "ONE_PAIR_CONVEX_NASH_PILOT_EXECUTED",
+  "source": "GitHub Actions Stage 2-H run 41738261913, convex-nash job",
+  "model": "Molico–Zhang source-calibration with Stage 2-E triangular CM continuation",
+  "price": 2.5,
+  "grid": [
+    3,
+    3
+  ],
+  "buyer": 4,
+  "seller": 4,
+  "quantity": 1.063506320708567,
+  "payment_nominal": 1,
+  "convex_log_nash": 4.63557270691288,
+  "triangle_pairs_total": 64,
+  "triangle_pairs_pruned": 25,
+  "convex_subproblems_solved": 39,
+  "independent_monotone_upper_log_nash": 4.635672627962515,
+  "independent_monotone_log_gap": 0.0000999210496388514,
+  "independent_bellman_fixedpoint_5x5": false,
+  "stationary_GE": false,
+  "convex_solver_global_proof_in_exact_real_arithmetic": false
+}
