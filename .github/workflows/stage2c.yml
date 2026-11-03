@@ -31,6 +31,8 @@ jobs:
         run: python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v
       - name: Execute price and grid audit
         run: python research/02-kinetic-exchange-yakovenko/stage2c/scripts/run_canonical_benchmark.py
+      - name: Distinguish nontrade and active PRIVATE stationary branches
+        run: python research/02-kinetic-exchange-yakovenko/stage2c/scripts/run_monetary_multistart.py
       - name: Prevent false stationary equilibrium claims
         run: |
           python - <<'PY'

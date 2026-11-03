@@ -1,0 +1,31 @@
+{
+  "status": "TWO_PRIVATE_FIXED_PRICE_REGIMES_NOT_MONEY_CLEARING_GE",
+  "money_supply": 1,
+  "quoted_price": 3,
+  "solutions": [
+    {
+      "initialization": "zero_value_uniform",
+      "converged": true,
+      "iterations": 327,
+      "value_residual": 8.445340426987968e-8,
+      "distribution_residual": 8.5114137959863e-12,
+      "mean_money": 0.34305608907570695,
+      "money_excess": -0.656943910924293,
+      "mean_capital": 1.8068233189539005e-12,
+      "trades": 5.450699038386356e-13
+    },
+    {
+      "initialization": "positive_value_concentrated",
+      "converged": true,
+      "iterations": 1249,
+      "value_residual": 9.824543667491525e-8,
+      "distribution_residual": 1.7333939839048185e-11,
+      "mean_money": 1.1831828378052496,
+      "money_excess": 0.18318283780524958,
+      "mean_capital": 0.9865791013395123,
+      "trades": 0.24136336545383785,
+      "asset_top_mass": 0.0010038595741595113
+    }
+  ],
+  "caveat": "Two fixed-price private stationary regimes, neither satisfies normalized money supply; NOT two monetary general equilibria."
+}
