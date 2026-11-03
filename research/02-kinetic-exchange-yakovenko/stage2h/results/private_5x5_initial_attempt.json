@@ -1,0 +1,46 @@
+{
+  "status": "NOT_CONVERGED",
+  "model": {
+    "nk": 5,
+    "nm": 5,
+    "kmax": 3,
+    "mmax": 2,
+    "p": 2.5,
+    "partner_state": [
+      1.5,
+      1
+    ]
+  },
+  "source_run": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41738001092",
+  "direct_root_relative_sup": 45.059775832473406,
+  "matching_continuation": [
+    {
+      "multiplier": 0,
+      "relative_sup": 1.0015810403274372e-9
+    },
+    {
+      "multiplier": 0.05,
+      "relative_sup": 5.240963218966499e-10
+    },
+    {
+      "multiplier": 0.15,
+      "relative_sup": 2.954948286060244e-9
+    },
+    {
+      "multiplier": 0.3,
+      "relative_sup": 8.222286851378158e-9
+    },
+    {
+      "multiplier": 0.55,
+      "relative_sup": 3.982222551712766e-9
+    },
+    {
+      "multiplier": 0.8,
+      "relative_sup": 24.779725695179422
+    }
+  ],
+  "refined_global_nash_5x5": false,
+  "endogenous_money_price": false,
+  "stationary_ge": false,
+  "warning": "matching multipliers represent conditional private problems and are not monetary equilibria"
+}
