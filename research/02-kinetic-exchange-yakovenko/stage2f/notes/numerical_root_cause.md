@@ -39,3 +39,10 @@ At p=2.5, 96 entries change in each of the last six Nash improvements, a clear n
 Unsolved: original all-pairs continuous Nash with value-policy consistency; high-accuracy fixed-price endogenous-Nash household value fixed point; adaptive *value* grids and original real-wealth KDE representation; endogenous price + stationary wealth/portfolio distribution; independent KKT/Nash/grid convergence; monetary policy and welfare novelty.
 
 The new tests, code, and diagnostics are designed to reject false GE certification. Do not report the fixed-contract Bellman result as an endogenous privately optimal search equilibrium.
+
+
+## Additional executed experiments: adapted CM-to-DM transition and continuous Nash pairs
+
+After initial conditional CM price 3.007500, the maximum real wealth is 2.0828649274. The original Step 6 formula sets capital upper bound 4.1657298548 and money upper bound 12.5284325384. Population, money, capital moments are unchanged under remeshing to roundoff. A subsequent conditional CM auction clears at price 3.0050785285 with issuer stock one and CM budget discrepancy −2.22e-16. **The extension of old V is merely an initial guess**; Bellman residual 152.8656 and stationary equilibrium remains open.
+
+The preexisting continuous multistart Nash optimizer was applied for every one of 96 match pairs relevant to the support of the conditional CM distribution. Of these, 76 have positive contracts and zero reported local numerical solver failures. Minimum positive participation surplus 0.43883; trading rate 1/3; DM output 0.189329; K before 0.969525, K after 1.090987 after 7% depreciation, nominal money one before and after. The endogenous Bellman update residual remains 153.050, and continuous Nash global optimality has not been proven. Discrete-contract Nash policy cycling is independently established by converged fixed-contract evaluation tests. Neither observation certifies the full source-model stationary equilibrium.

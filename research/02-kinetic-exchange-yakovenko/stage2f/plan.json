@@ -1,7 +1,7 @@
 {
   "stage": "2-F",
   "branch": "research/stage2f-stationary-monetary-ge-recovery",
-  "status": "partial_primitive_implementation_and_discrete_nash_cycling_no_stationary_GE",
+  "status": "adaptive_one_step_and_all_pair_continuous_Nash_candidates_executed_no_stationary_GE",
   "original_source": "Molico and Zhang, November 2005 manuscript, Section 4 Steps 3–8",
   "passed": [
     "moment-preserving adaptive portfolio-grid transport tests",
@@ -15,10 +15,16 @@
     "stable endogenous fixed-price household Nash equilibrium",
     "joint money-price and invariant distribution GE",
     "high-resolution grid convergence",
-    "original numerical replication"
+    "original numerical replication",
+    "globally certified continuous Nash for all states",
+    "joint stationary money-price/Bellman/measure fixed point on adaptive grids"
   ],
   "actual_status": "NO_STATIONARY_MONETARY_GE",
   "novelty": false,
   "notes": "notes/numerical_root_cause.md",
-  "results": "results/reference_fixed_price_diagnostic.json"
+  "results": "results/reference_fixed_price_diagnostic.json",
+  "completed": [
+    "conditional adaptive CM-DM step with exact money/capital accounting",
+    "continuous Nash candidates for 96 relevant matches in actual Bellman/DM kernel"
+  ]
 }

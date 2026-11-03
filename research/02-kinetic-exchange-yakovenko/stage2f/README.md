@@ -12,3 +12,8 @@ Run from repository root:
     python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_fixed_price_diagnostic.py
 
 See notes/numerical_root_cause.md and results/reference_fixed_price_diagnostic.json; .github/workflows/stage2f.yml runs tests and produces a JSON/CSV artifact. None of this proves a stationary monetary GE or a new kinetic economic mechanism.
+
+
+## Executed integration tests
+
+One real CM-to-DM adaptive regridding step sets capital and money maxima to 4.165730 and 12.528433, respectively, preserving mass/moments and issuer cash. The next conditional CM price is 3.005079, yet the Bellman residual is 152.866 because new-grid V is only an initial interpolated/extrapolated guess. An additional all-relevant-pair continuous Nash candidate run treats 96 buyer/seller pairs, finds 76 positive-trade contracts, conserves fiat stock one and accounts for output 0.189329. No global Nash certificate or stationary GE is claimed.

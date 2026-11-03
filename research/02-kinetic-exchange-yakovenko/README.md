@@ -52,3 +52,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-E: Conditional continuous joint CM saving, not stationary GE
 
 [Stage 2-E](stage2e/README.md) uses the same continuous k,m portfolio solver in CM value and population transition, under a triangular piecewise-affine interpolation of the continuation V. It verifies one-period fiat money clearing with unaltered issuer stock at 5x5 and 7x7. A separate one-pair continuous Nash experiment is not an all-pairs policy. **Bellman and distribution errors remain large**, so no stationary monetary GE or novel kinetic macro mechanism is established. The original paper's bicubic and wealth-simulation algorithm is not replicated.
+
+
+## Stage 2-F: Adaptive grids and Nash contract stability
+
+[Stage 2-F](stage2f/README.md) executes one original Section 4 Step 6 adaptive CM-DM update with exact fiat/asset moment accounting; it also isolates the convergent fixed-contract Bellman operator from cycling discrete Nash best responses. Continuous Nash candidates are evaluated for all 96 distribution-relevant matches in one period and linked to the actual DM and Bellman operators; 76 have positive trade. **No invariant monetary GE, continuous Nash global certification, or new macro mechanism is yet established.**
