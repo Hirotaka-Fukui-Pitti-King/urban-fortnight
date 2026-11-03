@@ -1,38 +1,11 @@
-Research decision memo — Stage 2
-Title: Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)
-Status: NOT STARTED
+Stage 2 research status (2026-11-03): Python implemented and executed a restricted, indivisible-token posted-price search subeconomy with newly produced services. Nine Stage 2 tests passed locally, alongside six original Stage 0 Aiyagari checks.
 
-Central hypothesis: Can voluntary optimal bilateral trades generate a kinetic exchange operator consistent with household budgets, rational expectations and market clearing?
+No-trade proposition: strictly increasing own-asset value and a pure zero-sum asset transfer imply only delta=0 satisfies both bilateral participation constraints.
 
-Feasibility prior:
-Conditional: exogenous random transfers conserve assets but do not generally arise from optimal trade; require gains from trade, matching frictions or a specified contractual market.
+Optimal active search candidate: M=5, mean=2, beta=.96, buyer utility=5, seller effort cost=.15; all participation gains nonnegative and Bellman/mass/market identities hold. A no-trade equilibrium also exists.
 
-Core economic distinction:
-Aiyagari/Huggett GE with kinetic matching shut off; separately exogenous Yakovenko exchange as non-optimal benchmark
+Boltzmann gain-loss operator follows exactly from matched buyer/seller events. Its weak form preserves mass and token holdings, while the service production rate is separately counted. Monte Carlo convergence was checked for 1500/6000/20000 agents and four seeds.
 
-Conditions to check:
-1. Bilateral post-trade financial asset conservation, accounting for external issuance
-2. Both partners' budget constraints and participation constraints
-3. Bellman optimality or bilateral Nash bargaining
-4. Boltzmann collision operator and other household transition terms
-5. Goods and financial market clearing
+Uniform matching yields a truncated-geometric money stationary distribution and coincident mean-constrained max-entropy money distribution; assortative matching violates this coincidence (KL=.0060626683). A stylized Foley-style transaction entropy comparison gives KL=.19240049/.35979716, but differs in offer sets and is NOT a refutation of Foley.
 
-Pass / fail criterion:
-Accept only if a microfounded, nondegenerate bilateral trading equilibrium exists and aggregate identities hold.
-
-The project reports negative feasibility results when a kinetic, entropy, adaptive-trading, or heuristic-firm mechanism cannot be reconciled with optimization and equilibrium. Do not silently weaken rational expectations or drop clearing equations.
-
-Evidence status: no derived theorems, numerical solutions or validated simulations committed yet.
-
-
-Stage 0–1 computed benchmark, 2026-11-03:
-Stationary Aiyagari equilibrium: capital 5.706221, interest rate 0.038097, Gini 0.493914; market-clearing and Euler residuals checked. Finite agents N=40,000 at fixed GE prices: mean K 5.669039 across three seeds. Agent-level policies are optimal, without random bilateral transfers.
-
-Candidate economic mechanism for Stage 2:
-1. Model idiosyncratic liquidity or preference shocks producing gains from bilateral exchange of economically distinct claims or services.
-2. Specify search/matching meeting rates, partner states, feasible contracts and acceptance inequalities.
-3. Derive optimal joint or Nash bargaining trades from conditional continuation values.
-4. Write wealth and goods ledgers and show the trade operator conserves claims under each bilateral match, with issuer liabilities handled separately.
-5. Derive gain-loss equation for a joint state distribution f(a,z,liquidity), then compare particle simulations and the Boltzmann equation.
-6. Contrast to an exogenous Yakovenko random-wealth-transfer kernel explicitly labeled non-optimal.
-Potential counterexample: when preferences and marginal values are identical and markets frictionless, an arbitrary random zero-sum money transfer need not be mutually beneficial.
+Theoretical boundary: the productive Aiyagari block can coexist under strong separability, but nonseparable optimizing joint capital/money decisions, price bargaining, a shared labor constraint and monetary equilibrium selection are not solved. Maintain a restricted/partial status in plan.json and paper/article.qmd. Next priority: Lagos-Wright canonical mechanism and full joint household Bellman with endogenous exchange terms.
