@@ -1,0 +1,21 @@
+{
+  "stage": "2-G",
+  "run_id": 41725689660,
+  "run_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41725689660",
+  "source_commit": "aaf40cc7a870bc9d65ec3a388b3c968c2edf535f",
+  "scope": "3x3 fixed-price private problem, Dirac partner measure",
+  "price": 2.5,
+  "relevant_pairs": 17,
+  "positive_pair_count": 11,
+  "all_policy_nash_bounded_to_tolerance": true,
+  "max_policy_log_objective_upper_gap": 0.00009999581106256983,
+  "max_search_log_gap": 0.00009999581106256983,
+  "max_boxes_used_per_pair": 32206,
+  "bellman_sup_after_global_policy_recheck": 4.547473508864641e-13,
+  "math_in_exact_arithmetic": "Monotonic upper bound on each rectangle in continuous (quantity, real payment) space",
+  "floating_point_interval_certification": false,
+  "source_continuous_state_global_optimality": false,
+  "grid_5x5_converged": false,
+  "stationary_distribution": false,
+  "stationary_monetary_GE": false
+}
