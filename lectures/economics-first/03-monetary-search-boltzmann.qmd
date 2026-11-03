@@ -47,7 +47,7 @@ $$
 $$
 \boxed{
 (q^*,d^*)\in\arg\max_{(q,d)\in\mathcal F_{b,s}(V)}
-\eta\log\left[G_B(q,d;b)\right]+(1-\eta)\log\left[G_S(q,d;s)\right]
+\eta\,\log\left[G_B(q,d;b)\right]+(1-\eta)\,\log\left[G_S(q,d;s)\right]
 }
 $$
 
