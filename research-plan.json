@@ -200,5 +200,22 @@
     "last_money_grid_ceiling_mass": 0.23208291233316045,
     "original_adaptive_grid_implemented": false,
     "source_ordered_trace": "GitHub Actions run 41618040998"
+  },
+  "stage2f": {
+    "branch": "research/stage2f-stationary-monetary-ge-recovery",
+    "status": "executed_adaptive_one_period_CM_DM_and_Nash_candidates_no_stationary_GE",
+    "adaptive_bounds": {
+      "kmax": 4.165729854828086,
+      "mmax": 12.52843253839547
+    },
+    "adaptive_second_price": 3.005078528487682,
+    "adaptive_value_residual": 152.8656272083833,
+    "moments_preserved": true,
+    "fixed_contract_private_Bellman_converged": true,
+    "endogenous_Nash_contracts_cycle": true,
+    "relevant_continuous_contract_pairs": 96,
+    "positive_continuous_contracts": 76,
+    "global_Nash_optimality_certified": false,
+    "stationary_GE_certified": false
   }
 }

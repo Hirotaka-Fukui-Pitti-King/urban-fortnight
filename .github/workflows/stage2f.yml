@@ -1,0 +1,92 @@
+name: Stage 2-F adaptive grid and converged fixed-contract Bellman verification
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stage2f-economics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Parse Python source
+        run: python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2f
+      - name: Run Stage 2-F moment conservation and value/Nash tests
+        env:
+          PYTHONPATH: research/02-kinetic-exchange-yakovenko/stage2f/src:research/02-kinetic-exchange-yakovenko/stage2d/src:research/02-kinetic-exchange-yakovenko/stage2c/src
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2f/tests -v
+      - name: Repeat source-aligned Stage 2-C regressions
+        env:
+          PYTHONPATH: research/02-kinetic-exchange-yakovenko/stage2c/src
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2c/tests -v
+      - name: Execute fixed-contract Bellman and endogenous Nash policy audit
+        run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_fixed_price_diagnostic.py
+      - name: Execute original Step 6 adaptive grid on actual CM to DM transition
+        run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_adaptive_single_step.py
+      - name: Verify regridding did not fabricate money or stationary GE
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2f/results/adaptive_single_source_step.json').read_text())
+          assert x['certified_GE'] is False
+          assert x['source_step6_implemented'] is True
+          assert abs(x['issuer_money_after_regrid']-1)<1e-8
+          assert max(abs(v) for v in x['incoming_moment_differences'])<1e-9
+          if x['second_auction_status']=='CLEARED':
+              assert abs(x['second_CM_fiat']-1)<1e-8
+              assert abs(x['second_DM_fiat']-1)<1e-8
+              assert abs(x['second_CM_budget'])<1e-8
+          print('Adaptive-grid CM-to-DM transport verified; no stationary GE claim.')
+          PY
+      - name: Execute measure-relevant continuous Nash contracts in Bellman and DM transition
+        run: python research/02-kinetic-exchange-yakovenko/stage2f/scripts/run_continuous_all_pairs.py
+      - name: Check full relevant-pair kernel and money/capital conservation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2f/results/continuous_all_pair_pilot.json').read_text())
+          assert x['stationary_GE'] is False
+          assert x['continuous_contracts_applied_to_actual_DM_operator']
+          assert x['relevant_pairs']>0
+          assert x['positive_continuous_contract_candidates']>0
+          assert abs(x['money_after']-x['money_before'])<1e-9
+          assert abs(x['money_after']-1)<1e-8
+          assert abs(x['capital_after']-(1-.07)*x['capital_before']-x['DM_production'])<1e-9
+          print('All measure-relevant matched states use continuous Nash candidates; GE unverified.')
+          PY
+      - name: Audit numerical claims against generated data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('research/02-kinetic-exchange-yakovenko/stage2f/results/fixed_price_diagnostic.json')
+          d=json.loads(path.read_text())
+          assert d['equilibrium_certified'] is False
+          assert len(d['runs'])==2
+          for r in d['runs']:
+              assert r['fixed_contract_Bellman_converged']
+              assert r['fixed_contract_Bellman_sup']<1e-7
+              assert r['Nash_policy_improvements']==30
+              assert r['endogenous_Nash_policy_status']=='ENDOGENOUS_NASH_POLICY_DID_NOT_STABILIZE'
+          print('Verified fixed-contract Bellman convergence; no endogenous Nash/GE claim.')
+          PY
+      - name: Upload executed economic numerical evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2f-regridding-and-discrete-Nash-nonconvergence
+          path: research/02-kinetic-exchange-yakovenko/stage2f/results/
+          retention-days: 30
+          if-no-files-found: error

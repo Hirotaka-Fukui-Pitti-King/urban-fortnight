@@ -17,3 +17,6 @@ Stage 2-C research gate, 2026-11-03: original Molico--Zhang draft examined direc
 
 
 Stage 2-E (2026-11-03): continuous joint CM saving is solved globally for a **triangular approximation** of the continuation value, consistent in Bellman and population operators. Money-clearing *one-period* prices are 3.01125 (5x5) and 3.0103125 (7x7), but Bellman residuals ~153 and distribution sup ~0.55–0.73. Separate continuous Nash test only for one pair. Original author algorithm employs bicubic 100x100 and 10,000 samples; **no stationary general equilibrium** has been found.
+
+
+Stage 2-F: Original Section 4 Step 6 adaptive asset bounds and conservative measure transport implemented. A conditional CM-DM step clears money after expanding capital/money bounds, but residual for guessed V is 152.866. Frozen bilateral contract Bellman evaluation converges (beta contraction); discrete Nash policy improvement cycles at fixed price. Continuous multistart Nash candidates are applied to 96 relevant pairs (76 positive) with correct DM accounting. Stationary monetary GE remains NOT FOUND.

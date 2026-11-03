@@ -84,5 +84,10 @@
     "status": "conditional_CM_only",
     "directory": "research/02-kinetic-exchange-yakovenko/stage2e",
     "stationary_GE": false
+  },
+  "stage2f": {
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2f",
+    "status": "one_period_adaptive_and_Nash_candidates_not_stationary_GE",
+    "stationary_GE": false
   }
 }
