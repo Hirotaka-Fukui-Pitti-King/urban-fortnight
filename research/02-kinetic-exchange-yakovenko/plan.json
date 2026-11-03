@@ -4,7 +4,7 @@
   "folder": "research/02-kinetic-exchange-yakovenko",
   "title": "Optimal Kinetic Exchange and Boltzmann Dynamics (Yakovenko)",
   "category": "economic_mechanism",
-  "status": "planned",
+  "status": "restricted_posted_price_model_verified",
   "research_question": "Can voluntary optimal bilateral trades generate a kinetic exchange operator consistent with household budgets, rational expectations and market clearing?",
   "feasibility_hypothesis": "Conditional: exogenous random transfers conserve assets but do not generally arise from optimal trade; require gains from trade, matching frictions or a specified contractual market.",
   "prerequisites": [
@@ -39,24 +39,25 @@
     "Zero-matching-rate switch-off recovers baseline prices and distribution",
     "No exchange theorem/counterexample under frictionless homogeneous preferences"
   ],
-  "stage_gate": "Accept only if a microfounded, nondegenerate bilateral trading equilibrium exists and aggregate identities hold.",
+  "stage_gate": "OPEN: neither full nonseparable joint GE nor endogenous bargaining prices or equilibrium selection solved. Restricted monetary search example is validated.",
   "reference_leads": [
     "Yakovenko and Rosser (2009)",
     "Kinetic exchange and Boltzmann models",
     "Search, matching and bargaining theory"
   ],
   "implementation": {
-    "status": "not_started",
-    "method": "equilibrium solving plus ABM/distribution verification when relevant",
-    "language": "Julia proposed; environment and APIs to be verified before implementation",
-    "artifacts": "results/",
-    "reporting": [
-      "code revision",
-      "economic assumptions",
-      "source provenance",
-      "numerical solver residuals",
-      "seed and tolerances",
-      "matched ablation comparisons"
+    "status": "python_executed",
+    "language": "Python 3.13",
+    "model": "voluntary posted-price service-for-token search with optimal acceptance and stationary rational token values",
+    "solver": "finite-state Bellman linear solve and stationary distribution nonlinear root",
+    "tests": "9 Stage 2 and 6 Stage 0 tests passed",
+    "full_experiment": "N=1500,6000,20000; seeds=11,22,33,44; 1800 burn-in +700 periods",
+    "results": "results/reference_stage2_summary.json plus CI artifacts",
+    "limitations": [
+      "money does not convert into capital",
+      "posted price is restricted, not bargained",
+      "coexisting zero-trade equilibrium",
+      "Foley transaction offers differ from search economy and money entropy"
     ]
   }
 }
