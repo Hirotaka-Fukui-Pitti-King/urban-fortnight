@@ -1,252 +1,359 @@
-# Brock–DurlaufとBlume：最適離散選択からGibbs分布・相転移を導く
+# 講義II：社会的相互作用の最適選択からGibbs測度・大偏差・相転移へ
 
-**大学院研究講義 II。** 既存の社会的相互作用モデルを用いて、ランダム効用→個人の最適離散選択→確率的戦略更新→ポテンシャル→有限人数の定常Gibbs測度→大人数極限の相転移を導く。[Blume (1993)](https://doi.org/10.1006/game.1993.1023)と[Brock and Durlauf (2001)](https://doi.org/10.1111/1467-937X.00168)は異なる問い・更新規則を持つ先行研究であり、以下は**両者と対応する明示的な対称モデル**である。[Kirman (1993)](https://doi.org/10.2307/2118498)は有限人数の模倣と群集行動を比較する基準となる。
+**出発点。** Blume (1993)の確率的戦略更新とBrock and Durlauf (2001)の社会的相互作用をもとに、講義用に対称な完全グラフの二択ゲームを構成する。この**明示的な特殊ケース**について、GumbelショックからLogitを積分計算し、ポテンシャル性を証明し、有限人数のGibbs分布、大人数の大偏差、相転移、社会的乗数、厚生を導出する。異なる原著の更新制度を同一の均衡概念とみなさない。原著：[Blume (1993)](https://doi.org/10.1006/game.1993.1023)、[Brock and Durlauf (2001)](https://doi.org/10.1111/1467-937X.00168)、[Kirman (1993)](https://doi.org/10.2307/2118498)、[Manski (1993)](https://doi.org/10.2307/2298123)。
 
-## 1. Economic Primitives：社会的補完性を持つ選択
+## 1. 個人の選択問題：社会的補完性の経済的原始条件
 
-$N\ge2$人の個人$i$は$s_i\in\{-1,+1\}$を選択する。観察可能な私的便益$h$と、他人に同調することの便益$J\ge0$があり、**選択ショックを除いた**効用を
-$$
-u_i(s_i,\mathbf s_{-i})=
-s_i\left[h+\frac{J}{N-1}\sum_{j\ne i}s_j\right]
-$$
-とする。この式は正の行動が常に効率的という仮定ではない。$J>0$で他人の選択と自分の選択が補完的になることを表す。企業の採用、集団への参加、技術選択などの単純化された経済的意思決定に対応する。
+$N\ge2$人の主体は同時点で$s_i\in\{-1,+1\}$という行動をとり、$h\in\mathbb R$は私的な選択便益、$J\ge0$は他者への同調便益である。他者の平均を$m_{-i}=(N-1)^{-1}\sum_{j\ne i}s_j$とし、確定的な効用を
 
-他人の平均$m_{-i}=(N-1)^{-1}\sum_{j\ne i}s_j$を所与とした二つの効用差は
 $$
-u_i(+1,\mathbf s_{-i})-u_i(-1,\mathbf s_{-i})=2(h+Jm_{-i}).
+u_i(s_i,\mathbf s_{-i})=s_i(h+Jm_{-i})
 $$
-各選択肢に独立なType-I Extreme Valueショック$\epsilon_i(+),\epsilon_i(-)$（同じ尺度$\tau>0$）を加え、個人が効用を最大化する。極値ショックの差がLogistic分布なので
+
+と定める。この式は、個人が他人の行動を所与として、二つの行動のどちらが好ましいかを選ぶ経済学的な目的関数である。直接微分ではなく二つの離散値を比較すると、
+
 $$
-\boxed{
+u_i(+1,\mathbf s_{-i})=h+Jm_{-i},\quad
+u_i(-1,\mathbf s_{-i})=-h-Jm_{-i},
+$$
+
+従って効用差は$u_i(+1)-u_i(-1)=2(h+Jm_{-i})$である。$J>0$なら他者が$+1$を選ぶほど自分の$+1$の相対便益が高まる。
+
+これに私的選択ショック$\epsilon_i(+),\epsilon_i(-)$を加える。両ショックは独立で同一のType-I Extreme Value分布
+
+$$
+F_\epsilon(x)=\exp[-\exp(-x/\tau)],\qquad
+f_\epsilon(x)=\frac1\tau\exp(-x/\tau)\exp[-\exp(-x/\tau)]
+$$
+
+に従い、尺度$\tau>0$、位置定数は二つの選択に同じため効用差から消える。各主体はショックを観測して$u_i(s_i)+\epsilon_i(s_i)$を最大化する。物理的な熱温度を仮定しているのではなく、ランダム効用に規定された個人最適化である。
+
+## 2. GumbelからLogitを積分して導出
+
+一般に確定効用$U_+$と$U_-$の差$\Delta=U_+-U_-$を定義すると、$+1$を選ぶ条件は$\epsilon_-\le\epsilon_++\Delta$である。独立性を使って条件付き積分すると、
+
+$$
+\begin{aligned}
+P(+)
+&=\int_{-\infty}^{\infty}
+P(\epsilon_-\le e+\Delta)\,f_\epsilon(e)\,de\\
+&=\int_{-\infty}^{\infty}
+\exp[-\exp(-(e+\Delta)/\tau)]\,
+\frac1\tau\exp(-e/\tau)
+\exp[-\exp(-e/\tau)]\,de.
+\end{aligned}
+$$
+
+ここで$t=\exp(-e/\tau)$と変数変換すると$de=-\tau\,dt/t$、積分の上下限は$\infty$から0へ逆転する。従って
+
+$$
+\begin{aligned}
+P(+)
+&=\int_0^\infty
+\exp[-t\{1+\exp(-\Delta/\tau)\}]\,dt\\
+&=\left[\frac{-\exp[-t\{1+\exp(-\Delta/\tau)\}]}{1+\exp(-\Delta/\tau)}\right]_{t=0}^{\infty}\\
+&=\frac1{1+\exp(-\Delta/\tau)}.
+\end{aligned}
+$$
+
+$\Delta=2(h+Jm_{-i})$を代入して
+
+$$
 P_i(+1\mid\mathbf s_{-i})
-=\frac{e^{(h+Jm_{-i})/\tau}}
-{e^{(h+Jm_{-i})/\tau}+e^{-(h+Jm_{-i})/\tau}}
-=\frac{1}{1+e^{-2(h+Jm_{-i})/\tau}}.
-}
+=\frac{\exp[(h+Jm_{-i})/\tau]}
+{\exp[(h+Jm_{-i})/\tau]+\exp[-(h+Jm_{-i})/\tau]}.
 $$
-したがって
-$$
-E[s_i\mid\mathbf s_{-i}]=
-P_i(+1\mid\mathbf s_{-i})-P_i(-1\mid\mathbf s_{-i})
-=\tanh((h+Jm_{-i})/\tau).
-$$
-ここにあるのは**実際に最大化したランダム効用のLogit確率**である。$\tau$は個人選択の異質性を表す尺度で、物理的な温度や時間割引因子ではない。
 
-## 2. Stochastic Revision：同時選択と非同期更新は別モデル
+**命題II.1（条件付き平均行動）。** 上の確率的最適化では$E[s_i\mid\mathbf s_{-i}]=\tanh[(h+Jm_{-i})/\tau]$。
 
-ここからBlume型の確率的戦略更新を明示する。各期、一様に選ばれた個人$i$だけが、現在の他者選択$\mathbf s_{-i}$を条件に新しいGumbelショックを観察して選択し直す。他人の選択はその期には固定する。この**asynchronous logit best response**は有限状態$\{-1,+1\}^N$上のMarkov Chainを定める。
+**証明。** $s_i$は$\pm1$なので条件付き平均は$P_i(+)-P_i(-)=2P_i(+)-1$。上の分数へ代入して
 
-現在状態$\mathbf s$から$i$だけを反転した状態$\mathbf s^i$への遷移確率は
 $$
-P(\mathbf s,\mathbf s^i)=\frac1N
-P_i(-s_i\mid\mathbf s_{-i})>0.
+2P_i(+)-1
+=\frac{\exp(x)-\exp(-x)}{\exp(x)+\exp(-x)}
+=\tanh x,\qquad x=(h+Jm_{-i})/\tau.
 $$
-自己ループもあり、すべての状態間は有限回の更新で到達できる。ゆえに有限$N$で既約・非周期的、定常分布は一意である。
 
-個人のランダム効用による**一斉同時更新**であれば一般にはこの可逆Markov Chainとは異なり、同じ定常Gibbs測度は保証されない。均衡選択、同時Logit QRE、非同期の確率更新の不変測度は区別する。
+$\square$。この段階は個人の条件付き選択確率の導出であり、集計期待と整合する均衡の導出はまだ行っていない。
 
-## 3. Potential Game：経済的な効用差とポテンシャルの一致
+## 3. 戦略更新過程とPotential Gameの証明
 
-次のポテンシャル関数を定義する。
-$$
-\boxed{
-\Phi_N(\mathbf s)=h\sum_{i=1}^Ns_i+
-\frac{J}{2(N-1)}\sum_{i\ne j}s_is_j
-=hS+\frac{J}{2(N-1)}(S^2-N)
-}
-$$
-ただし$S=\sum_i s_i$。個人$i$の選択を$s_i$から$s_i'$に変えると
-$$
-\Phi_N(s_i',\mathbf s_{-i})-\Phi_N(s_i,\mathbf s_{-i})
-=(s_i'-s_i)\left[h+\frac{J}{N-1}\sum_{j\ne i}s_j\right].
-$$
-右辺はその個人の効用変化
-$u_i(s_i',\mathbf s_{-i})-u_i(s_i,\mathbf s_{-i})$に**厳密に一致**する。よって対称的な相互作用のゲームはExact Potential Gameである。
+各離散時点に独立に一人の更新者$i$を一様抽出し、他者の現行行動を固定して再びGumbelショックを抽選して最適行動へ更新する。$N$人全員が同時更新するゲームとは別のMarkov Chainである。ミクロ状態を$\mathbf s=(s_1,\ldots,s_N)$、$i$だけ符号を反転した状態を$\mathbf s^i$とし、
 
-相互作用行列が非対称$J_{ij}\ne J_{ji}$の場合、この同一式のポテンシャルが一般に存在しない。ポテンシャル性は「個人に他者の影響がある」というだけで自動的に成立しない。
+$$
+P(\mathbf s,\mathbf s^i)=\frac1N P_i(-s_i\mid\mathbf s_{-i})
+$$
 
-## 4. Detailed BalanceからFinite-$N$ Gibbs Measure
+と定める。どの二状態も一人ずつ更新する有限経路で結ばれ、Logit確率は厳密に正だから既約。個人が現在の行動を選び直す確率も正なので、全状態に自己ループがあり非周期的。有限の既約・非周期Markov鎖は一意の不変分布を持ち、任意初期分布から収束する（後半は有限Markov鎖の既知の外部定理）。
 
-候補分布を
+**命題II.2（Exact Potential）。** 対称相互作用$J$を持つ上記ゲームでは
+
 $$
-\boxed{
-\pi_N(\mathbf s)=
-\frac{\exp[\Phi_N(\mathbf s)/\tau]}{Z_N},
-\quad
-Z_N=\sum_{\mathbf s\in\{-1,+1\}^N}e^{\Phi_N(\mathbf s)/\tau}
-}
+\Phi_N(\mathbf s)
+=h\sum_i s_i+\frac{J}{2(N-1)}\sum_{i\ne j}s_is_j
 $$
-とする。$\mathbf s^i$が個人$i$のみ反転した状態なら、Logitのオッズ比とポテンシャル差の一致から
+
+がExact Potentialである。
+
+**証明。** 任意の個人$i$が$s_i$から$s_i'$に変更すると、線形項は$h(s_i'-s_i)$変化する。二次の和において$i$を含む組$(i,j),(j,i)$の両方が現れ、係数$1/2$が二重計上を除くので、
+
 $$
+\begin{aligned}
+\Delta_i\Phi_N
+&=h(s_i'-s_i)+
+\frac{J}{2(N-1)}\cdot2\sum_{j\ne i}(s_i'-s_i)s_j\\
+&=(s_i'-s_i)(h+Jm_{-i})
+=\Delta_i u_i.
+\end{aligned}
+$$
+
+これはExact Potentialの定義そのものである。$\square$
+
+**非対称相互作用の反例。** 二人のゲーム$u_1=s_1J_{12}s_2$、$u_2=s_2J_{21}s_1$を考え、$J_{12}\neq J_{21}$とする。主体1の選択差$u_1(+1,s_2)-u_1(-1,s_2)=2J_{12}s_2$を、$s_2=-1$から$+1$へ変えるとその差は$4J_{12}$変わる。同じ四つのゲーム状態を主体2からたどった場合は$4J_{21}$となる。Exact Potentialが存在すれば四角形の混合差は経路に依存しないはずなので$J_{12}=J_{21}$が必要。非対称な例では存在しない。
+
+## 4. Detailed Balanceから有限人数のGibbs測度を証明する
+
+分配関数$Z_N=\sum_{\mathbf s\in\{-1,+1\}^N}\exp[\Phi_N(\mathbf s)/\tau]$は有限正である。候補の定常分布を
+
+$$
+\pi_N(\mathbf s)=Z_N^{-1}\exp[\Phi_N(\mathbf s)/\tau]
+$$
+
+とする。対向する単一反転遷移の比率について、更新者$i$を選ぶ確率$1/N$が相殺し、Logitの二つの選択確率の比率は
+
+$$
+\begin{aligned}
 \frac{P(\mathbf s,\mathbf s^i)}{P(\mathbf s^i,\mathbf s)}
-=\exp\left(
-\frac{\Phi_N(\mathbf s^i)-\Phi_N(\mathbf s)}{\tau}
-\right)
-=\frac{\pi_N(\mathbf s^i)}{\pi_N(\mathbf s)}.
+&=\frac{P_i(-s_i\mid\mathbf s_{-i})}{P_i(s_i\mid\mathbf s_{-i})}\\
+&=\exp\left[\frac{u_i(-s_i,\mathbf s_{-i})-u_i(s_i,\mathbf s_{-i})}{\tau}\right]\\
+&=\exp\left[\frac{\Phi_N(\mathbf s^i)-\Phi_N(\mathbf s)}{\tau}\right]\\
+&=\frac{\pi_N(\mathbf s^i)}{\pi_N(\mathbf s)}.
+\end{aligned}
 $$
+
+**命題II.3（有限人数の可逆性と一意Gibbs分布）。** 上のゲームと非同期Logit更新の下では、$\pi_N$は唯一の定常分布であり、Detailed Balanceを満たす。
+
+**証明。** 上式を交差乗算すれば$\pi_N(\mathbf s)P(\mathbf s,\mathbf s^i)=\pi_N(\mathbf s^i)P(\mathbf s^i,\mathbf s)$。それ以外の異なる二状態間の直接遷移確率は両方向とも0。すべての状態間でDetailed Balanceが成り立つため、各状態への確率流入総量は流出総量に等しく$\pi_NP=\pi_N$。前節で証明した既約性より定常分布は一意である。$\square$
+
+ここでGibbs測度が出現する理由は**個人の効用の正確なPotential性と選択オッズの指数形**であり、すべての経済主体がEntropyを目的関数としているからではない。同時更新、非対称ゲーム、一定でない状態依存の更新者選択では、この証明は再利用できない。
+
+## 5. 配置数、Boltzmann Entropy、有限人数分配関数
+
+$S_N=\sum_i s_i$、$m_N=S_N/N$、$k=(N+S_N)/2$を正の選択者数とする。$m_N=m$を実現するミクロ配置の数は、$N$人から正の選択者を$k$人選ぶ方法の数
+
+$$
+W_N(m)=\binom Nk=\frac{N!}{k!(N-k)!}
+$$
+
+である。$p=k/N=(1+m)/2$。Stirlingの公式$\log n!=n\log n-n+O(\log n)$をそれぞれの階乗に適用すると、
+
+$$
+\begin{aligned}
+\frac1N\log W_N(m)
+&=\frac1N[\log N!-\log(Np)!-\log(N(1-p))!]\\
+&=-p\log p-(1-p)\log(1-p)+O(\log N/N)\\
+&=:H_B(m)+O(\log N/N)
+\end{aligned}
+$$
+
+を得る（内部の$p\in(0,1)$を固定）。$H_B(m)$は二値エントロピーであるが、効用そのものではない。
+
+ポテンシャルの二次項は$\sum_{i\neq j}s_is_j=S_N^2-N$なので、$m=(2k-N)/N$を使うと、同じ$m$に属する全ミクロ状態のポテンシャルは
+
+$$
+\Phi_N(m)=Nhm+\frac{J}{2(N-1)}(N^2m^2-N).
+$$
+
+したがって全$2^N$状態の和を$N+1$個のマクロ状態へ正確に集約できる。
+
+$$
+Z_N=\sum_{k=0}^N
+\binom Nk
+\exp\left[
+\frac{h(2k-N)}{\tau}
++\frac{J((2k-N)^2-N)}{2\tau(N-1)}
+\right].
+$$
+
+有限人数での確率分布は$P_{\pi_N}(m_N=m)=W_N(m)\exp[\Phi_N(m)/\tau]/Z_N$。**有限$N$の厳密式**であり、次節の連続$m$による近似とは違う。
+
+## 6. Large Deviationsを組合せ式から導出
+
+$\Psi(m)=H_B(m)+hm/\tau+Jm^2/(2\tau)$と定義する。前節の組合せ式から
+
+$$
+\frac1N\log\{W_N(m)e^{\Phi_N(m)/\tau}\}
+=\Psi(m)+O(\log N/N)
+$$
+
+となる。$m$の値は$N+1$種類しかないので、最大項で分配関数の和を挟むと
+
+$$
+\max_m e^{N\Psi_N(m)}
+\le Z_N\le(N+1)\max_m e^{N\Psi_N(m)},
+$$
+
+ここで$\Psi_N(m)=N^{-1}\log[W_N(m)e^{\Phi_N(m)/\tau}]$。対数を取って$N$で割ると、上界と下界の差は$\log(N+1)/N\to0$。従って
+
+$$
+\lim_{N\to\infty}\frac1N\log Z_N
+=\sup_{m\in[-1,1]}\Psi(m).
+$$
+
+離散格子上の$m_N$がある内部点$m$の近傍へ入る確率の指数率は、
+
+$$
+P(m_N\simeq m)\asymp e^{-NI(m)},\quad
+I(m)=\sup_x\Psi(x)-\Psi(m).
+$$
+
+これはこの有限状態のCurie–Weiss型模型の組合せ評価からの**大偏差率の導出**であり、任意の相互作用する一般経済に対するSanov型定理を証明したものではない。
+
+内部の典型的な$m$は$\Psi'(m)=0$を満たす。$H_B'(m)$を直接微分すると
+
+$$
+\begin{aligned}
+H_B'(m)&=-\frac12[\log((1+m)/2)+1]
++\frac12[\log((1-m)/2)+1]\\
+&=\frac12\log\frac{1-m}{1+m}
+=-\operatorname{arctanh}(m).
+\end{aligned}
+$$
+
 したがって
-$$
-\boxed{\pi_N(\mathbf s)P(\mathbf s,\mathbf s^i)
-=\pi_N(\mathbf s^i)P(\mathbf s^i,\mathbf s)}.
-$$
-全ての単一反転ペアに対して成立するから詳細釣合いが成立し、$\pi_N$は不変分布である。有限$N$で既約なので唯一の定常分布でもある。$\square$
 
-**重要な範囲：** 特定の同時性、対称的な効用相互作用、Logit更新を仮定した有限ゲームに対する証明である。任意の社会相互作用モデル、ネットワーク、学習ダイナミクスにGibbs測度があるわけではない。
+$$
+0=\Psi'(m)=-\operatorname{arctanh}(m)+(h+Jm)/\tau,
+$$
 
-## 5. Microstate Count、Boltzmann Entropy、Partition Function
+両辺に双曲線正接を適用して、初めて
 
-マクロ状態を$m_N=N^{-1}\sum_i s_i=S/N$とする。正の選択者数$k$は$k=N(1+m)/2$。同じ$m$を持つミクロ状態の個数は
 $$
-W_N(m)=\binom{N}{k},\qquad k=\frac{N(1+m)}2.
+m=\tanh((h+Jm)/\tau)
 $$
-Stirling公式を使い、$N$が大きく$k/N$が内部にあれば
-$$
-\frac1N\log W_N(m)\to
-H_B(m)=-\frac{1+m}{2}\log\frac{1+m}{2}
--\frac{1-m}{2}\log\frac{1-m}{2}.
-$$
-これが二値行動の**Boltzmann combinatorial entropy**。社会的な行動の分布がエントロピーを最大化する、という行動仮定ではない。
 
-ポテンシャルが同一$m$の全ミクロ状態で等しいので有限人数の分配関数を厳密に集計できる。
-$$
-\boxed{
-Z_N=\sum_{k=0}^N\binom Nk
-\exp\left\{
-\frac{h(2k-N)}{\tau}+
-\frac{J[(2k-N)^2-N]}{2\tau(N-1)}
-\right\}.
-}
-$$
-したがって厳密な有限人数の$m$の確率は
-$$
-P_{\pi_N}(m_N=m)=
-\frac{W_N(m)\exp[\Phi_N(m)/\tau]}{Z_N}.
-$$
-この式は有限$N$での正確な分布で、$m$を連続とみなす近似とは異なる。社会的相互作用のある経済で「多数のミクロ配置が典型的なマクロ状態を決める」という統計力学の命題が、個人効用から直接導かれた。
+が導かれる。ただし**一階条件を満たす全ての解が大域最大ではない**。下の臨界分析においてこの違いが重要である。
 
-## 6. Large DeviationsとMean-Field Self Consistency
+## 7. 相転移の存在、個数、局所安定性を証明する
 
-$N\to\infty$で$\Phi_N/N\to hm+Jm^2/2$。したがってLaplace原理の下でマクロ確率は
-$$
-P(m_N\simeq m)\asymp
-\exp\left\{N\left[
-H_B(m)+\frac{hm}{\tau}+\frac{Jm^2}{2\tau}-\sup_x\Psi(x)
-\right]\right\},
-$$
-$$
-\Psi(m)=H_B(m)+\frac{hm}{\tau}+\frac{Jm^2}{2\tau}.
-$$
-大偏差レート関数は
-$$
-\boxed{I(m)=\sup_{x\in[-1,1]}\Psi(x)-\Psi(m)\ge0.}
-$$
-典型的な集計選択は$\Psi$を最大化する。内部の一階条件は
-$$
-\Psi'(m)=-\operatorname{arctanh}(m)+\frac{h+Jm}{\tau}=0.
-$$
-よって
-$$
-\boxed{m=\tanh((Jm+h)/\tau).}
-$$
-これは大人数極限における**自己整合条件**であり、有限人数の平均$E[m_N]$が全ての$N$でこの式を厳密に満たすという主張ではない。
+$h=0$、$k=J/\tau$と書く。自己整合方程式は$m=\tanh(km)$で、$m=0$は常に解である。
 
-なお、大偏差関数の局所最小点は準安定的な分布の集中点となり得るが、グローバルに典型的なマクロ状態は**大域的な**最小点で決まる。単なる一階条件の複数解すべてが、平衡の確率質量を同程度に持つわけではない。
+**命題II.4（対称模型の解の個数）。** $k\le1$なら自己整合方程式の解は$m=0$のみ。$k>1$なら$0$と対称な非ゼロ解$\pm m^*$の3解が存在し、非ゼロの正の解は一意である。
 
-## 7. Phase TransitionとSocial Multiplier
+**証明。** $m>0$について$\tanh(km)<km$。$k\le1$なら$\tanh(km)<km\le m$だから正の解はない。奇関数なので負の解もない。$k>1$では$f(m)=\tanh(km)-m$とすると$f(0)=0$、$f'(0)=k-1>0$、$f(1)=\tanh(k)-1<0$。よって中間値定理により$(0,1)$に正の解が存在する。$m>0$における$f''(m)=-2k^2\operatorname{sech}^2(km)\tanh(km)<0$から$f$は厳密凹、$f'(m)$は単調減少だから正のゼロ交差は一度だけ。負の解は対称性から従う。$\square$
 
-対称ケース$h=0$では$m=0$が常に自己整合解。$\Psi''(m)=-1/(1-m^2)+J/\tau$より
-$$
-\Psi''(0)=J/\tau-1.
-$$
-$J/\tau<1$では$m=0$が唯一の大域最大点、$J/\tau>1$では$m=0$は局所最小点となり、$\pm m^*$が対称的な大域最大点になる。$J/\tau=1$はCurie–Weiss型の連続相転移点である。$\tanh x=x-x^3/3+O(x^5)$を使えば臨界近傍で
-$$
-(m^*)^2\simeq\frac{3(J/\tau-1)}{(J/\tau)^3},
-$$
-すなわち臨界指数$1/2$が得られる（**大人数・臨界近傍の漸近式**）。
+レート関数を決める$\Psi''(m)=-1/(1-m^2)+k$より、$k<1$で$m=0$は局所最大、$k>1$で局所最小。非ゼロの外側の解は$\Psi''<0$を満たし局所最大となる。$h=0$では対称性から二つの大域最大が等高である。臨界点は$k=1$。
 
-自己整合式を$h$で暗黙微分すると
+$tanh x=x-x^3/3+O(x^5)$を原点近傍に代入すると、
+
 $$
-\boxed{
+m=km-\frac{k^3m^3}{3}+O(m^5)
+\quad\Longrightarrow\quad
+(m^*)^2=\frac{3(k-1)}{k^3}+O((k-1)^2).
+$$
+
+したがって秩序変数は$(k-1)^{1/2}$の速度で立ち上がる。これは指定した大人数極限の**漸近式**であり、有限人数に真の不連続な相転移を見つけたことを意味しない。
+
+**局所安定性。** 期待平均行動を前期から更新する特定の平均場動学$m_{t+1}=\tanh((Jm_t+h)/\tau)$を別途考える。この写像の導関数は$k(1-m^2)$。従って$|k(1-m^2)|<1$なら線形近傍の摂動が縮小し、$>1$なら拡大する。これは**指定した動学**の安定性であり、有限人数の非同期Markov鎖の定常一意性とは別である。
+
+## 8. External Field、Spinodal、社会的乗数
+
+$J>\tau$で、自己整合条件の外生便益を$m$の関数として解くと
+
+$$
+h(m)=\tau\operatorname{arctanh}(m)-Jm.
+$$
+
+$dh/dm=\tau/(1-m^2)-J$がゼロになる点は$m=\pm r$、$r=\sqrt{1-\tau/J}$。$h(-r)=Jr-\tau\operatorname{arctanh}(r)>0$、$h(r)$は負。よって
+
+$$
+h_c=Jr-\tau\operatorname{arctanh}(r)
+$$
+
+がSpinodalの外場閾値である。$|h|<h_c$では自己整合方程式に3解、$|h|>h_c$では1解、境界$|h|=h_c$では接する重根が生じる（これらの結果は$h(m)$の極大・極小と単調性から従う）。重根と大域最大の間の切替は異なる点で起こり得るため、Spinodalを厚生的な最適均衡選択と呼ばない。
+
+自己整合方程式$F(m,h)=m-\tanh((h+Jm)/\tau)=0$を微分すると
+
+$$
+F_m=1-\frac{J}{\tau}(1-m^2),\qquad
+F_h=-\frac{1-m^2}{\tau}.
+$$
+
+$F_m\ne0$では陰関数定理を適用でき、$dm/dh=-F_h/F_m$だから
+
+$$
 \frac{\partial m}{\partial h}
 =\frac{1-m^2}{\tau-J(1-m^2)}.
-}
 $$
-$J(1-m^2)/\tau<1$という局所安定枝では、他者への反応が存在しない場合より社会的効果が増幅される。これが社会的乗数（social multiplier）の特殊な表現。
 
-有限$N$では$\pi_N$は一意で滑らかな関数として存在し、$h=0$の有限人数平均$E_{\pi_N}[m_N]=0$は常に成り立つ。それにもかかわらず、$N$を増やすと分布が$\pm m^*$近傍に二峰性を持ち、両峰の間の移動が稀になり得る。この**準安定性**と均衡の非一意性を区別する。外部場$h$を先にゼロへ近づけるか、$N\to\infty$を先に行うかで選ばれる極限が違い得る。
+$J>0$で安定な分枝では他者の反応の連鎖により社会的な反応が増幅する。分母がゼロへ近づくと局所感応度は発散し得るが、有限人数の期待値の導関数は有限である。
 
-## 8. Individual Equilibrium、Social Planner、Welfare
+## 9. 有限人数の感応度と準安定性の区別
 
-各個人が他人の$m$を所与として最適反応する条件と、社会計画者がすべての選択を同時に選ぶ条件は異なる。全員のショックを除いた効用の和は
+有限人数の分配関数を$Z_N(h)$とし、$\partial\Phi_N/\partial h=S_N$を使って微分すると
+
 $$
-\sum_i u_i(\mathbf s)
-=hS+\frac{J}{N-1}(S^2-N).
-$$
-一方、ポテンシャルは
-$$
-\Phi_N(\mathbf s)=hS+\frac{J}{2(N-1)}(S^2-N).
-$$
-相互作用項が**2倍異なる**。家計は自分の選択が他人の同調便益を変える影響を内部化しない。この比較は対称ゲームの具体的な外部性を示すが、Gibbs分布の最頻状態が常に厚生最大という主張を否定する。
-
-市場価格・財・資産がないこのモデルの固定点を**競争的一般均衡**と呼んではならない。銀行取付・技術普及・企業選択に拡張するなら、それぞれの予算・契約・生産の市場条件が追加的に必要である。
-
-## 9. Reflection ProblemとIdeal Experiment
-
-$E[s_i\mid X_i,\bar s_{-i}]$が$\bar s_{-i}$と相関しても、模倣の因果効果$J$を識別できない。未観測の共通環境や同類的なネットワーク形成も同じ相関を生む。[Manski (1993)](https://doi.org/10.2307/2298123)のReflection Problemである。
-
-**理想実験：** ランダム化した社会的情報を一部の隣人だけに与え、個人$i$への直接情報効果を排除したうえで、隣人の変化が$i$の行動・支出に及ぼす効果を推定する。ただし隣人の選択が内生的なら単純な比率は構造的な$J$に直結しない。先験的なネットワーク形成、局所的な共通ショック、選択ショック尺度$\tau$を別に識別する設計が必要となる。
-
-比較静学としては相互作用が強いほど外生情報処置の局所伝播が増幅することと、ネットワークを断ち切ると効果が減衰することが候補。ただしモデルが予測するのは**変化の機構**であり、全ての観察された同調が模倣と断定できるわけではない。
-
-## 10. 数値図・文献・研究評価
-
-[有限人数の定常マクロ分布と相転移](figures/ising-finite-population.svg)は、上の$Z_N$を対数和指数関数で計算する**厳密な有限状態の理論分布**の可視化である。[再現Python](scripts/generate_figures.py)。有限人数の確率的更新のモンテカルロでは、観測時間の長さにより二峰性間の移動頻度が変わるため「観測されなかった移動」を不可逆な複数均衡と呼ばない。
-
-**既存の結果：** Logit社会選択と複数自己整合解は[Brock and Durlauf (2001)](https://doi.org/10.1111/1467-937X.00168)、確率的戦略更新は[Blume (1993)](https://doi.org/10.1006/game.1993.1023)の研究系列。有限人数の同調移動は[Kirman (1993)](https://doi.org/10.2307/2118498)。**追加的な研究の可能性：** 資産制約と同調便益を同時に持つ家計が、政策ショックにどのような非線形な消費反応を示すか。ただしBrock–DurlaufとHANKの単なる組み合わせでは不十分で、相互作用×流動性制約による新しい比較静学と反例が必要である。
-
-
-![Blume–Brock–Durlauf型の有限人数Gibbs定常分布](figures/ising-finite-population.svg)
-
-## Appendix A. 有限人数のGibbs法則と選択感応度の厳密な計算
-
-有限$N$のポテンシャル$\Phi_N(\mathbf s)$と分配関数
-$$
-Z_N(h,J,\tau)=\sum_{\mathbf s}\exp[\Phi_N(\mathbf s)/\tau]
-$$
-を考える。$S=\sum_i s_i$なら$\partial\Phi_N/\partial h=S$なので
-$$
-\frac{\partial\log Z_N}{\partial h}=\frac{E_{\pi_N}[S]}{\tau},
-\qquad
+\begin{aligned}
+\frac{\partial\log Z_N}{\partial h}
+&=\frac{1}{Z_N}\sum_{\mathbf s}
+\frac{S_N(\mathbf s)}{\tau}e^{\Phi_N(\mathbf s)/\tau}
+=\frac{E_{\pi_N}[S_N]}{\tau},\\
 \frac{\partial^2\log Z_N}{\partial h^2}
-=\frac{\operatorname{Var}_{\pi_N}(S)}{\tau^2}.
+&=\frac{E_{\pi_N}[S_N^2]-E_{\pi_N}[S_N]^2}{\tau^2}.
+\end{aligned}
 $$
-ゆえに**有限人数の平均行動**について
+
+よって有限$N$の集計平均について
+
 $$
-\boxed{\frac{\partial E_{\pi_N}[m_N]}{\partial h}
-=\frac{\operatorname{Var}_{\pi_N}(S)}{N\tau}\ge0.}
+\frac{\partial E_{\pi_N}[m_N]}{\partial h}
+=\frac{\operatorname{Var}_{\pi_N}(S_N)}{N\tau}\ge0.
 $$
-分配関数は有限個の正の解析的な指数項の和なので、$\tau>0$、有限$N$なら非解析的な相転移は発生しない。本文の$J/\tau=1$という臨界点は、$N\to\infty$の大偏差・自己整合方程式に関する結果である。
 
-有限状態の詳細釣合いの証明では、状態$\mathbf s$から$i$だけを変更する条件付きLogit確率の比が
+$Z_N$は有限個の解析的な正の指数関数の和なので、$\tau>0$、有限$N$で非解析的な自由エネルギーの相転移は起きない。$h=0$なら対称性により$E[m_N]=0$でも、$J/\tau>1$では分布の質量が$\pm m^*$周辺に二峰性で集中する。有限$N$で一意な不変分布を持つことと、有限の観測期間にはモードの間の移動が稀な準安定性は矛盾しない。遷移時間の指数オーダーを正確に主張するには可逆鎖のスペクトル・大偏差の追加理論が必要なので、ここでは未証明の一般定理として扱わない。
+
+## 10. 計画者の厚生と個人の外部性
+
+確定的効用を全員について加算すると
+
 $$
-\frac{P(\mathbf s,\mathbf s^i)}{P(\mathbf s^i,\mathbf s)}
-=\exp\left\{\frac{u_i(-s_i,\mathbf s_{-i})-
-u_i(s_i,\mathbf s_{-i})}{\tau}\right\}
+\begin{aligned}
+W_N(\mathbf s)
+&=\sum_i s_i h+\frac{J}{N-1}\sum_i\sum_{j\ne i}s_is_j\\
+&=hS_N+\frac{J}{N-1}(S_N^2-N).
+\end{aligned}
 $$
-となり、Exact Potential性により$\exp[(\Phi_N(\mathbf s^i)-\Phi_N(\mathbf s))/\tau]$に一致する。したがって可逆である。相互作用が非対称なネットワークでは、このポテンシャル差の等式を満たす関数が一般に存在せず、同じ証明は使えない。
 
-## Appendix B. 大域的な典型状態と局所的な準安定性
+一方、Potentialは$\Phi_N=hS_N+J(S_N^2-N)/[2(N-1)]$で、相互作用項が**半分**である。なぜなら主体$i$の行動変更は本人の同調利得に加え、他者$j$が感じる$i$への同調利得も変えるからである。両者の差を明示すると、
 
-$h=0$でレート関数を$I(m)=\sup_x\Psi(x)-\Psi(m)$と書くと、$\Psi''(0)=J/\tau-1$。$J/\tau<1$で$m=0$が大域最大、$J/\tau>1$で非ゼロ対称枝$\pm m^*$が大域最大となる。$\Psi'(m)=0$の任意の解が**大域最大**とは限らない。とくに$J/\tau>1$で$m=0$は自己整合式を満たすが典型的な安定分布ではない。
-
-$\tau>0$、有限$N$の非同期Logit鎖は既約なので定常測度は常に一意である。それでも低温相では$\pm m^*$の山を跨ぐ移行時間が非常に長くなり得る。長い期間に一方のモードだけを観測しても、そのことは二つの有限人数の不変測度を意味しない。
-
-## Appendix C. 厚生と識別の対象
-
-確率的に選ぶ個人の**ショックを除いた利得**の和は
 $$
-\sum_i u_i(\mathbf s)=hS+\frac{J}{N-1}(S^2-N),
+W_N(\mathbf s)-\Phi_N(\mathbf s)
+=\frac{J}{2(N-1)}(S_N^2-N).
 $$
-ポテンシャルは$hS+\frac{J}{2(N-1)}(S^2-N)$である。従って、個人の外部効果が計画者に内部化されないことを示せる。ただしGumbel選択ショックを計画者が事前に観測するか否かにより、厚生の期待値や最適配分は変わる。「Gibbs測度の最頻値＝社会的最適」という一般的な結論は出ない。
 
-社会的乗数$dm/dh$は、相関の推定量ではなく、$J$と$\tau$が識別済みであることを前提としたモデルの比較静学である。Manski (1993)のReflection Problemから、集団平均の行動と個人の行動の回帰だけで$J$は識別できない。
+これは個人が自身の他者への効果を内部化しないことを示す。確率的なショックを含む期待厚生を計画者が最大化する場合は、ショック観察・情報集合と選択タイミングを新しく定める必要がある。この計算だけでGibbsの最頻値が社会的に最適とは言えない。
+
+## 11. Reflection Problemを構造方程式から理解する
+
+Manski型の識別問題を簡単な線形社会効果模型で考える。家計$i$の行動$y_i$、観測特性$x_i$、集団平均$\bar y_g,\bar x_g$について
+
+$$
+y_i=\alpha+\beta\bar y_g+\gamma\bar x_g+\delta x_i+u_g+\epsilon_i
+$$
+
+と仮定する（同じ集団平均に自身を含む単純化）。集団平均を取ると
+
+$$
+(1-\beta)\bar y_g=
+\alpha+(\gamma+\delta)\bar x_g+u_g+\bar\epsilon_g.
+$$
+
+従って観測される集団平均回帰の傾きは$(\gamma+\delta)/(1-\beta)$。同じ傾きは異なる$\beta,\gamma,\delta$の組合せで生成できる。さらに$u_g$が存在すると集団共通ショックと内生的な模倣効果が観測的に混ざる。これがReflection Problemの基本的な識別障害の具体例である。平均行動の相関だけで$J$や社会的乗数を推定してはならない。理想実験はランダムな社会情報割当、相手の受け取る情報だけを変える設計などだが、直接効果を排除できるかが経済学的識別仮定となる。
+
+## 12. 数値計算・原著との対応
+
+有限人数の$Z_N$は対数和指数で計算し、$\pi_N$の正規化、全単一反転ペアのDetailed Balanceを検証する。$J/\tau$を臨界前後で変えたときの$m_N$の正確な定常確率を図示し、数値シミュレーションの混合時間と区別する。
+
+![有限人数の社会的選択のGibbs分布](figures/ising-finite-population.svg)
+
+本講義で証明したII.1–II.4は、**対称な二択、完全グラフ、独立Gumbelショック、一人ずつの更新**という講義用特殊ケースの結果である。Brock–Durlauf原著の多重自己整合平均や識別の研究、Blume原著の格子状の相互作用と戦略改定、Kirmanの群集モデルを一つの同一モデルだと称しない。モデルの「相転移」が一般の市場均衡や厚生政策の結論に直結するわけではない。
