@@ -34,7 +34,7 @@ E_0\sum_{t=0}^{\infty}\beta^t u(c_t),\qquad
 u'(c)=c^{-\gamma},\qquad u''(c)=-\gamma c^{-\gamma-1}<0.
 $$
 
-$\gamma\neq1$なら$u(c)=c^{1-\gamma}/(1-\gamma)$、$\gamma=1$なら$u(c)=\log c$とし、効用の加法定数は価値の差に影響しない。借入下限は自然借入限度か、より厳しい外生制約とする。所得系列の支持と$1+r_t>0$により実行可能な正の消費が存在することを仮定する。
+$\gamma\neq1$なら$u(c)=c^{1-\gamma}/(1-\gamma)$、$\gamma=1$なら$u(c)=\,\log c$とし、効用の加法定数は価値の差に影響しない。借入下限は自然借入限度か、より厳しい外生制約とする。所得系列の支持と$1+r_t>0$により実行可能な正の消費が存在することを仮定する。
 
 企業は$Y_t=AK_t^\alpha L_t^{1-\alpha}$、$\alpha\in(0,1)$、減耗$\delta\in(0,1)$の技術を持ち、競争的な利潤最大化問題
 
@@ -160,23 +160,23 @@ $$
 $$
 \mathcal M(\widetilde a',z)=
 \beta(1+r)\sum_{z'}P_z(z,z')
-c_{\rm old}(\widetilde a',z')^{-\gamma}
+c_{\mathrm{old}}(\widetilde a',z')^{-\gamma}
 $$
 
 を計算すると、現在消費は限界効用の逆関数から
 
 $$
-c_{\rm endo}(\widetilde a',z)=\mathcal M(\widetilde a',z)^{-1/\gamma}
+c_{\mathrm{endo}}(\widetilde a',z)=\mathcal M(\widetilde a',z)^{-1/\gamma}
 $$
 
 となる。現在の予算式へ代入して
 
 $$
-a_{\rm endo}(\widetilde a',z)=
-\frac{c_{\rm endo}(\widetilde a',z)+\widetilde a'-wz}{1+r}
+a_{\mathrm{endo}}(\widetilde a',z)=
+\frac{c_{\mathrm{endo}}(\widetilde a',z)+\widetilde a'-wz}{1+r}
 $$
 
-を得る。$(a_{\rm endo},c_{\rm endo})$の点を作り、現在の外生資産グリッド$a_j$へ単調な補間を行う。$a_j<a_{\rm endo}(\underline a,z)$では内点Euler条件を使わず、$a'=\underline a$と$c=(1+r)a_j+wz-\underline a$を直接課す。
+を得る。$(a_{\mathrm{endo}},c_{\mathrm{endo}})$の点を作り、現在の外生資産グリッド$a_j$へ単調な補間を行う。$a_j<a_{\mathrm{endo}}(\underline a,z)$では内点Euler条件を使わず、$a'=\underline a$と$c=(1+r)a_j+wz-\underline a$を直接課す。
 
 **命題I.3（資産Lotteryの二つの保存則）。** 政策$a'=g(a_j,z)$が新分布グリッド$[a_0,\ldots,a_G]$に含まれ、隣接ノード$a_\ell\le a'\le a_{\ell+1}$の間で
 
@@ -316,7 +316,7 @@ $$
 
 ## 8. ItoからFokker–Planckを導く所得拡散への拡張
 
-離散所得を変更し、**別のモデル**として対数労働効率$x=\log z$に
+離散所得を変更し、**別のモデル**として対数労働効率$x=\,\log z$に
 
 $$
 dx_t=\kappa(\bar x-x_t)dt+\sigma dW_t,\qquad z_t=e^{x_t}
@@ -365,42 +365,42 @@ $$
 
 ## 10. Log–SumとKL Data Processingの完全な証明
 
-正の数$a_i,b_i$について、$A=\sum_i a_i$、$B=\sum_i b_i$とする。$q_i=a_i/A$、$p_i=b_i/B$と置く。$\log x\le x-1$を各比率$x=p_i/q_i$へ適用すると、
+正の数$a_i,b_i$について、$A=\sum_i a_i$、$B=\sum_i b_i$とする。$q_i=a_i/A$、$p_i=b_i/B$と置く。$\,\log x\le x-1$を各比率$x=p_i/q_i$へ適用すると、
 
 $$
 \begin{aligned}
-\sum_iq_i\log\frac{p_i}{q_i}
+\sum_iq_i\,\log\frac{p_i}{q_i}
 &\le\sum_iq_i\left(\frac{p_i}{q_i}-1\right)\\
 &=\sum_i(p_i-q_i)=0.
 \end{aligned}
 $$
 
-従って$\sum_iq_i\log(q_i/p_i)\ge0$であり、
+従って$\sum_iq_i\,\log(q_i/p_i)\ge0$であり、
 
 $$
 \begin{aligned}
-\sum_ia_i\log\frac{a_i}{b_i}
-&=\sum_iAq_i\log\frac{Aq_i}{Bp_i}\\
-&=A\log(A/B)+A\sum_iq_i\log(q_i/p_i)\\
-&\ge A\log(A/B).
+\sum_ia_i\,\log\frac{a_i}{b_i}
+&=\sum_iAq_i\,\log\frac{Aq_i}{Bp_i}\\
+&=A\,\log(A/B)+A\sum_iq_i\,\log(q_i/p_i)\\
+&\ge A\,\log(A/B).
 \end{aligned}
 $$
 
 これが**Log–Sum不等式の証明**。ゼロ成分は極限で処理する。
 
-**命題I.5（KL Data Processing）。** $P$を有限状態の行確率行列、$f,\pi$を確率分布、$\pi P=\pi$、$D_{\rm KL}(f\Vert\pi)<\infty$とすると
+**命題I.5（KL Data Processing）。** $P$を有限状態の行確率行列、$f,\pi$を確率分布、$\pi P=\pi$、$D_{\mathrm{KL}}(f\Vert\pi)<\infty$とすると
 
 $$
-D_{\rm KL}(fP\Vert\pi)\le D_{\rm KL}(f\Vert\pi).
+D_{\mathrm{KL}}(fP\Vert\pi)\le D_{\mathrm{KL}}(f\Vert\pi).
 $$
 
 **証明。** 各遷移先$j$にLog–Sum不等式を$a_i=f_iP_{ij}$、$b_i=\pi_iP_{ij}$として適用する。
 
 $$
 \begin{aligned}
-(fP)_j\log\frac{(fP)_j}{(\pi P)_j}
-&\le\sum_if_iP_{ij}\log\frac{f_iP_{ij}}{\pi_iP_{ij}}\\
-&=\sum_if_iP_{ij}\log\frac{f_i}{\pi_i}.
+(fP)_j\,\log\frac{(fP)_j}{(\pi P)_j}
+&\le\sum_if_iP_{ij}\,\log\frac{f_iP_{ij}}{\pi_iP_{ij}}\\
+&=\sum_if_iP_{ij}\,\log\frac{f_i}{\pi_i}.
 \end{aligned}
 $$
 
@@ -408,10 +408,10 @@ $$
 
 $$
 \begin{aligned}
-D_{\rm KL}(fP\Vert\pi)
-&=D_{\rm KL}(fP\Vert\pi P)\\
-&\le\sum_i f_i\left(\sum_jP_{ij}\right)\log\frac{f_i}{\pi_i}\\
-&=D_{\rm KL}(f\Vert\pi).
+D_{\mathrm{KL}}(fP\Vert\pi)
+&=D_{\mathrm{KL}}(fP\Vert\pi P)\\
+&\le\sum_i f_i\left(\sum_jP_{ij}\right)\,\log\frac{f_i}{\pi_i}\\
+&=D_{\mathrm{KL}}(f\Vert\pi).
 \end{aligned}
 $$
 
@@ -419,11 +419,11 @@ $$
 
 **反例：非可逆でもKL縮小。** 三状態で$P_{12}=P_{23}=P_{31}=1$、それ以外の要素が0の循環行列をとる。一様$\pi=(1/3,1/3,1/3)$は不変だが、$\pi_1P_{12}=1/3$に対し$\pi_2P_{21}=0$なので詳細釣合いは成立しない。それでも命題I.5は成立する（この決定論的な巡回ではKLは**等号**であり、厳密な減少や混合は主張できない）。
 
-**反例：分布依存核に同じ参照$\pi$を使えない。** 分布$f=(p,1-p)$に応じて両行が$(F(p),1-F(p))$となる核$P(p)$をとり、$F(p)=1/2+0.48\tanh[10(p-1/2)]$とする。$p=1/2$は固定点だが$F'(1/2)=4.8>1$なので近傍の摂動は増幅する。例えば$p=0.51$では$F(p)\simeq0.54784$となり、二値の$D_{\rm KL}((p,1-p)\Vert(1/2,1/2))$は増える。Data Processingが壊れたわけではない。比較すべき基準分布が$\pi P(p)$に変わり、$\pi P(p)\neq\pi$となるため、同一の$\pi$への単調性が結論できない。これは**Markov核の数学的な反例**であり、Aiyagariの均衡がそのような不安定性を持つと主張するものではない。
+**反例：分布依存核に同じ参照$\pi$を使えない。** 分布$f=(p,1-p)$に応じて両行が$(F(p),1-F(p))$となる核$P(p)$をとり、$F(p)=1/2+0.48\tanh[10(p-1/2)]$とする。$p=1/2$は固定点だが$F'(1/2)=4.8>1$なので近傍の摂動は増幅する。例えば$p=0.51$では$F(p)\simeq0.54784$となり、二値の$D_{\mathrm{KL}}((p,1-p)\Vert(1/2,1/2))$は増える。Data Processingが壊れたわけではない。比較すべき基準分布が$\pi P(p)$に変わり、$\pi P(p)\neq\pi$となるため、同一の$\pi$への単調性が結論できない。これは**Markov核の数学的な反例**であり、Aiyagariの均衡がそのような不安定性を持つと主張するものではない。
 
 ## 11. Detailed Balance、Entropy、Gibbsの経済的な意味
 
-固定されたMarkov核で不変分布$\pi$を得ることと、ペアごとの流入流出が相殺するDetailed Balanceを得ることは別。更に$\pi_i\propto e^{-E_i/\tau}$という形式は、後から$E_i=-\tau\log\pi_i$と定義すれば任意の正分布について書ける。経済的に独立な効用・費用・ポテンシャルを使ってその形を**事前に導出**したときだけ構造的な意味がある。
+固定されたMarkov核で不変分布$\pi$を得ることと、ペアごとの流入流出が相殺するDetailed Balanceを得ることは別。更に$\pi_i\propto e^{-E_i/\tau}$という形式は、後から$E_i=-\tau\,\log\pi_i$と定義すれば任意の正分布について書ける。経済的に独立な効用・費用・ポテンシャルを使ってその形を**事前に導出**したときだけ構造的な意味がある。
 
 Aiyagariの富分布は、最適貯蓄政策、借入制約、所得過程、資本市場清算で決まる。通常は富を保存するランダム交換模型でも、Gibbsの詳細釣合いを前提とした模型でもない。KL縮小は固定政策の有限Markov作用素についての数学的定理であり、厚生最大化や競争均衡の存在証明ではない。
 
