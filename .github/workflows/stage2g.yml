@@ -76,6 +76,20 @@ jobs:
           assert d['upper_log_nash'] >= d['lower_log_nash']-1e-10
           print('Bounded to tolerance:',d['bounded_to_tolerance'],'gap:',d['gap_log_nash'])
           PY
+      - name: Independent all-pair monotone Nash global bound and Bellman recheck
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_all_pairs.py --gap 0.0001 --max-boxes 100000
+      - name: Enforce all-pair global-bound and reoptimized Bellman fixed point
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('research/02-kinetic-exchange-yakovenko/stage2g/results/all_pair_monotone_summary.json')
+          z=json.loads(path.read_text())
+          assert z["all_policy_nash_bounded_to_tolerance"], z
+          assert z["Bellman_sup_after_global_policy_recheck"] < 1e-8, z
+          assert z["positive_pair_count"] == 11, z
+          print("All-pair numerical bounds and reoptimized private fixed point checked")
+          PY
       - name: Upload private-problem evidence
         if: always()
         uses: actions/upload-artifact@v4
