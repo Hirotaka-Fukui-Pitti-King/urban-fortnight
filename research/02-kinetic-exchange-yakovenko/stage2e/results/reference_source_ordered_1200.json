@@ -1,0 +1,40 @@
+{
+  "status": "ALL_1200_CONDITIONAL_MONEY_AUCTIONS_CLEARED_NO_STATIONARY_GE",
+  "equilibrium_certified": false,
+  "source": "Molico-Zhang Section 4; finite-grid approximation with source order",
+  "alpha_V": 0.035,
+  "alpha_distribution": 0.035,
+  "beta": 0.96,
+  "steps_executed": 1200,
+  "all_steps_money_cleared": true,
+  "original_author_adaptive_grid": false,
+  "all_pairs_continuous_bargaining": false,
+  "checkpoints": [
+    {
+      "step": 1,
+      "price": 3.0075000000000003,
+      "bellman_sup": 153.09436766947138,
+      "distribution_sup": 0.6190820430106966,
+      "money_max_mass": 0,
+      "capital_max_mass": 0
+    },
+    {
+      "step": 80,
+      "price": 2.2520781053620222,
+      "bellman_sup": 136.4041566018197,
+      "distribution_sup": 0.04227154367196932,
+      "money_max_mass": 0.05199323093730596,
+      "capital_max_mass": 3.244668161992989e-8
+    },
+    {
+      "step": 1200,
+      "price": 73.91462775763782,
+      "bellman_sup": 4.149941547103367,
+      "distribution_sup": 0.0022027806495189817,
+      "money_max_mass": 0.23208291233316045,
+      "capital_max_mass": 0.00021801404013776083
+    }
+  ],
+  "reported_as": "numerical nonconvergence and price-grid pressure, NOT equilibrium",
+  "complete_trace": "Actions run 41618040998 artifact stage2e-continuous-CM-conditional-not-GE"
+}

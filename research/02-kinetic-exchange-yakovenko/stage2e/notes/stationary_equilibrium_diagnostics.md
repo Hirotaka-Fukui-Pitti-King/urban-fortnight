@@ -26,3 +26,22 @@ One supported match at 5x5, conditional p=3.01125: output y=0.6535636809538037; 
 ## Research decision
 
 DM preserves fiat money and population mass and produces output from seller labor/capital. CM's continuous joint portfolio policy conserves the aggregate goods/financial budget at quoted price. Yet the current experiment does NOT simultaneously satisfy stationarity, optimized continuous bargaining in all meetings, or high-grid numerical accuracy. Thus there is no claim about monetary policy, welfare, a stationary kinetic operator or a new mechanism beyond Molico--Zhang.
+
+
+## Source-ordered fixed-point stress test: 1,200 executed iterations
+
+The new source-order diagnostic computes a market-clearing CM price for **fixed entering CM wealth distribution and prior V**, chooses CM portfolios, executes decentralized production and trading, and updates V and next CM entrant distribution. The GitHub Actions artifact contains its complete 1,200-step CSV and JSON traces; code is in the Stage 2-E scripts folder.
+
+Each of the 1,200 updates finds an endogenous conditional money-clearing price. Issuer fiat stock after CM and after DM equals one to numerical tolerance; probability mass and CM budget accounting checks pass. **No stationary monetary GE is obtained.**
+
+| Update | Conditional price | Bellman sup | Entrant distribution sup | Upper money-grid mass | Upper capital-grid mass |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 3.007500 | 153.094368 | 0.619082 | 0 | 0 |
+| 80 | 2.252078 | 136.404157 | 0.042272 | 0.051993 | approximately 0 |
+| 1,200 | 73.914628 | 4.149942 | 0.002203 | 0.232083 | 0.000218 |
+
+This evidence revises the Stage 2-D diagnosis. Once the original CM-then-DM order is followed, loss of a money-clearing price is **not** the observed failure for this path. Rather, joint fixed-point residuals remain large and the quoted price drifts while the bounded money savings-grid accumulates 23.2% of the population at its ceiling. The original paper's numerical step 6 dynamically rescales capital and money state-grid bounds with current maximum wealth and price; our pilot does not.
+
+Under an illustrative fixed-price, fixed-population contraction with beta=0.96, value damping alpha_V=0.035 gives modulus 1-alpha_V*(1-beta)=0.9986, explaining why short iteration runs do not establish convergence. This is NOT a contraction theorem for the full price/value/distribution operator.
+
+Remaining requirements are adaptive grids, accurate value-function interpolation, a faster inner Bellman solver, globally checked continuous all-pair Nash bargaining, full stationary GE and independent grid convergence. No new policy or welfare result is established.

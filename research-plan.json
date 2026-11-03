@@ -186,11 +186,19 @@
   },
   "stage2e": {
     "branch": "research/stage2e-continuous-monetary-ge",
-    "status": "one_period_continuous_CM_cleared_but_stationary_GE_unverified",
+    "status": "source_ordered_1200_steps_clear_money_but_not_stationary",
     "directory": "research/02-kinetic-exchange-yakovenko/stage2e",
     "continuous_Nash_all_pairs": false,
     "verified_stationary_GE": false,
     "novelty_claim": false,
-    "result": "research/02-kinetic-exchange-yakovenko/stage2e/results/reference_conditional.json"
+    "result": "research/02-kinetic-exchange-yakovenko/stage2e/results/reference_conditional.json",
+    "source_ordered_iterations_run": 1200,
+    "source_ordered_money_auctions_cleared": 1200,
+    "last_price": 73.91462775763782,
+    "last_bellman_sup": 4.149941547103367,
+    "last_distribution_sup": 0.0022027806495189817,
+    "last_money_grid_ceiling_mass": 0.23208291233316045,
+    "original_adaptive_grid_implemented": false,
+    "source_ordered_trace": "GitHub Actions run 41618040998"
   }
 }
