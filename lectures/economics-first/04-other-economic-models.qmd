@@ -272,6 +272,22 @@ $$
 
 金融ネットワークの有限責任清算$p_i=\min\{\bar p_i,\max(0,e_i+\sum_j\Pi_{ji}p_j)\}$には、ショックによるデフォルト閾値がある。この非線形性は、Ising的な模倣の存在がなくてもネットワークに急な状態転換を生むことを示す。[Acemoglu et al. (2015)](https://doi.org/10.1257/aer.20130456)を参照する。
 
+### 3.4 中間投入のショック伝播の符号を証明する
+
+企業の対数価格方程式を$(I-\Gamma)\Delta\log p=-\varepsilon$としたとき、$\Gamma$の各要素が非負、$\rho(\Gamma)<1$なら、Leontief逆の各要素は非負である。なぜなら$\Gamma^0=I$の要素は非負、非負行列の積は非負なので、すべての$\Gamma^k$も非負だからである。
+
+**命題IV.3（部門の生産性ショックと価格の符号）。** 非負行列$\Gamma$と$\rho(\Gamma)<1$を仮定し、賃金と費用シェアを固定する。ある部門$j$の生産性だけが改善する$\varepsilon_j>0$に対し、すべての部門の対数価格変化は非正である。
+
+**証明。** 既に証明したNeumann級数を用いると
+
+$$
+\Delta\log p_i=-\sum_{k=0}^\infty\sum_j(\Gamma^k)_{ij}\varepsilon_j.
+$$
+
+各係数$(\Gamma^k)_{ij}\ge0$、生産性の変化は$j$にのみ正で他の部門は0だから、各$i$の右辺は非正。$\square$
+
+これはCobb–Douglasの費用最小化・ゼロ利潤・固定賃金を与えた**価格方程式の比較静学**である。賃金が一般均衡で変化する場合、同じ符号が全ての相対価格・実質賃金について成立すると主張してはいけない。
+
 ## 4. FoleyのStatistical Equilibriumを制約付き最大化から導く
 
 家計タイプ$k=1,\ldots,K$の人口比$w_k>0$、$\sum_kw_k=1$、許容する取引ベクトルの有限集合$X_k$を指定する。$h_k(x)\ge0$をタイプ$k$が取引$x\in X_k$を選ぶ確率とし、各タイプの正規化と市場の実行可能性
@@ -383,6 +399,30 @@ $$
 $$
 
 $q>1$なら$S$の階数が最大$T<N$なので、少なくとも$N-T$個の固有値は正確に0である。極限の零固有値の比率は$1-1/q$。これは市場価格や投資家の選好ではなく**標本共分散の高次元推定**の性質である。[Laloux et al. (1999)](https://doi.org/10.1103/PhysRevLett.83.1467)の金融データにおけるノイズ診断はこの分野に属する。
+
+### 5.3 Marchenko–Pasturの$q=1$を二次方程式から直接計算する
+
+前節の二次方程式に$q=1$を代入すると
+
+$$
+\sigma^2 z\,m(z)^2+z\,m(z)+1=0.
+$$
+
+二次方程式の解は
+
+$$
+m(z)=\frac{-z\pm\sqrt{z^2-4\sigma^2z}}{2\sigma^2z}.
+$$
+
+$|z|\to\infty$で$m(z)\sim-1/z$を満たし、$\operatorname{Im}z>0$で$\operatorname{Im}m(z)>0$となる枝を選ぶ。実数$0<\lambda<4\sigma^2$に境界から近づくと、平方根の判別式は$\lambda(\lambda-4\sigma^2)<0$なので、分布のStieltjes反転公式から密度は
+
+$$
+\rho(\lambda)
+=\frac{\sqrt{4\sigma^2-\lambda}}{2\pi\sigma^2\sqrt\lambda}
+\mathbf1_{\{0<\lambda<4\sigma^2\}}
+$$
+
+となる。$q=1$は零に近い固有値が高密度に集中するが、$q>1$での原点の**点質量**とは異なる。この計算は**Resolventの極限方程式を所与にした結果**であり、有限行列の収束を証明する代用ではない。
 
 ## 6. New Keynesian HANK：Calvo最適化からNKPCへ
 
@@ -518,6 +558,75 @@ $$
 
 これが**この限定条件のNew Keynesian Phillips Curve**。非ゼロのTrend Inflation、価格Indexation、企業固有資本、非線形な厚生評価では係数・状態変数・分散項が変わり得る。
 
+### 6.4.1 Reset-Price FOCの一次近似を途中式から示す
+
+第6.2節で導いたReset Priceは、二つの将来加重和の比率である。$\omega_{t,k}=\theta^k\Lambda_{t,t+k}Y_{t+k}$、$A_t=\sum_{k\ge0}\omega_{t,k}P_{t+k}^{\epsilon}mc_{t+k}$、$B_t=\sum_{k\ge0}\omega_{t,k}P_{t+k}^{\epsilon-1}$とすると
+
+$$
+P_t^*=\frac{\epsilon}{\epsilon-1}\frac{A_t}{B_t}.
+$$
+
+定常インフレが0で、実質限界費用の定常値が$\bar{mc}=(\epsilon-1)/\epsilon$、家計の実質確率的割引因子が定常状態で$\beta^k$、生産が定常であると仮定する。定常$A,B$の第$k$項の総和に占める比率は
+
+$$
+w_k=(1-\beta\theta)(\beta\theta)^k,\qquad
+\sum_{k=0}^{\infty}w_k=1,
+$$
+
+後の等号は等比級数$\sum_{k=0}^\infty(\beta\theta)^k=1/(1-\beta\theta)$による。各変数の対数偏差をハットで書くと、和の対数の一次変化は定常ウェイトで加重した各項の対数変化に等しい。従って
+
+$$
+\begin{aligned}
+\widehat A_t
+&=\sum_{k\ge0}w_kE_t[
+\widehat\omega_{t,k}+
+\epsilon\widehat P_{t+k}+
+\widehat{mc}_{t+k}],\\
+\widehat B_t
+&=\sum_{k\ge0}w_kE_t[
+\widehat\omega_{t,k}+
+(\epsilon-1)\widehat P_{t+k}].
+\end{aligned}
+$$
+
+比率の対数変化は差なので、$\widehat\omega_{t,k}$が**同じ係数で相殺**され、
+
+$$
+\widehat P_t^*
+=\widehat A_t-\widehat B_t
+=\sum_{k\ge0}w_kE_t[\widehat P_{t+k}+\widehat{mc}_{t+k}].
+$$
+
+両辺から当期の集計価格$\widehat P_t$を引くと、$x_t=\widehat P_t^*-\widehat P_t$と$\widehat P_{t+k}-\widehat P_t=\sum_{j=1}^k\pi_{t+j}$より
+
+$$
+x_t=(1-\beta\theta)
+\sum_{k=0}^\infty(\beta\theta)^k
+E_t\left[\widehat{mc}_{t+k}+\sum_{j=1}^k\pi_{t+j}\right].
+$$
+
+$k=0$の項を分け、$k\ge1$の項の条件付き期待に期待値の反復法則を使えば
+
+$$
+x_t=(1-\beta\theta)\widehat{mc}_t
++\beta\theta E_t[x_{t+1}+\pi_{t+1}]
+$$
+
+となる。ここまででReset Priceの線形化を**将来加重和の展開から**導出した。第6.4節の価格指数の線形化$x_t=\theta\pi_t/(1-\theta)$を代入することでNKPCが得られる。
+
+**命題IV.4（ゼロ定常インフレのCalvo NKPC）。** 共通の実質限界費用、定常$\beta$、独立なCalvoハザード$\theta\in(0,1)$、正の収束割引和、ゼロ定常インフレ、Indexationなし、定常近傍での一次微分可能性を仮定する。対称企業の最適Reset PriceとCES価格指数は
+
+$$
+\pi_t=\beta E_t\pi_{t+1}+
+\frac{(1-\theta)(1-\beta\theta)}{\theta}\widehat{mc}_t
+$$
+
+を一次近似で満たす。
+
+**証明。** 上で示した二つの線形化式を代入し、$x_t$を消去すれば第6.4節の最終式となる。すべての出発式は第6.1–6.3節の需要最適化と企業価格最適化から導いた。$\square$
+
+この命題は**厳密な非線形関係ではなく一次近似結果**である。長期のTrend Inflation、企業固有資本、企業間の異なる費用や利潤、インデクセーションが存在する場合、同じ単一係数をそのまま当てはめてはいけない。
+
 ### 6.5 HANKの家計分布とSequence-Space Jacobian
 
 HANKでは個別家計$(a,z)$が利子率、税、賃金、将来価格の予想に応じて消費・貯蓄政策$g_t$を選び、分布は$\mu_{t+1}=\mu_t P(g_t,z_t)$で変化する。同時に企業の価格分布がCalvoの法則に従い、財、労働、資産、政府の清算を課す。合理的期待は**全ての家計・企業が予想する将来の価格・政策系列が実際の均衡系列と一致すること**である。
@@ -543,6 +652,37 @@ $$
 $$
 
 が積の一次展開から従う。[Auclert et al. (2021)](https://doi.org/10.3982/ECTA17434)はこの体系を効率的に計算する既存手法を研究した。上の記法だけで無限次元作用素の可逆性や非線形HANKの大域的一意性を証明していない。
+
+### 6.6 借入制約付きHANK家計と集計反応の具体例
+
+New Keynesian HANKで家計が保有する債券は名目金利$R_t$を払い、価格水準が$\Pi_{t+1}=P_{t+1}/P_t$倍になるとする。時点$t$の実質的な次期債券の限界利得は$R_t/\Pi_{t+1}$である。簡単化した家計予算
+
+$$
+c_t+a_{t+1}=(R_{t-1}/\Pi_t)a_t+w_tz_t-T_t
+$$
+
+と下限$a_{t+1}\ge\underline a$を考える。名目金利とインフレ率の予想が家計の意思決定に影響するので、最適化問題を一期間摂動し、
+
+$$
+u'(c_t)=\beta E_t\left[
+\frac{R_t}{\Pi_{t+1}}u'(c_{t+1})\right]
+$$
+
+を内点で得る。下限が拘束される家計では左辺が右辺以上となる。ここでも家計状態$(a_t,z_t)$と価格・所得の将来系列への合理的期待を指定しなければならない。単に代表家計のIS式を全員に適用しただけではHANKでない。
+
+平均資産が同じでも限界消費性向（MPC）の分布が異なれば、政府移転や所得のショックへの総消費反応は異なる。単純な二期間の分析では、制約付き家計のMPCは1、内点家計のMPCは
+
+$$
+m_U=\frac{1+r}{1+r+[\beta(1+r)]^{1/\gamma}}<1.
+$$
+
+制約付きの人口比を$\ell$とし、ショックが両群へ同額$\Delta b$届くとすれば、集計消費の一次反応は
+
+$$
+\Delta C\approx[\ell+(1-\ell)m_U]\Delta b.
+$$
+
+これは借入制約と家計分布から生じる再分配的なマクロ反応を示す**二期間の教育用例**であり、時間変化するインフレ・税・賃金・企業利潤を全て含むHANKのインパルス応答の解析解ではない。金融政策の一般均衡では家計の実質所得・賃金・資産価格・政府移転も変化するため、Sequence-Space Jacobianを構築する必要がある。
 
 ## 7. 統計力学に相当する数学は何を追加するか
 
