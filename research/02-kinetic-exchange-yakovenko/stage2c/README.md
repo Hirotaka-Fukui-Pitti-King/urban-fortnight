@@ -1,4 +1,6 @@
-# Stage 2-C — Reconstructing Canonical Monetary Search
+Source verification status for Molico--Zhang: web-indexed text only; PDF pages and equations have NOT been visually verified.
+
+# Stage 2-C — Provisional reconstruction from indexed manuscript text
 
 **Executed original-equation pilot; monetary general equilibrium not obtained.**
 
@@ -9,7 +11,7 @@ Run from repository root after installing requirements:
     PYTHONPATH=research/02-kinetic-exchange-yakovenko/stage2c/src python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2c/tests -v
     python research/02-kinetic-exchange-yakovenko/stage2c/scripts/run_canonical_benchmark.py
 
-Seven tests passed locally. Among three converged quoted-price private solutions none cleared the exogenous normalized money supply of one. A fourth finer-grid case did not converge. Therefore **no monetary steady-state equilibrium or policy effect is reported**. The small 5x5/7x7 grids are smoke tests only, not the original 100x100 numerical exercise. Original equations, deviations, outcomes and next acceptance gate are documented in notes/canonical_model_reconstruction.md.
+Seven tests passed locally. Among three converged quoted-price private solutions none cleared the exogenous normalized money supply of one. A fourth finer-grid case did not converge. Therefore **no monetary steady-state equilibrium or policy effect is reported**. The small 5x5/7x7 grids are smoke tests only, not the original 100x100 numerical exercise. Candidate equations and their unverified source correspondence, deviations, outcomes and next acceptance gate are documented in notes/canonical_model_reconstruction.md.
 
 An independent GitHub Actions workflow runs the tests, price/grid scan, and uploads CSV/JSON. The main research paper remains academic-typst Quarto; it must explicitly preserve the non-GE caveat.
 

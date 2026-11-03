@@ -1,22 +1,26 @@
-# Stage 2-C: primary source, exact modeling differences, and executed numerical audit
+Source verification status for Molico--Zhang: web-indexed text only; PDF pages and equations have NOT been visually verified.
 
-**Status 2026-11-03: original-equation finite-grid pilot executed. NO monetary stationary general equilibrium found or claimed.**
+**Correction:** The direct PDF and rendered page images are unavailable for independent checking. All exact page references, equation numbers, table entries and claims of source-faithful equation matching below are **provisional**, not verified original-PDF readings. Consult the source provenance registry before using any of them as literal citations. Bibliographic record: https://ideas.repec.org/p/sce/scecfa/136.html.
 
-## Original manuscript source
+# Stage 2-C: extracted-text manuscript interpretation and numerical audit
+
+**Status 2026-11-03: provisional text-derived finite-grid pilot executed. NO monetary stationary general equilibrium found or claimed.**
+
+## Manuscript reported by index, not a retrievable original PDF
 
 Molico and Zhang, *Monetary Policy and the Distribution of Money and Capital*, November 2005 draft, SCE (2006) No. 136.
-Source: https://citeseerx.ist.psu.edu/document?doi=e6826088816be6c1deea19bd1f677f16d190316f&repid=rep1&type=pdf
+CiteSeerX indexed text candidate (direct PDF not independently retrievable): https://citeseerx.ist.psu.edu/document?doi=e6826088816be6c1deea19bd1f677f16d190316f&repid=rep1&type=pdf
 
-- pp. 6–8, environment: N>=3 household types. Type i stores/consumes own good and produces type i+1 from labor and type-i capital. Output y=A*k^alpha*l^(1-alpha), depreciation delta. Fiat money is not directly consumed. DM has random matches; centralized capital market has **no production**. This is substantively different from the Stage 2-B representative Cobb–Douglas firm plus centralized labor sector.
-- pp. 9–11, eqs. (1)–(7): V before DM, W before CM, joint k',m' saving choice subject to normalized real wealth c+k'+m'/p_k=kbar+mbar/p_k (mu=0).
-- pp. 11–12, eq. (8): generalized Nash chooses output y and money payment d, with buyer gain W(m_b-d,(1-delta)k_b+y)-W(m_b,(1-delta)k_b) and seller gain W(m_s+d,(1-delta)k_s)-W(m_s,(1-delta)k_s)-v(y,k_s).
-- pp. 12–14, eqs. (9)–(14): matching-induced distribution transition then CM portfolio mapping. Recursive equilibrium needs all value/optimality conditions and end-of-CM normalized fiat money **market clearing E[m']=1**.
-- pp. 15–16, original algorithm: 100x100 money/capital interpolating grid, sample of 10,000 households, nonparametric wealth densities, iterative price and asset-portfolio clearing, parallel Fortran solver. Our 5x5/7x7 pilot is not a replication.
-- p. 17, Table 1: N=3, beta=0.96, eta=5, b=0.2, alpha=0.36, A=1, delta=0.07, theta=0.5. The small numerical grids and solver tolerances in this project are NOT in that table.
+- **Unverified page locator**, pp. 6–8, environment: N>=3 household types. Type i stores/consumes own good and produces type i+1 from labor and type-i capital. Output y=A*k^alpha*l^(1-alpha), depreciation delta. Fiat money is not directly consumed. DM has random matches; centralized capital market has **no production**. This is substantively different from the Stage 2-B representative Cobb–Douglas firm plus centralized labor sector.
+- **Unverified page locator**, pp. 9–11, eqs. (1)–(7): V before DM, W before CM, joint k',m' saving choice subject to normalized real wealth c+k'+m'/p_k=kbar+mbar/p_k (mu=0).
+- **Unverified page locator**, pp. 11–12, eq. (8): generalized Nash chooses output y and money payment d, with buyer gain W(m_b-d,(1-delta)k_b+y)-W(m_b,(1-delta)k_b) and seller gain W(m_s+d,(1-delta)k_s)-W(m_s,(1-delta)k_s)-v(y,k_s).
+- **Unverified page locator**, pp. 12–14, eqs. (9)–(14): matching-induced distribution transition then CM portfolio mapping. Recursive equilibrium needs all value/optimality conditions and end-of-CM normalized fiat money **market clearing E[m']=1**.
+- **Unverified page locator**, pp. 15–16, original algorithm: 100x100 money/capital interpolating grid, sample of 10,000 households, nonparametric wealth densities, iterative price and asset-portfolio clearing, parallel Fortran solver. Our 5x5/7x7 pilot is not a replication.
+- **Unverified page locator**, p. 17, Table 1: N=3, beta=0.96, eta=5, b=0.2, alpha=0.36, A=1, delta=0.07, theta=0.5. The small numerical grids and solver tolerances in this project are NOT in that table.
 
 ## Implemented Python equation subset
 
-The new source file src/molico_grid.py defines U(c)=[(c+b)^(1-eta)-b^(1-eta)]/(1-eta); seller g(l)=l/(1-l); the DM Cobb–Douglas production and labor cost; and CM joint choice of capital, fiat money and consumption under a single wealth budget. There is no Gumbel portfolio shock and money has no direct utility. A finite contract menu approximates original *continuous* Nash bargaining. Buyers receive output as a storable own-type consumption/capital good; seller productivity depends on seller's own capital. We use 1/N buyer and 1/N seller contact probabilities.
+The new source file src/molico_grid.py implements a provisional interpretation of text-extracted model expressions and defines U(c)=[(c+b)^(1-eta)-b^(1-eta)]/(1-eta); seller g(l)=l/(1-l); the DM Cobb–Douglas production and labor cost; and CM joint choice of capital, fiat money and consumption under a single wealth budget. There is no Gumbel portfolio shock and money has no direct utility. A finite contract menu approximates original *continuous* Nash bargaining. Buyers receive output as a storable own-type consumption/capital good; seller productivity depends on seller's own capital. We use 1/N buyer and 1/N seller contact probabilities.
 
 The DM measure is propagated by mass splitting on a post-trade goods grid that is enlarged above the next-period savings grid: newly produced goods are **not cut off** at the savings-grid boundary. The maximum money grid, however, restricts admissible transfers. The CM then maps wealth back into next-period portfolio choices and consumption. At nonclearing quoted prices, the repeated CM mapping can change the aggregate nominal money balances, and thus is NOT itself a feasible monetary general-equilibrium transition.
 
@@ -37,7 +41,7 @@ Seven local Python/Numba unit and economic checks pass: type specialization, lab
 
 All four cases conserve computational distribution mass; the last case is not a valid stationary individual solution. The *first three private problems* are not positive-stock monetary equilibria either: nominal fiat supply cannot clear.
 
-The original model admits monetary and potentially nonmonetary regimes; the coarse iteration is vulnerable to a nontrading/low-wealth attractor. These failures are not an impossibility theorem. Money essentials must also be distinguished from its store-of-value role in the assumed-price partial problem; the lambda=0 test alone is not a complete general-equilibrium result.
+The source-indexed description appears consistent with monetary and potentially nonmonetary regimes; the coarse iteration is vulnerable to a nontrading/low-wealth attractor. These failures are not an impossibility theorem. Money essentials must also be distinguished from its store-of-value role in the assumed-price partial problem; the lambda=0 test alone is not a complete general-equilibrium result.
 
 ## Next necessary implementation and gate
 

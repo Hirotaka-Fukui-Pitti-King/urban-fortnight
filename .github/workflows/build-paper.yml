@@ -60,6 +60,10 @@ jobs:
         run: |
           quarto --version
           quarto pandoc --version | head -n 1
+      - name: Audit original-paper retrieval evidence and provenance claims
+        run: |
+          python scripts/check_source_provenance.py
+          python -m unittest discover -s scripts/tests -p test_source_provenance.py -v
       - name: Test the math quality gate against intentionally broken equations
         run: python -m unittest discover -s scripts/tests -p test_math_quality.py -v
       - name: Validate all QMD math with Pandoc AST and equation inventory
