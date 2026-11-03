@@ -3,7 +3,7 @@
   "documents": {
     "paper/article.qmd": {
       "display": 26,
-      "inline": 158,
+      "inline": 159,
       "minimum_pages": 10,
       "minimum_extracted_chars": 8000,
       "math_font_required": true
