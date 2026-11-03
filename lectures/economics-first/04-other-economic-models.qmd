@@ -231,16 +231,16 @@ A_i^{-1}\ell_i^{-\ell_i}
 w^{\ell_i}\prod_jp_j^{\gamma_{ij}}.
 $$
 
-対数を取ると$\,\log p_i=-\,\log A_i-\ell_i\,\log\ell_i-\sum_j\gamma_{ij}\,\log\gamma_{ij}+\ell_i\,\log w+\sum_j\gamma_{ij}\,\log p_j$。係数と賃金が固定の生産性変動$\varepsilon_i=\Delta\,\log A_i$に対して
+対数を取ると$\log p_i=-\log A_i-\ell_i\log\ell_i-\sum_j\gamma_{ij}\log\gamma_{ij}+\ell_i\log w+\sum_j\gamma_{ij}\log p_j$。係数と賃金が固定の生産性変動$\varepsilon_i=\Delta\log A_i$に対して
 
 $$
-\Delta\,\log p_i=-\varepsilon_i+\sum_j\gamma_{ij}\Delta\,\log p_j.
+\Delta\log p_i=-\varepsilon_i+\sum_j\gamma_{ij}\Delta\log p_j.
 $$
 
 行列$\Gamma=(\gamma_{ij})$と書けば
 
 $$
-(I-\Gamma)\Delta\,\log\mathbf p=-\varepsilon.
+(I-\Gamma)\Delta\log\mathbf p=-\varepsilon.
 $$
 
 ### 3.2 Leontief逆行列の存在とネットワーク増幅
@@ -253,7 +253,7 @@ $$
 
 **証明。** 右辺の有限和$S_n=I+A+\cdots+A^n$へ左から$I-A$を掛けると$(I-A)S_n=I-A^{n+1}$と望遠鏡型に相殺される。$\rho(A)<1$ならJordan標準形または適合する行列ノルムの評価から$A^n\to0$。従って$S_n$は収束し、その極限$S$は$(I-A)S=I$を満たす。正方行列なので$S=(I-A)^{-1}$である。$\square$
 
-よって価格応答は$\Delta\,\log\mathbf p=-(I-\Gamma)^{-1}\varepsilon=-\sum_{k\ge0}\Gamma^k\varepsilon$。$k$段目は$k$回の産業投入連関を通った価格波及である。産出の方程式$y=\varepsilon+Ay$は**別のReduced Form**であり、その導出には最終需要、集計支出、労働制約などの追加条件が必要となる。
+よって価格応答は$\Delta\log\mathbf p=-(I-\Gamma)^{-1}\varepsilon=-\sum_{k\ge0}\Gamma^k\varepsilon$。$k$段目は$k$回の産業投入連関を通った価格波及である。産出の方程式$y=\varepsilon+Ay$は**別のReduced Form**であり、その導出には最終需要、集計支出、労働制約などの追加条件が必要となる。
 
 ### 3.3 ミクロショックの集計分散
 
@@ -284,7 +284,7 @@ $$
 を課す。Foley型の統計均衡について、離散集合に基づく講義用のエントロピー問題は
 
 $$
-\max_h-\sum_kw_k\sum_{x\in X_k}h_k(x)\,\log h_k(x)
+\max_h-\sum_kw_k\sum_{x\in X_k}h_k(x)\log h_k(x)
 $$
 
 である。基準測度が一様でない場合は**相対エントロピー**を使う必要があり、任意の取引座標変換の下で同じShannon式が不変というわけではない。
@@ -295,7 +295,7 @@ $$
 
 $$
 \mathcal L=
--\sum_kw_k\sum_xh_k(x)\,\log h_k(x)
+-\sum_kw_k\sum_xh_k(x)\log h_k(x)
 -\lambda^\top\sum_kw_k\sum_xh_k(x)x
 -\sum_k\alpha_k\left(\sum_xh_k(x)-1\right).
 $$
@@ -303,7 +303,7 @@ $$
 内点で$h_k(x)$を微分すると、
 
 $$
--w_k(\,\log h_k(x)+1)-w_k\lambda^\top x-\alpha_k=0,
+-w_k(\log h_k(x)+1)-w_k\lambda^\top x-\alpha_k=0,
 $$
 
 すなわち
@@ -321,7 +321,7 @@ $$
 
 **命題IV.2（有限取引集合での条件付き一意性）。** 実行可能集合が非空で、上の最適化が内点解を持つとき、Entropy最大解は一意である。
 
-**証明。** $g(p)=-p\,\log p$の二階微分は$g''(p)=-1/p<0$であり、全ての$w_k>0$だから目的関数は確率単体の内部で厳密凹。市場清算と正規化は線形制約なので実行可能集合は凸である。異なる二つの最大点が存在すると仮定すれば、その中点は厳密凹性により両者より高い目的値を持つので矛盾する。$\square$
+**証明。** $g(p)=-p\log p$の二階微分は$g''(p)=-1/p<0$であり、全ての$w_k>0$だから目的関数は確率単体の内部で厳密凹。市場清算と正規化は線形制約なので実行可能集合は凸である。異なる二つの最大点が存在すると仮定すれば、その中点は厳密凹性により両者より高い目的値を持つので矛盾する。$\square$
 
 この問題の影価格$\lambda$は実行可能性のLagrange乗数である。家計がBellman最適化を行い、合理的期待と市場価格を同時に満たしたことは示していない。**統計均衡と競争的GEは異なる均衡概念**。[Foley (1994)](https://doi.org/10.1006/jeth.1994.1018)の数学的な比較基準である。
 
@@ -475,9 +475,9 @@ $$
 
 ### 6.4 Log-Linearized NKPCを導く
 
-ゼロ定常インフレ、同質企業、定常Reset価格は集計価格に等しい、価格Indexationなし、共通の実質限界費用、定常実質割引因子$\beta$という追加仮定を置く。$x_t=\,\log(P_t^*/P_t)$、$\pi_t=\,\log(P_t/P_{t-1})$、$\widehat{mc}_t$を定常からの実質限界費用の対数偏差とする。
+ゼロ定常インフレ、同質企業、定常Reset価格は集計価格に等しい、価格Indexationなし、共通の実質限界費用、定常実質割引因子$\beta$という追加仮定を置く。$x_t=\log(P_t^*/P_t)$、$\pi_t=\log(P_t/P_{t-1})$、$\widehat{mc}_t$を定常からの実質限界費用の対数偏差とする。
 
-価格指数を定常近傍で一次展開し、$\,\log P_{t-1}-\,\log P_t=-\pi_t$を使うと
+価格指数を定常近傍で一次展開し、$\log P_{t-1}-\log P_t=-\pi_t$を使うと
 
 $$
 0=-\theta(1-\epsilon)\pi_t
