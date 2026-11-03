@@ -19,6 +19,9 @@
 | I | EGM consumption inversion | CRRA marginal utility inverse of Euler | Monotone endo grid, valid interior Euler | §4, EGM derivation | VERIFIED-DERIVATION |
 | I | Endogenous asset nodes | Household budget solved for current a | Constant stationary r and w | §4, algebraic formula | VERIFIED-DERIVATION |
 | I | Proposition I.3 mass/moment-conserving lottery | Nonnegative adjacent linear weights | Every positive-mass old state and policy target inside new grid | §4, two linear equalities | VERIFIED-PROOF |
+| I | Proposition I.6 finite invariant distribution | Cesàro mean of iterates on compact probability simplex | Finite-state Markov stochastic matrix | §5.1, compactness and telescoping sum proof | VERIFIED-PROOF |
+| I | Two-period constrained and unconstrained MPC | Two-period CRRA FOC and linked budgets | Terminal wealth zero, known future income, positive consumption | §4.1, complete solution for c0 and derivatives | VERIFIED-DERIVATION |
+| I | Artificial upper-grid Euler residual and invariance | Conditional Euler and interpolation after policy choice | Fixed finite computational cap, no off-grid deletion | §4.2 | NUMERICAL |
 | I | Asset grid support inclusion | Reachable a′ and existing distribution support | No clipping or deleting positive mass | §4, numerical conditions | CONDITIONAL |
 | I | Distribution pushforward | Law of iterated expectations and policy transition | Exogenous Markov income given current state | §5, test-function derivation | VERIFIED-DERIVATION |
 | I | Finite population law of large numbers | Conditional independence | Appropriate LLN, no common shocks | §5 | EXTERNAL |
@@ -46,6 +49,9 @@
 | II | Proposition II.2 Exact Potential | Compute unilateral change of quadratic potential | Symmetric J on complete graph | §3, explicit difference | VERIFIED-PROOF |
 | II | Non-symmetric counterexample | Four-cycle cross difference | Two players with J12≠J21 | §3 | VERIFIED-PROOF |
 | II | Proposition II.3 Gibbs/detailed balance | Odds ratio + potential differences | Asynchronous Logit, finite irreducible chain | §4, pairwise flow equality | VERIFIED-PROOF |
+| II | Proposition II.5 synchronous update counterexample | Enumerate 2-player simultaneous Logit transition matrix | N=2, J>0, independent shocks per player | §4.1, double stochastic proof and contrast with Gibbs | VERIFIED-PROOF |
+| II | Proposition II.6 Gibbs variational principle | KL identity and log inequality | Finite state, positive temperature | §5.1, objective equals τlogZ−τKL | VERIFIED-PROOF |
+| II | Proposition II.7 heterogeneous mean-field uniqueness | Banach contraction and tanh derivative bound | J/τ<1, any private-benefit distribution | §9.1, contraction bound | VERIFIED-PROOF |
 | II | Microstate count and combinatorial entropy | Binomial counts and Stirling | N large with interior choice fractions | §5 | VERIFIED-DERIVATION |
 | II | Partition function for aggregate choices | Sum 2^N microstates by equal S | Homogeneous symmetric utility | §5 | VERIFIED-DERIVATION |
 | II | Large-deviation rate function | Max-term bound for partition function | Symmetric complete graph, N→∞ | §6, upper/lower bound | VERIFIED-DERIVATION |
@@ -79,6 +85,9 @@
 | III | Entropy maximizing exponential | Lagrange FOCs, entropy Hessian | Finite set, interior feasible mean | §9 | VERIFIED-DERIVATION |
 | III | Fokker–Planck limit | Taylor expansion with drift/variance scaling | Small trades, high frequency, negligible third moments | §10 | CONDITIONAL |
 | III | Proposed money–capital general equilibrium | Sequential DM and CM budget and markets | Must complete household choice and aggregate RE | §11 | UNRESOLVED |
+| III | Proposition III.5 active/no-trade coexistence threshold | Two-state Poisson Bellman system and bilateral participation | M=1, mean 1/2, U>C>0, λ(U−C)≥4ρC | §4.1, solve difference V(1)−V(0) and check both equilibria | VERIFIED-PROOF |
+| III | Money-holding variance evolution | Test φ=m² and exact posttrade second moment | Fixed transfer d=1, finite token states | §7.1 | VERIFIED-DERIVATION |
+| III | Circulating stationary probability/entropy | Three-state ring CTMC and positive reverse rates | Rates a,b>0 | §9.1, compute currents and entropy production | VERIFIED-DERIVATION |
 | III | Fixed-price token calibration | Bilateral gains, stationarity, Bellman and money | Limited discrete contract | §12 and generate_figures.py | NUMERICAL |
 
 ## Lecture IV — Learning, Networks, Entropy, Random Matrices and HANK
@@ -93,6 +102,9 @@
 | IV | Heterogeneous optimal demand | Differentiate mean-variance objective | Quadratic risk penalty, interior choice | §2.1 | VERIFIED-DERIVATION |
 | IV | Asset price clearing | Sum heterogeneous demand | Exogenous stock supply | §2.1 | VERIFIED-DERIVATION |
 | IV | Logit strategy switching | Gumbel-derived discrete choice | Heterogeneous forecast-score utilities | §2.2; Lecture II §2 | VERIFIED-DERIVATION |
+| IV | Proposition IV.3 input network price monotonicity | Elementwise nonnegative Neumann series for Γ | Γ nonnegative, spectral radius less than one, fixed wages | §3.4, sign of Δlog p | VERIFIED-PROOF |
+| IV | Proposition IV.4 zero-trend Calvo NKPC | Reset-price discounted profit FOC and linearized CES index | Zero trend inflation, no indexation, constant β, homogeneous MC | §6.4.1, normalized future weights and elimination of reset price | VERIFIED-PROOF |
+| IV | Constrained HANK household Euler and transfer MPC | Household budget plus consumption Euler / two-period example | Nominal gross bond rate, borrowing constraint, exogenous transfer | §6.6 | CONDITIONAL |
 | IV | Cobb–Douglas input demand | Firm unit-cost minimization and FOCs | CRS and positive inputs | §3.1 | VERIFIED-DERIVATION |
 | IV | Proposition IV.1 Leontief inverse | Geometric matrix series and spectral radius | ρ(A)<1 | §3.2 | VERIFIED-PROOF |
 | IV | Aggregate shock variance | v^TΣv linear algebra | Given linear network reduced form | §3.3 | VERIFIED-DERIVATION |
