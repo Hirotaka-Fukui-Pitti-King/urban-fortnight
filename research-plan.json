@@ -174,5 +174,14 @@
     "results": "research/02-kinetic-exchange-yakovenko/stage2c/results/reference_pilot.json",
     "new_ge_claim": false,
     "novelty_claim": false
+  },
+  "stage2d": {
+    "branch": "research/stage2d-monetary-equilibrium-selection",
+    "status": "conditional_CM_market_cleared_stationary_GE_open",
+    "root_cause": "old CM value interpolation differs from actual optimal portfolio distribution and restricts intermediate DM money",
+    "new_verified": "conditional CM money cleared using genuine tied optimal portfolios",
+    "stationary_money_GE": false,
+    "novelty_claim": false,
+    "numerical_outputs": "research/02-kinetic-exchange-yakovenko/stage2d/results/stage2d_diagnostics.json"
   }
 }

@@ -74,5 +74,10 @@
     "result": "stage2b/results/reference_failed_ge.json",
     "critical_competitor": "Molico and Zhang 2006; Aruoba Waller Wright 2011",
     "no_full_equilibrium": true
+  },
+  "stage2d": {
+    "status": "conditional_cm_price_auction_only",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2d",
+    "stationary_GE": false
   }
 }

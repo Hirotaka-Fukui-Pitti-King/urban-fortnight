@@ -42,3 +42,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-C source-reconstructed monetary economy
 
 [Stage 2-C](stage2c/README.md) is a separate source-derived reconstruction of the Molico--Zhang original economic environment, not an extension of the representative-firm CM algorithm in Stage 2-B. It uses no CM production, type-specific capital and production, and no intrinsic money utility or portfolio taste shock. Seven Python model/economic tests pass locally. The reported 5x5/7x7 **pilot fails normalized fiat supply market clearing**, so the model is not yet stationary monetary GE. See source-audited notes and CI artifacts.
+
+
+## Stage 2-D conditional monetary auction (not stationary GE)
+
+[Stage 2-D](stage2d/README.md) documents a repaired exact-on-discrete-grid CM value policy and an expanded post-DM cash state, plus one-period money-clearing price tests. Its 5x5/7x7/9x9 conditional auctions pass budget and fiat-money checks but are **not jointly stationary**. The old active branch's Bellman update deviated by sup 356.426 under direct reoptimization. Fully market-clearing Molico-Zhang stationary GE remains OPEN.

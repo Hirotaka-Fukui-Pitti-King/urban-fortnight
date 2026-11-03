@@ -413,6 +413,24 @@ $$
 Only after **both** joint asset-market clearing and stationarity are established does the identity become $Y_{\mathrm{DM}}=C+\delta K$. The new solver's next essential step is therefore an endogenous capital price that clears nominal fiat supply *inside* the fixed point for values, bargained trade policies, and population distribution. We must also replace the crude portfolio/contract grids with accurate continuous or interpolation-based choices and check multiple possible monetary branches before reporting general equilibrium, capital accumulation, welfare, or a distinctive kinetic result. In particular, switching off search in this specialized production model does not automatically yield the earlier Aiyagari economy.
 
 
+
+# Stage 2-D: Repairing the centralized money auction without claiming stationary equilibrium
+
+The initial finite-grid code contained a major policy/value inconsistency. It interpolated the centralized-market maximized value on a uniform real-wealth grid inside the Bellman and Nash bargaining operators, while the invariant-distribution update directly maximized over portfolios at realized wealth. At the previously reported active private fixed-price state, replacing that approximation by the *same exact finite-choice maximizer* used by the distribution operator changes the Bellman update by 356.426 in sup norm, changes 181 bilateral Nash contracts, and changes the next distribution by total variation 0.07487. Hence the earlier small private fixed-point residuals do not validate the corrected economic problem.
+
+The original code also prevented sellers at the next-period *savings* money-grid ceiling from receiving further fiat money in decentralized trade. The corrected calculation enlarges intermediate post-trade money support without relaxing the next-period CM budget or creating money.
+
+At a specified initial feasible portfolio distribution with total normalized fiat money one and a **provisional, unoptimized** continuation-value function, the revised centralized-market price algorithm locates a genuine *discrete optimal-policy indifference*. It allows a lottery only between the tied optimal CM choices, after verifying that the decentralized Nash contract and wealth distribution are unchanged across the price switch. This clears the CM issuer's money supply without post hoc normalization.
+
+| CM portfolio grid | One-period money-clearing price | Next mean money | Budget residual |
+|---|---:|---:|---:|
+| 5 by 5 | 3.110784 | 1.000000 | less than 1e-12 |
+| 7 by 7 | 3.053066 | 1.000000 | less than 1e-12 |
+| 9 by 9 | 2.979536 | 1.000000 | less than 1e-12 |
+
+**These are conditional one-period auctions, not stationary general-equilibrium prices.** The quoted price varies with grid size. Updating the households' continuation values, Nash trading and population distribution jointly with the clearing price succeeds for several periods but subsequently fails to find a verified money-clearing portfolio tie; private optimality and invariant distribution have not converged simultaneously. No stationary general equilibrium, equilibrium selection result, monetary policy effect, welfare comparison or original-paper numerical replication is claimed. Stage 2-D preserves these errors and constraints as explicit research diagnostics instead of hiding them through infeasible money-stock adjustments.
+
+
 # Research sequence and precommitted acceptance criteria
 
 The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.
