@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-11-03",
+  "required_notice": "Source verification status for Molico--Zhang: web-indexed text only; PDF pages and equations have NOT been visually verified.",
+  "notice_paths": [
+    "paper/article.qmd",
+    "research/02-kinetic-exchange-yakovenko/stage2c/README.md",
+    "research/02-kinetic-exchange-yakovenko/stage2c/notes/canonical_model_reconstruction.md"
+  ],
+  "sources": {
+    "molico_zhang_2005": {
+      "title": "Monetary Policy and the Distribution of Money and Capital",
+      "version": "November 2005 manuscript; SCE 2006 no. 136",
+      "metadata_record": "https://ideas.repec.org/p/sce/scecfa/136.html",
+      "source_level": "indexed_text",
+      "evidence": "PDF-like extracted text returned by web index; direct PDF bytes and page screenshots unavailable during this audit. Exact equations/page numbers were not visually checked.",
+      "pdf": {
+        "local_path": null,
+        "sha256": null,
+        "page_image_evidence": [],
+        "human_verified_equations": []
+      },
+      "candidate_links": [
+        {
+          "url": "https://citeseerx.ist.psu.edu/document?doi=e6826088816be6c1deea19bd1f677f16d190316f&repid=rep1&type=pdf",
+          "verified_direct_download": false
+        },
+        {
+          "url": "https://repec.org/sce2006/up.16909.1139953529.pdf",
+          "verified_direct_download": false
+        },
+        {
+          "url": "https://web.archive.org/web/20251230112235/https://citeseerx.ist.psu.edu//document?doi=e6826088816be6c1deea19bd1f677f16d190316f&repid=rep1&type=pdf",
+          "verified_direct_download": false
+        }
+      ]
+    },
+    "foley_1994": {
+      "title": "A Statistical Equilibrium Theory of Markets",
+      "version": "Journal of Economic Theory 62, 321-345",
+      "metadata_record": "https://doi.org/10.1006/jeth.1994.1018",
+      "source_level": "metadata",
+      "evidence": "No independently reproducible original page images or PDF SHA in this audit; earlier notes not recertified.",
+      "pdf": {
+        "local_path": null,
+        "sha256": null,
+        "page_image_evidence": [],
+        "human_verified_equations": []
+      },
+      "candidate_links": []
+    },
+    "gallegati_2006": {
+      "title": "Worrying Trends in Econophysics",
+      "version": "Physica A 370, 1-6",
+      "metadata_record": "https://doi.org/10.1016/j.physa.2006.04.029",
+      "source_level": "metadata",
+      "evidence": "No independently reproducible original page images or PDF SHA in this audit; earlier notes not recertified.",
+      "pdf": {
+        "local_path": null,
+        "sha256": null,
+        "page_image_evidence": [],
+        "human_verified_equations": []
+      },
+      "candidate_links": []
+    }
+  },
+  "claims": [
+    {
+      "id": "mz_publication_metadata",
+      "source_id": "molico_zhang_2005",
+      "required_level": "metadata",
+      "status": "supported"
+    },
+    {
+      "id": "mz_high_level_economy",
+      "source_id": "molico_zhang_2005",
+      "required_level": "indexed_text",
+      "status": "supported"
+    },
+    {
+      "id": "mz_literal_equations_1_to_14",
+      "source_id": "molico_zhang_2005",
+      "required_level": "equations_crosschecked",
+      "status": "pending"
+    },
+    {
+      "id": "mz_exact_page_and_table_numbers",
+      "source_id": "molico_zhang_2005",
+      "required_level": "pdf_pages_rendered",
+      "status": "pending"
+    },
+    {
+      "id": "foley_pareto_theorem_page_mapping",
+      "source_id": "foley_1994",
+      "required_level": "equations_crosschecked",
+      "status": "pending"
+    },
+    {
+      "id": "gallegati_exact_page_mapping",
+      "source_id": "gallegati_2006",
+      "required_level": "pdf_pages_rendered",
+      "status": "pending"
+    }
+  ]
+}
