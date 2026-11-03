@@ -32,6 +32,8 @@ jobs:
                 "scipy",scipy.__version__,"numpy",numpy.__version__)
           assert "CLARABEL" in cvxpy.installed_solvers()
           PY
+      - name: Run convex economic unit tests
+        run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2h/tests -v
       - name: Execute convex-branch Nash pilot against analytical CM
         run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/benchmark_global_nash.py
       - name: Upload Nash results
