@@ -35,7 +35,7 @@ $$
 $$
 \boxed{
 (q^*,d^*)\in\arg\max_{(q,d)\in\mathcal F_{b,s}(V)}
-G_B(q,d;b)^\eta\cdot G_S(q,d;s)^{1-\eta}
+G_B(q,d;b)^{\eta} G_S(q,d;s)^{1-\eta}
 }
 $$
 
