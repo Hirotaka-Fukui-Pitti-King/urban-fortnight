@@ -36,6 +36,8 @@ jobs:
         run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2h/tests -v
       - name: Execute convex-branch Nash pilot against analytical CM
         run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/benchmark_global_nash.py
+      - name: Reoptimize all 17 relevant Nash pairs and independent 3x3 Bellman
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/validate_3x3_all_convex.py
       - name: Upload Nash results
         if: always()
         uses: actions/upload-artifact@v4
