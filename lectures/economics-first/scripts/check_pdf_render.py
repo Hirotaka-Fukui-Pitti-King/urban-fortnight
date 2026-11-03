@@ -34,8 +34,11 @@ def check_pdf(pdf: Path, destination: Path) -> dict:
     for index, page in enumerate(document):
         text = page.get_text(sort=True)
         texts.append(text)
-        if RAW_TEX.search(text):
-            raise AssertionError(f"Raw TeX syntax found on page {index + 1}: {pdf}")
+        bad_tex=RAW_TEX.search(text)
+        if bad_tex:
+            excerpt=text[max(0,bad_tex.start()-160):min(len(text),bad_tex.end()+160)]
+            raise AssertionError(
+                f"Raw TeX syntax on page {index+1}: {pdf}: {excerpt!r}")
         for block in page.get_text("blocks"):
             if len(block) > 6 and block[6] == 0 and str(block[4]).strip():
                 x0,y0,x1,y1 = block[:4]
