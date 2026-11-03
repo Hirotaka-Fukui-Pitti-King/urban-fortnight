@@ -207,3 +207,61 @@ Aiyagariでの分布Forward Equation、固定政策のKL縮小、定常価格の
 ![Aiyagariの最適資産保有政策](figures/aiyagari-savings.svg)
 
 ![Aiyagariの資産分布のForward Dynamics](figures/aiyagari-distribution.svg)
+
+## Appendix A. Euler/KKTを最適化問題から検証する
+
+資産の次期選択を$a'$、当期の可処分資源を$b(a,z)=(1+r)a+wz$とし、固定された将来価値$V$について
+$$
+\max_{a'\in[\underline a,\overline a]}
+f(a')=u(b(a,z)-a')+\beta\sum_{z'}P_z(z,z')V(a',z')
+$$
+を考える。$\overline a$は原則として経済的な制約ではなく、計算用の有限グリッドである。$u,V$が微分可能で$u$が凹ならば
+$$
+f'(a')=-u'(c)+\beta E_z[V_a(a',z')].
+$$
+$c>0$の実行可能性と十分な凹性を仮定すると、最大化の一次条件は
+$$
+\begin{cases}
+u'(c)=\beta E_z[V_a(a',z')],&\underline a<a'<\overline a,\\
+u'(c)\ge\beta E_z[V_a(a',z')],&a'=\underline a,\\
+u'(c)\le\beta E_z[V_a(a',z')],&a'=\overline a.
+\end{cases}
+$$
+最後は**数値的に導入した上限制約**に対応する不等式であり、元の無制限AiyagariモデルのEuler条件ではない。内点での包絡条件$V_a(a,z)=(1+r)u'(c(a,z))$を代入すると、本文のEuler/KKT条件となる。値関数が微分不可能な点では片側微分・超微分による条件が必要である。
+
+計算の資産上限では、$\widehat a'=\min\{\overline a,\max\{\underline a,b-c_{\mathrm{EGM}}\}\}$と置いた後、**必ず**
+$$
+c_{\mathrm{realized}}=b(a,z)-\widehat a'
+$$
+で消費を再計算する。$a'$のみを切り詰めると$c+a'=b$が成立しなくなる。数値検証では$\max|c+a'-b|$、内点Euler残差、下限・上限のKKT違反を別々に報告する。
+
+## Appendix B. Forward Equationの測度形式と境界
+
+一般の試験関数$\varphi(a,z)$に対する**正確な**分布方程式は
+$$
+\frac{d}{dt}\sum_z\int\varphi(a,z)\,\mu_t(da,z)
+=\sum_z\int
+\left[s(a,z)\varphi_a(a,z)+
+\sum_{z'}q_{zz'}\varphi(a,z')\right]\mu_t(da,z).
+$$
+これは連続密度の存在を前提としない。実際、借入制約$a=\underline a$に滞留する家計の質量$b_z(t)>0$が存在し得るので
+$$
+\mu_t(da,z)=g_t(a,z)\mathbf1_{a>\underline a}\,da
++b_z(t)\delta_{\underline a}(da)
+$$
+という分解が必要な場合がある。内部のPDEだけを積分し、境界流束を無視すると総確率質量を失い得る。状態制約の下で境界の最適ドリフト$s(\underline a,z)\ge0$を課し、原子質量の入出を弱形式に含めるのが安全である。拡散所得については$\varphi_{zz}$の生成作用素も加わり、所得側の境界を自然境界か反射境界として別途指定する。
+
+定常均衡の数値固定点では、企業の価格を$K$から生成し、家計のHJB/Bellman政策$g_K$を求め、その不変分布$\mu_K$から新しい資本供給
+$$
+\mathcal T(K)=\int a\,\mu_K(da,dz)
+$$
+を計算する。市場清算は$\mathcal T(K^*)=K^*$である。$g_K$の数値政策だけを得ても、$\mu_K$と価格の固定点を満たしたことにはならない。
+
+## Appendix C. KL定理の適用範囲
+
+本文のLog–sum証明には、固定Markov核$P$と不変参照測度$\pi P=\pi$が必要である。時間依存の核$P_t$に対しても一般に
+$$
+D_{\mathrm{KL}}(\mu_tP_t\Vert\pi P_t)
+\le D_{\mathrm{KL}}(\mu_t\Vert\pi)
+$$
+は成立する。しかし$\pi P_t\ne\pi$なら、左辺を$D_{\mathrm{KL}}(\mu_{t+1}\Vert\pi)$と置くのは誤りである。この不等式にはDetailed Balanceは不要だが、経済的な価格形成条件も含まない。固定政策のKullback–Leibler距離は数値解の安定性を調べる候補であって、経済の厚生や自由エネルギーと同一視できない。
