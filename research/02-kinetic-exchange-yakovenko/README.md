@@ -28,3 +28,7 @@ At N=20000 with four seeds, average Wasserstein distance to the stationary money
 **Caution:** Foley (1994) characterizes transaction entropy conditional on specified offer sets; none of these comparisons refutes Foley. An active monetary equilibrium coexists with a no-trade equilibrium. Seller/buyer bargaining, fully coupled Aiyagari money-and-capital household optimization, and endogenous conversion price remain open.
 
 See notes/source_audit_and_propositions.md and results/reference_stage2_summary.json.
+
+## Executed segmented product-equilibrium check
+
+A further Python experiment now combines the Aiyagari capital-income stationary measure and optimal-policy value evaluation with the monetary service-search measure under strong separability and nonconvertibility. Stationary joint-distribution sup residual: 2.45e-13. Joint additive Bellman policy-evaluation sup residual: 9.22e-12. Capital-market relative residual: 1.79e-9. Goods-resource residual: 7.11e-10. Token, service and labor resources are accounted separately. Run the additional product_embedding.py tests or scripts/run_product_embedding.py. **Do not interpret this construction as fully integrated capital-money portfolio choice or endogenous service-price bargaining.**

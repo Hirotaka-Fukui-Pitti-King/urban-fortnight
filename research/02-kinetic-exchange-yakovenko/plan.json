@@ -50,7 +50,7 @@
     "language": "Python 3.13",
     "model": "voluntary posted-price service-for-token search with optimal acceptance and stationary rational token values",
     "solver": "finite-state Bellman linear solve and stationary distribution nonlinear root",
-    "tests": "9 Stage 2 and 6 Stage 0 tests passed",
+    "tests": "11 Stage 2 tests (nine matching and two product embedding), plus 6 Stage 0 tests",
     "full_experiment": "N=1500,6000,20000; seeds=11,22,33,44; 1800 burn-in +700 periods",
     "results": "results/reference_stage2_summary.json plus CI artifacts",
     "limitations": [
@@ -58,6 +58,14 @@
       "posted price is restricted, not bargained",
       "coexisting zero-trade equilibrium",
       "Foley transaction offers differ from search economy and money entropy"
-    ]
+    ],
+    "product_embedding": {
+      "status": "executed_separable",
+      "joint_distribution_sup_error": 2.4521443903191553e-13,
+      "joint_bellman_policy_eval_sup_error": 9.219514041092225e-12,
+      "capital_relative_error": 1.7941930376115843e-9,
+      "goods_error": 7.111644606538903e-10,
+      "caveat": "No capital-money convertibility, shared service labor, bargaining or nonseparable portfolio problem"
+    }
   }
 }

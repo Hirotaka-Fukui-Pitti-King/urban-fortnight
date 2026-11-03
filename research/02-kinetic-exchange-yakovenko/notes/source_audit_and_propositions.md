@@ -40,3 +40,7 @@ The Aiyagari capital/numeraire sector was previously solved with optimizing hous
 Unsolved: optimal bargaining over money prices, token-to-numeraire conversion, portfolio savings interactions, a single labor resource across sectors, partial-trade regimes, and selection among active/no-trade equilibria. Changes in matching intensity or storage capacity can invalidate the full-trade candidate; such cases must be rejected, not reported as valid equilibria.
 
 The full analytical derivation and verification code is included in the Stage 2 reproducibility ZIP, and the source files in this repository contain exact production and token-accounting checks.
+
+## Numerical product-embedding validation
+
+The restricted additive product construction was explicitly executed. With 200 Aiyagari asset nodes, the joint policy-value Bellman residual was 9.22e-12, stationary product distribution sup residual 2.45e-13, relative capital-market error 1.79e-9, goods resource error 7.11e-10, and service output=consumption=0.15200709. The underlying nonconvertible tokens and separate home-service effort guarantee segmentation; these calculations do not establish a general nonseparable HANK plus kinetic exchange model.
