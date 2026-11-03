@@ -49,8 +49,19 @@ jobs:
           print("Conditional PRIVATE fixed point solved; GE not claimed.")
           PY
       - name: Independent all-pair dense search
-        if: github.event_name == 'workflow_dispatch' && inputs.precision
         run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/validate_nash.py
+      - name: Enforce independent all-pair Nash lower-bound comparison
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('research/02-kinetic-exchange-yakovenko/stage2g/results')
+          z=json.loads((root/'nash_checks.json').read_text())
+          assert z['pairs']==17 and z['positive_pairs']==11, z
+          assert z['maximum_dense_improvement']<1e-8, z
+          assert not z['global_optimality_proven'], z
+          print('All relevant Nash pairs beat 201x201 independent deterministic benchmark')
+          PY
       - name: Upload private-problem evidence
         if: always()
         uses: actions/upload-artifact@v4
