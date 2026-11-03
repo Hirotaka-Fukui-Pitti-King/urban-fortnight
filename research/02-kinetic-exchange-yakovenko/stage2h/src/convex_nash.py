@@ -74,14 +74,35 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
     buyer_ids=[i for i,bound in enumerate(buyer_bounds) if bound>1e-11]
     seller_ids=[i for i,bound in enumerate(seller_bounds) if bound>1e-11]
     pairs=[(i,j) for i in buyer_ids for j in seller_ids]
+    # Obtain a feasible incumbent only for branch pruning, NEVER for
+    # certifying optimality. Bounds below dominate every feasible contract
+    # in each individual triangle pair.
+    from private_nash_bellman import nash_candidate
+    q0,d0,score0=nash_candidate(buyer,seller,price,model.k,model.m,
+                   V,model.edges,p.beta,p.b,p.eta,p.alpha,p.A,p.theta,
+                   p.delta,13,11)
+    if q0>0 and np.isfinite(score0) and score0>-1e200:
+        incumbent=NashResult(float(q0),float(d0),0.,0.,float(score0),
+                        len(triangles)**2,0,0,0,None,True)
+    else:
+        incumbent=empty
+    candidate_pairs=[]
+    for ib,is_ in pairs:
+        bu=buyer_bounds[ib]
+        su=seller_bounds[is_]
+        ub=p.theta*np.log(bu)+(1-p.theta)*np.log(su)
+        if ub>incumbent.log_nash:
+            candidate_pairs.append((ib,is_))
+    pairs=candidate_pairs
     if cap_branches is not None:
         pairs=pairs[:cap_branches] # Explicitly *not* a global search
     considered=len(triangles)**2
     pruned=considered-len(pairs)
-    result=empty
+    result=incumbent
     result.triangles_considered=considered
     result.triangles_pruned=pruned
     successes=solved=0
+    failed_branches=0
     r=1/(1-p.alpha)
     for ib,is_ in pairs:
         tri_b=np.asarray(triangles[ib],dtype=int)
@@ -113,8 +134,10 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
                           **({"tol_gap_abs":1e-9,"tol_feas":1e-9,
                               "tol_gap_rel":1e-9} if solver=="CLARABEL" else {}))
         except cp.SolverError:
+            failed_branches+=1
             continue
         if problem.status not in ("optimal","optimal_inaccurate"):
+            failed_branches+=1
             continue
         successes+=1
         q=float(yy.value)
@@ -137,5 +160,8 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
                               solved,successes,(ib,is_),True)
     result.triangles_solved=solved
     result.successes=successes
+    # Failed convex branches cannot be silently certified.
+    if failed_branches:
+        result.dcp_pass=False
     # Not even successful convex solver status is an exact numerical proof.
     return result
