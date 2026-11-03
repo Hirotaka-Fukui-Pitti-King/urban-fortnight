@@ -1,0 +1,36 @@
+{
+  "run_date": "2026-11-03",
+  "source": "Locally executed Python 3.13.5 stationary Aiyagari solver",
+  "status": "executed",
+  "calibration": {
+    "beta": 0.96,
+    "sigma": 2,
+    "alpha": 0.36,
+    "delta": 0.08,
+    "rho": 0.9,
+    "z_std": 0.2,
+    "na": 360,
+    "nz": 5,
+    "amax": 600
+  },
+  "equilibrium": {
+    "K": 5.706220626914589,
+    "r": 0.038097151561853816,
+    "w": 1.1980238261726377,
+    "Y": 1.8719122283947465,
+    "C": 1.4154145728944947,
+    "gini_assets": 0.4939140794150678
+  },
+  "diagnostics": {
+    "capital_relative_residual": 2.3148875382817124e-8,
+    "goods_absolute_residual": 5.347084663931412e-9,
+    "euler_kkt_weighted_p99": 7.937390822217207e-7,
+    "distribution_invariance_sup_error": 9.899026043314052e-13,
+    "upper_asset_stationary_mass": 0
+  },
+  "limitations": [
+    "Stationary deterministic equilibrium only",
+    "Not estimated from real data",
+    "No proof of existence/uniqueness"
+  ]
+}

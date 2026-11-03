@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "status": "planned",
+  "status": "stage0_numerical_solution_stage1_preliminary",
   "created": "2026-11-03",
   "project": "Statistical Mechanics within Optimizing Heterogeneous-Agent General Equilibrium",
   "central_question": "Can statistical-mechanical mechanisms be embedded in heterogeneous-agent general equilibrium with individual optimization, rational expectations and market clearing, before introducing New Keynesian nominal rigidity?",
@@ -19,7 +19,7 @@
       "title": "Optimizing Heterogeneous-Agent General Equilibrium",
       "directory": "research/00-heterogeneous-agent-ge",
       "category": "benchmark",
-      "status": "planned",
+      "status": "numerically_validated_baseline",
       "prerequisites": []
     },
     {
@@ -27,7 +27,7 @@
       "title": "Agent-Based Econophysics as an Equilibrium Computation Method",
       "directory": "research/01-agent-based-equilibrium",
       "category": "method",
-      "status": "planned",
+      "status": "preliminary_particle_validation",
       "prerequisites": [
         0
       ]
@@ -139,5 +139,12 @@
     "format": "clean-typst"
   },
   "superseded_plan": "archive/initial-nk-first-roadmap/",
-  "criteria": "A named economic mechanism is accepted only after optimality, RE and full equilibrium have been demonstrated or a concrete failure is recorded."
+  "criteria": "A named economic mechanism is accepted only after optimality, RE and full equilibrium have been demonstrated or a concrete failure is recorded.",
+  "implementation": {
+    "language": "Python 3.13",
+    "source_branch": "research/stage01-aiyagari-python-validation",
+    "stage0": "Stationary no-aggregate-shocks Aiyagari",
+    "stage1": "Fixed-price continuous optimal policy simulation",
+    "caveat": "Finite-N market clearing with endogenous prices and aggregate stochastic RE not yet implemented."
+  }
 }

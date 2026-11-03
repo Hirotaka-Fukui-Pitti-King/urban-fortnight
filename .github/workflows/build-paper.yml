@@ -1,4 +1,4 @@
-name: Academic Typst paper and research slides
+name: Python equilibrium tests and Quarto Typst PDFs
 
 on:
   push:
@@ -10,45 +10,66 @@ permissions:
   contents: read
 
 jobs:
-  render:
+  validate-and-render:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install Python scientific libraries
+        run: python -m pip install -r requirements.txt
+      - name: Validate nine research plans and economic stage statuses
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=json.loads(Path("research-plan.json").read_text())
+          assert len(root["stages"])==9
+          for n,item in enumerate(root["stages"]):
+              assert item["id"]==n
+              folder=Path(item["directory"])
+              plan=json.loads((folder/"plan.json").read_text())
+              assert plan["stage"]==n
+              assert plan["status"] in ("planned","numerically_validated_baseline","preliminary_particle_validation")
+              for f in ("README.md","RESEARCH.me","results/.gitkeep"):
+                  assert (folder/f).is_file(), f
+          assert root["paper"]["format"]=="academic-typst"
+          PY
+      - name: Compile Python sources
+        run: python -m compileall -q research
+      - name: Test Stage 0 economics and numerics
+        run: python -m unittest discover -s research/00-heterogeneous-agent-ge/tests -v
+      - name: Test Stage 1 reproducibility and particle accounting
+        run: python -m unittest discover -s research/01-agent-based-equilibrium/tests -v
+      - name: Solve high-resolution stationary equilibrium
+        run: python research/00-heterogeneous-agent-ge/scripts/run_stationary_equilibrium.py
+      - name: Check GE asset-grid refinement
+        run: python research/00-heterogeneous-agent-ge/scripts/run_accuracy_tests.py --quick
+      - name: Produce separate SVG figures
+        run: python research/00-heterogeneous-agent-ge/scripts/make_figures.py
+      - name: Simulate optimal heterogeneous agents
+        run: python research/01-agent-based-equilibrium/scripts/run_particles.py --quick
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-      - name: Show Quarto version
-        run: quarto --version
-      - name: Validate nine stage plans
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import json
-          root = json.loads(Path("research-plan.json").read_text(encoding="utf-8"))
-          stages = root["stages"]
-          assert len(stages) == 9
-          for n, entry in enumerate(stages):
-              assert entry["id"] == n
-              d = Path(entry["directory"])
-              plan = json.loads((d / "plan.json").read_text(encoding="utf-8"))
-              assert plan["stage"] == n and plan["status"] == "planned"
-              for f in ["README.md", "RESEARCH.me", "results/.gitkeep"]:
-                  assert (d / f).is_file(), d / f
-              assert plan["research_question"] and plan["acceptance_tests"]
-          assert root["paper"]["format"] == "academic-typst"
-          assert Path("_extensions/academic/_extension.yml").is_file()
-          print("Nine new research plans and academic Typst setup validated.")
-          PY
-      - name: Render English academic paper with Quarto Typst
+      - name: Render English academic research paper
         run: quarto render paper/article.qmd --to academic-typst
-      - name: Render clean Typst presentation
+      - name: Render research slides
         run: quarto render slides/research-agenda.qmd --to clean-typst
-      - name: Upload rendered PDF artifacts
+      - name: Save model data, SVG figures, and PDF papers
         uses: actions/upload-artifact@v4
         with:
-          name: equilibrium-research-paper-and-slides
+          name: stage01-equilibrium-results-and-papers
           path: |
+            research/00-heterogeneous-agent-ge/results/*.json
+            research/00-heterogeneous-agent-ge/results/*.csv
+            research/00-heterogeneous-agent-ge/results/figures/*.svg
+            research/01-agent-based-equilibrium/results/*.json
+            research/01-agent-based-equilibrium/results/*.csv
             paper/article.pdf
             slides/research-agenda.pdf
           if-no-files-found: error

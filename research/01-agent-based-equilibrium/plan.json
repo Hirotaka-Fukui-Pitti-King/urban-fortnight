@@ -4,7 +4,7 @@
   "folder": "research/01-agent-based-equilibrium",
   "title": "Agent-Based Econophysics as an Equilibrium Computation Method",
   "category": "method",
-  "status": "planned",
+  "status": "preliminary_particle_validation",
   "research_question": "Can many-agent simulations of policy-optimal decisions replicate the stationary and transition distributions of the same heterogeneous-agent general equilibrium model?",
   "feasibility_hypothesis": "Yes as a numerical representation, provided the simulated decision rules solve the same equilibrium and common/aggregate risk is consistently forecast.",
   "prerequisites": [
@@ -40,9 +40,9 @@
     "Numerical distribution simulation methods"
   ],
   "implementation": {
-    "status": "not_started",
+    "status": "locally_executed",
     "method": "equilibrium solving plus ABM/distribution verification when relevant",
-    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "language": "Python 3.13",
     "artifacts": "results/",
     "reporting": [
       "code revision",
@@ -51,6 +51,11 @@
       "numerical solver residuals",
       "seed and tolerances",
       "matched ablation comparisons"
+    ],
+    "tests": [
+      "1 reproducibility unit test passed",
+      "N 2500,10000,40000, seeds 101/202/303",
+      "1,400 burn-in, 150 averaged periods"
     ]
   }
 }

@@ -6,7 +6,7 @@ author:
   - name: "Author to be confirmed"
 lang: en
 abstract: |
-  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. This manuscript is a preregistered research design; it reports no numerical or empirical results.
+  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report Python results for a stationary Aiyagari equilibrium and compare finite-agent simulations to its stationary distribution; all proposed statistical-mechanical extensions remain untested.
 keywords:
   - heterogeneous-agent general equilibrium
   - econophysics
@@ -101,8 +101,61 @@ Once the economy generates multiple security returns, random-matrix eigenvalue d
 
 Only after the compatibility results are established do we add household and firm nominal contracts, optimal Calvo reset pricing [@calvo1983], a monetary policy rule, and New Keynesian equilibrium conditions. The central final comparison is a standard NK/HANK economy versus the same economy augmented with individually validated social, exchange, firm-financial, or strategic-trading mechanisms.
 
+# Stage 0: Computed stationary heterogeneous-agent equilibrium
+
+We implemented the stationary incomplete-markets Aiyagari model using the endogenous grid method (EGM), a finite-state Rouwenhorst approximation for idiosyncratic labor-efficiency risk, and a mass-preserving histogram distribution operator. Competitive wages and capital rentals are updated using a bracketed Brent solve for the endogenous stationary interest rate. No nominal rigidity, aggregate shocks, social preferences, or kinetic transfers appear in this model.
+
+The illustrative calibration is $\beta=0.96$, $\sigma=2$, $\alpha=0.36$, $\delta=0.08$, log labor-efficiency persistence $\rho=0.9$, and unconditional log-efficiency standard deviation $0.2$, normalized so that expected labor efficiency is one. In the reference computation, there are five income states and 360 asset nodes over $[0,600]$.
+
+## Equilibrium quantities and accounting checks
+
+| Numerical object | Computed value |
+|---|---:|
+| Capital supply and demand | 5.706221 |
+| Net interest rate | 0.038097 |
+| Wage | 1.198024 |
+| Output | 1.871912 |
+| Aggregate consumption | 1.415415 |
+| Gini coefficient of financial wealth | 0.493914 |
+| Relative excess capital supply | $2.31 \times 10^{-8}$ |
+| Goods resource residual | $5.35 \times 10^{-9}$ |
+| Invariant-distribution sup error | $9.90 \times 10^{-13}$ |
+| Distribution-weighted p99 Euler/KKT error | $7.94 \times 10^{-7}$ |
+
+The goods-market condition is evaluated as $Y-C-\delta K$. In a stationary economy, the average ex ante next-period asset holdings match the current asset holdings. Euler errors use the expected marginal utility implied by the interpolated next-period consumption policy, with the appropriate complementary-slackness inequality for households at the borrowing limit. The stationary distribution has zero mass at the upper asset-grid point.
+
+## Numerical refinement
+
+| Asset states | Income states | Asset upper bound | Stationary capital |
+|---:|---:|---:|---:|
+| 200 | 5 | 600 | 5.710771 |
+| 360 | 5 | 600 | 5.706221 |
+| 520 | 5 | 600 | 5.705067 |
+| 360 | 7 | 600 | 5.706644 |
+| 360 | 5 | 900 | 5.706898 |
+
+All rows re-solve the household problem, distribution, and equilibrium prices under the specified discretization. The variations are evidence of numerical refinement; they do not establish exact numerical convergence or global equilibrium uniqueness. The model is a stationary rational-expectations economy without aggregate uncertainty, not a Krusell--Smith approximation to a stochastic aggregate law of motion.
+
+# Stage 1: Finite-agent simulation of optimal household policies
+
+We simulate the very same optimal household savings policies at fixed Stage 0 equilibrium factor prices. Individual asset positions are continuous and determined by interpolation of the computed optimal policy; they are not projected randomly onto the histogram asset grid. Idiosyncratic labor-efficiency states evolve according to the same transition matrix, and there are no ad hoc transfers or behavioral trading rules.
+
+For each population we report mean capital across three random seeds after 1,400 burn-in periods and 150 measurement periods.
+
+| Simulated households | Monte Carlo mean capital | Deterministic reference |
+|---:|---:|---:|
+| 2,500 | 5.537903 | 5.706221 |
+| 10,000 | 5.661995 | 5.706221 |
+| 40,000 | 5.669039 | 5.706221 |
+
+At 40,000 agents the mean difference is approximately $-0.03718$, or $-0.65\%$ of the reference. This comparison is preliminary: three seeds are insufficient to establish an asymptotic convergence rate, and continuous particle transitions and a mass-splitting histogram operator need not agree exactly on a fixed grid. An additional finite-population equilibrium in which realized market prices clear *each realization* is not solved here. The simulation only verifies the fixed-price law of motion approximately.
+
+# Implication for Stage 2: Voluntary kinetic exchange
+
+The next conceptual step is to ask whether a Boltzmann-like bilateral collision kernel can arise from individually optimal and mutually admissible trade. Conserving financial assets in a two-agent pair is necessary but insufficient. A serious candidate is decentralized matching and bargaining over economically distinct consumption services or claims when parties face liquidity or preference shocks. Before defining the collision operator, one must specify gains from trade, information sets, participation constraints, exchange prices, and an aggregate market-clearing arrangement. If a classical random exchange kernel cannot satisfy those conditions, it should be reported as a heuristic comparator rather than called a rational-expectations equilibrium.
+
 # Research sequence and precommitted acceptance criteria
 
 The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.
 
-This is an agenda manuscript, **not** a claimed existence theorem, computational replication, or empirically estimated paper. The value of the program depends on identifying which familiar statistical-mechanical patterns survive economically consistent microfoundations, and on recording the counterexamples where they do not.
+The paper now reports numerical results for a stationary Aiyagari benchmark and preliminary particle comparisons, not a mathematical existence or uniqueness proof, an aggregate-risk solution, or an empirical calibration. The value of the program depends on identifying which familiar statistical-mechanical patterns survive economically consistent microfoundations, and on recording the counterexamples where they do not.
