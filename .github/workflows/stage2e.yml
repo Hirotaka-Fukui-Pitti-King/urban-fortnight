@@ -32,6 +32,23 @@ jobs:
         run: python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2e/tests -v
       - name: Execute conditional CM and continuous Nash computations
         run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_stage2e.py
+      - name: Execute source-ordered CM price and next-DM fixed-point diagnostics
+        run: python research/02-kinetic-exchange-yakovenko/stage2e/scripts/run_source_iteration_audit.py --steps 4
+      - name: Reject false monetary GE on source iteration trace
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2e/results/source_iteration_audit.json').read_text())
+          assert x['full_stationary_general_equilibrium'] is False
+          assert x['status']!='CANDIDATE_NOT_CERTIFIED'
+          for r in x['history']:
+              assert abs(r['fiat_post_CM']-1)<1e-8
+              assert abs(r['fiat_post_DM']-1)<1e-8
+              assert abs(r['CM_budget_gap'])<1e-8
+              assert r['mass_error']<1e-8
+          print('Source-ordered iteration audited without false GE claim.')
+          PY
       - name: Independently enforce no false stationary monetary GE claim
         run: |
           python - <<'PY'
