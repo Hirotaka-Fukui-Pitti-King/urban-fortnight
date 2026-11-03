@@ -89,5 +89,32 @@
     "directory": "research/02-kinetic-exchange-yakovenko/stage2f",
     "status": "one_period_adaptive_and_Nash_candidates_not_stationary_GE",
     "stationary_GE": false
+  },
+  "stage2g": {
+    "branch": "research/stage2g-endogenous-nash-bellman-ge",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2g",
+    "status": "3x3_fixed_price_endogenous_continuous_nash_bellman_root_converged_not_GE",
+    "fixed_price": 2.5,
+    "fixed_partner_capital": 1.5,
+    "fixed_partner_money": 1,
+    "grid": [
+      3,
+      3
+    ],
+    "bellman_sup": 9.094947017729282e-13,
+    "smooth_branch_KKT_max": 8.881784197001252e-16,
+    "relevant_pairs": 17,
+    "positive_contract_pairs": 11,
+    "dense_benchmark_improvement": 0,
+    "dense_grid": [
+      201,
+      201
+    ],
+    "continuous_global_nash_certified": false,
+    "grid_5x5_converged": false,
+    "stationary_joint_distribution_certified": false,
+    "endogenous_money_price_certified": false,
+    "stationary_GE_certified": false,
+    "draft_pr": 10
   }
 }

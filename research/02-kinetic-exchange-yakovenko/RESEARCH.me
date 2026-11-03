@@ -20,3 +20,6 @@ Stage 2-E (2026-11-03): continuous joint CM saving is solved globally for a **tr
 
 
 Stage 2-F: Original Section 4 Step 6 adaptive asset bounds and conservative measure transport implemented. A conditional CM-DM step clears money after expanding capital/money bounds, but residual for guessed V is 152.866. Frozen bilateral contract Bellman evaluation converges (beta contraction); discrete Nash policy improvement cycles at fixed price. Continuous multistart Nash candidates are applied to 96 relevant pairs (76 positive) with correct DM accounting. Stationary monetary GE remains NOT FOUND.
+
+
+Stage 2-G (2026-11-04): Endogenous Nash--Bellman fixed-price 3x3 root at p=2.5 solved with 9.09e-13 sup Bellman residual and 8.88e-16 smooth-branch KKT residual; all 17 relevant directed trade pairs compared against an independent dense 201x201 search (11 positive contracts; no improvement). Exact continuous global optimality is NOT certified. The 5x5 attempt failed to converge. Partner measure is fixed and nonstationary; no endogenous fiat price or stationary monetary GE is claimed. Work is in Draft PR #10, above Stage 2-F PR #9.

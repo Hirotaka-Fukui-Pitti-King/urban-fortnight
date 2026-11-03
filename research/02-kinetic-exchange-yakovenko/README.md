@@ -57,3 +57,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-F: Adaptive grids and Nash contract stability
 
 [Stage 2-F](stage2f/README.md) executes one original Section 4 Step 6 adaptive CM-DM update with exact fiat/asset moment accounting; it also isolates the convergent fixed-contract Bellman operator from cycling discrete Nash best responses. Continuous Nash candidates are evaluated for all 96 distribution-relevant matches in one period and linked to the actual DM and Bellman operators; 76 have positive trade. **No invariant monetary GE, continuous Nash global certification, or new macro mechanism is yet established.**
+
+
+## Stage 2-G: 3x3 endogenous continuous Nash--Bellman private equilibrium
+
+[Stage 2-G](stage2g/README.md) implements source-bounded continuous Nash contracts, analytic payment-space reduction, FOC/KKT polishing, and a joint relative-value root solver at fixed price and partner distribution. A 3x3 pilot reaches sup Bellman residual 9.09e-13 and smooth-branch Nash KKT residual 8.88e-16, with 11 positive contracts among 17 relevant pairs. Continuous global Nash optimality and higher-grid convergence remain unproved; no clearing monetary price, invariant distribution, or stationary GE has been found. Draft PR #10.

@@ -1,0 +1,100 @@
+name: Stage 2-G endogenous continuous Nash--Bellman private equilibrium
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      precision:
+        description: "Run expensive 201x201 all-pair independent benchmark"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  stage2g-private:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      NUMBA_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Python syntax and economic unit tests
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2g
+          python -m unittest discover -s research/02-kinetic-exchange-yakovenko/stage2g/tests -v
+      - name: Solve fixed-price endogenous Nash--Bellman (3x3)
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/solve_private.py
+      - name: Strict certification of private solution (not GE)
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("research/02-kinetic-exchange-yakovenko/stage2g/results")
+          x=json.loads((root/"private_summary.json").read_text())
+          assert x["converged"], x
+          assert x["bellman_sup"] < 1e-8, x
+          assert x["nash_kkt_max"] < 1e-6, x
+          assert x["positive_contracts"] > 0, x
+          assert x["partner_states"] == 1, x
+          print("Conditional PRIVATE fixed point solved; GE not claimed.")
+          PY
+      - name: Independent all-pair dense search
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/validate_nash.py
+      - name: Enforce independent all-pair Nash lower-bound comparison
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('research/02-kinetic-exchange-yakovenko/stage2g/results')
+          z=json.loads((root/'nash_checks.json').read_text())
+          assert z['pairs']==17 and z['positive_pairs']==11, z
+          assert z['maximum_dense_improvement']<1e-8, z
+          assert not z['global_optimality_proven'], z
+          print('All relevant Nash pairs beat 201x201 independent deterministic benchmark')
+          PY
+      - name: Independent monotone upper/lower Nash bound for one actual pair
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_one_pair.py --gap 0.0001 --max-boxes 100000
+      - name: Reject false full-global / GE claim in certificate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2g/results/nash_monotone_bound_one_pair.json').read_text())
+          assert d['numerical_only'] is True
+          assert d['undiscretized_Nash_optimum_certified'] is False
+          assert d['stationary_GE_certified'] is False
+          assert d['upper_log_nash'] >= d['lower_log_nash']-1e-10
+          print('Bounded to tolerance:',d['bounded_to_tolerance'],'gap:',d['gap_log_nash'])
+          PY
+      - name: Independent all-pair monotone Nash global bound and Bellman recheck
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_all_pairs.py --gap 0.0001 --max-boxes 100000
+      - name: Enforce all-pair global-bound and reoptimized Bellman fixed point
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('research/02-kinetic-exchange-yakovenko/stage2g/results/all_pair_monotone_summary.json')
+          z=json.loads(path.read_text())
+          assert z["all_policy_nash_bounded_to_tolerance"], z
+          assert z["Bellman_sup_after_global_policy_recheck"] < 1e-8, z
+          assert z["positive_pair_count"] == 11, z
+          print("All-pair numerical bounds and reoptimized private fixed point checked")
+          PY
+      - name: Upload private-problem evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2g-private-nash-bellman
+          path: research/02-kinetic-exchange-yakovenko/stage2g/results/
+          if-no-files-found: warn
+          retention-days: 30
