@@ -47,3 +47,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-D conditional monetary auction (not stationary GE)
 
 [Stage 2-D](stage2d/README.md) documents a repaired exact-on-discrete-grid CM value policy and an expanded post-DM cash state, plus one-period money-clearing price tests. Its 5x5/7x7/9x9 conditional auctions pass budget and fiat-money checks but are **not jointly stationary**. The old active branch's Bellman update deviated by sup 356.426 under direct reoptimization. Fully market-clearing Molico-Zhang stationary GE remains OPEN.
+
+
+## Stage 2-E: Conditional continuous joint CM saving, not stationary GE
+
+[Stage 2-E](stage2e/README.md) uses the same continuous k,m portfolio solver in CM value and population transition, under a triangular piecewise-affine interpolation of the continuation V. It verifies one-period fiat money clearing with unaltered issuer stock at 5x5 and 7x7. A separate one-pair continuous Nash experiment is not an all-pairs policy. **Bellman and distribution errors remain large**, so no stationary monetary GE or novel kinetic macro mechanism is established. The original paper's bicubic and wealth-simulation algorithm is not replicated.

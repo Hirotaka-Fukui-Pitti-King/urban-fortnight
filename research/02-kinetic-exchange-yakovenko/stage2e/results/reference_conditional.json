@@ -1,0 +1,40 @@
+{
+  "status": "ONLY_CONDITIONAL_CM_AUCTIONS_NO_STATIONARY_GE",
+  "units": "fixed nominal fiat supply=1",
+  "date": "2026-11-03",
+  "results": [
+    {
+      "grid": "5x5",
+      "p_k": 3.0112500000000004,
+      "money": 0.9999999999999999,
+      "capital": 1.084386213704171,
+      "trade_rate": 0.3333333333333333,
+      "budget_gap": 0,
+      "Bellman_sup": 153.1684046070214,
+      "distribution_sup": 0.552607116344513
+    },
+    {
+      "grid": "7x7",
+      "p_k": 3.0103125000000004,
+      "money": 1,
+      "capital": 1.084387460009484,
+      "trade_rate": 0.3333333333333333,
+      "budget_gap": 0,
+      "Bellman_sup": 153.24311281870814,
+      "distribution_sup": 0.7309183528717917
+    }
+  ],
+  "continuation_guess": "5*(k+m/3)+0.02*sin(k)+0.003*sin(2m), not Bellman fixed point",
+  "continuous_nash_one_pair": {
+    "y": 0.6535636809538037,
+    "d": 1,
+    "buyer_gain": 1.545682679056597,
+    "seller_gain": 0.9030054361157394,
+    "logNash": 0.1667194853511511,
+    "coarseLogNash": 0.11582103108020697
+  },
+  "actual_all_pairs_nash_continuous": false,
+  "full_stationary_GE": false,
+  "verification": "six Python tests passed locally; generated CSV and JSON in CI",
+  "source_code_status": "not original-author bicubic/10000-agent replication"
+}

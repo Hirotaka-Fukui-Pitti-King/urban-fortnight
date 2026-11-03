@@ -1,0 +1,31 @@
+{
+  "stage": "2-E",
+  "date": "2026-11-03",
+  "branch": "research/stage2e-continuous-monetary-ge",
+  "status": "conditional_continuous_CM_executed_stationary_GE_not_recovered",
+  "completed": [
+    "continuous joint CM capital-money optimization for triangular interpolated V",
+    "global CM optimality test vs independent continuous deviations",
+    "DM money/asset accounting",
+    "conditional CM money-clearing price 5x5 and 7x7",
+    "multistart continuous Nash at one active pair",
+    "six economics tests",
+    "CI plus JSON/CSV/SVG artifact"
+  ],
+  "conditional_prices": {
+    "5x5": 3.0112500000000004,
+    "7x7": 3.0103125000000004
+  },
+  "missing": [
+    "simultaneous stationary GE",
+    "continuous Nash for all pair states",
+    "high-resolution convergence",
+    "Euler/KKT on the full GE stationary support",
+    "original bicubic/10000-agent algorithm",
+    "monetary policy/welfare",
+    "kinetic novelty"
+  ],
+  "source": "Molico and Zhang November 2005 manuscript, indexed PDF Section 4; graphical screenshots inaccessible",
+  "result": "results/reference_conditional.json",
+  "novel_Ge_claim": false
+}
