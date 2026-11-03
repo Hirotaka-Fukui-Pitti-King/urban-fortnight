@@ -431,6 +431,38 @@ At a specified initial feasible portfolio distribution with total normalized fia
 **These are conditional one-period auctions, not stationary general-equilibrium prices.** The quoted price varies with grid size. Updating the households' continuation values, Nash trading and population distribution jointly with the clearing price succeeds for several periods but subsequently fails to find a verified money-clearing portfolio tie; private optimality and invariant distribution have not converged simultaneously. No stationary general equilibrium, equilibrium selection result, monetary policy effect, welfare comparison or original-paper numerical replication is claimed. Stage 2-D preserves these errors and constraints as explicit research diagnostics instead of hiding them through infeasible money-stock adjustments.
 
 
+
+# Stage 2-E: Continuous CM savings, conditional monetary clearing, and the remaining stationary-equilibrium failure
+
+The new continuous CM optimizer is globally optimal for a **triangulated piecewise-affine continuation value**, not for the original smooth problem or original bicubic interpolation. Given post-DM real wealth and the nominal capital price, the household solves
+
+$$
+W_h(w;p)=\max_{\substack{k',m'\ge 0\\k'+m'/p\le w}}\left\{u(w-k'-m'/p)+\beta\mathcal{I}_h V(k',m')\right\}.
+$$
+
+Inside a triangle the interpolated continuation value is affine. Along a portfolio-cost contour the conditional continuation objective is linear; an optimizer is attainable on a triangle edge. Each feasible edge has derivative
+
+$$
+F_e'(t)=-\Delta s_e[c_e(t)+b]^{-\eta}+\beta\Delta V_e,
+$$
+
+so an exhaustive edge scan with one-dimensional stationary points returns a global optimum for the **stated approximation**. Independent dense deviations and financial-budget tests passed. The CM optimizer is consistently used in Bellman values and in the distribution transition.
+
+For fixed initial continuation values and the population entering CM, the price solver accepts a price only when the issuer's stock belongs to the optimal-money correspondence at **that same price**:
+
+$$
+\underline M(p;V,\mu)\le M^s=1\le \overline M(p;V,\mu).
+$$
+
+Only portfolios genuinely indifferent (within an explicit small numerical tolerance) may be mixed; there is no post-hoc money-stock normalization.
+
+| Grid | Conditional CM price | End nominal money | Budget error | Bellman sup | Distribution sup |
+|---|---:|---:|---:|---:|---:|
+| 5 by 5 | 3.0112500 | 1.0000000 | 0 | 153.1684 | 0.5526 |
+| 7 by 7 | 3.0103125 | 1.0000000 | 0 | 153.2431 | 0.7309 |
+
+These computations begin with an explicitly **unoptimized illustrative continuation value** and a feasible initial middle-node asset distribution. **They are conditional one-period CM auctions, not stationary monetary general-equilibrium prices.** An independent one-pair continuous Nash SLSQP calculation yields positive buyer/seller gains and higher Nash surplus than a coarse grid, but the full matching law still uses finite Nash contracts. The source paper reports 100 by 100 bicubic-spline values, 10,000 entrant portfolios, and adaptive grids, which this triangular finite-grid approximation does not replicate. No monetary policy, welfare or novel kinetic effect follows from these results.
+
 # Research sequence and precommitted acceptance criteria
 
 The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.

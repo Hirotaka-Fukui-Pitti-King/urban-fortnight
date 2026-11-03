@@ -183,5 +183,14 @@
     "stationary_money_GE": false,
     "novelty_claim": false,
     "numerical_outputs": "research/02-kinetic-exchange-yakovenko/stage2d/results/stage2d_diagnostics.json"
+  },
+  "stage2e": {
+    "branch": "research/stage2e-continuous-monetary-ge",
+    "status": "one_period_continuous_CM_cleared_but_stationary_GE_unverified",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2e",
+    "continuous_Nash_all_pairs": false,
+    "verified_stationary_GE": false,
+    "novelty_claim": false,
+    "result": "research/02-kinetic-exchange-yakovenko/stage2e/results/reference_conditional.json"
   }
 }

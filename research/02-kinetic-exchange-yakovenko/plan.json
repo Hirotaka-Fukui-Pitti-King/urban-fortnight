@@ -79,5 +79,10 @@
     "status": "conditional_cm_price_auction_only",
     "directory": "research/02-kinetic-exchange-yakovenko/stage2d",
     "stationary_GE": false
+  },
+  "stage2e": {
+    "status": "conditional_CM_only",
+    "directory": "research/02-kinetic-exchange-yakovenko/stage2e",
+    "stationary_GE": false
   }
 }
