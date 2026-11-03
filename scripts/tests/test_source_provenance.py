@@ -40,6 +40,12 @@ class TestSourceProvenance(unittest.TestCase):
         d["notice_paths"] = ["nonexistent_file.txt"]
         self.assertTrue(any("verification notice missing" in x for x in validate(d, ROOT)))
 
+    def test_legacy_source_warning_cannot_be_removed(self):
+        d = copy.deepcopy(DATA)
+        path = next(iter(d["additional_notices"]))
+        d["additional_notices"][path] = "untrue source certification"
+        self.assertTrue(any("additional evidence disclaimer missing" in x for x in validate(d, ROOT)))
+
     def test_wrong_hash_cannot_certify_pdf(self):
         d = copy.deepcopy(DATA)
         with tempfile.TemporaryDirectory() as t:

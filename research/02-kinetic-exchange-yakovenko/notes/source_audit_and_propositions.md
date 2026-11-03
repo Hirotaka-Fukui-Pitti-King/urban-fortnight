@@ -1,3 +1,5 @@
+Historical Foley/Gallegati primary-source page claims are NOT independently reverified in the current audit; no original PDF hashes or page-image evidence are available.
+
 # Foley, Gallegati, and our Stage 2 propositions
 
 ## Source-audited literature

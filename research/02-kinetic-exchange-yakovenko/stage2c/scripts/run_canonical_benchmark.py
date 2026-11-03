@@ -1,4 +1,7 @@
-"""Execute small canonical monetary model at quoted prices; never imply GE."""
+"""Execute small text-derived monetary-search candidate; not source-verified GE.
+
+Source verification status for Molico--Zhang: web-indexed text only; PDF pages and equations have NOT been visually verified.
+"""
 from pathlib import Path
 import sys,json,csv,dataclasses,platform
 import numpy as np,scipy
@@ -23,8 +26,8 @@ with (out/"price_grid_audit.csv").open("w",newline="") as f:
     writer.writeheader();writer.writerows(rows)
 report={
  "status":"NO_VERIFIED_MONETARY_GENERAL_EQUILIBRIUM",
- "source":"Molico and Zhang November 2005 draft, eqs. (1)-(14)",
- "model_claim":"Equation-level finite-grid illustration, NOT replication of their numerical results",
+ "source":"Molico and Zhang November 2005 draft, provisional indexed-text equations (1)-(14); not visually verified",
+ "model_claim":"Unverified text-derived finite-grid illustration, NOT literal equation replication or original numerical results",
  "source_calibration":dataclasses.asdict(Calibration()),
  "economic_timing":{
    "DM":"Single coincidence buyer or seller, each 1/N. Money-for-produced-goods Nash trade.",

@@ -5,7 +5,9 @@
   "notice_paths": [
     "paper/article.qmd",
     "research/02-kinetic-exchange-yakovenko/stage2c/README.md",
-    "research/02-kinetic-exchange-yakovenko/stage2c/notes/canonical_model_reconstruction.md"
+    "research/02-kinetic-exchange-yakovenko/stage2c/notes/canonical_model_reconstruction.md",
+    "research/02-kinetic-exchange-yakovenko/stage2c/src/molico_grid.py",
+    "research/02-kinetic-exchange-yakovenko/stage2c/scripts/run_canonical_benchmark.py"
   ],
   "sources": {
     "molico_zhang_2005": {
@@ -101,5 +103,8 @@
       "required_level": "pdf_pages_rendered",
       "status": "pending"
     }
-  ]
+  ],
+  "additional_notices": {
+    "research/02-kinetic-exchange-yakovenko/notes/source_audit_and_propositions.md": "Historical Foley/Gallegati primary-source page claims are NOT independently reverified in the current audit; no original PDF hashes or page-image evidence are available."
+  }
 }

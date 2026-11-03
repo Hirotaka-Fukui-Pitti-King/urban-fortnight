@@ -96,6 +96,10 @@ def validate(data: dict, root: Path) -> list[str]:
             f = root / rel
             if not f.is_file() or notice not in f.read_text(encoding="utf-8"):
                 errors.append(rel + ": verification notice missing")
+    for rel, expected in data.get("additional_notices", {}).items():
+        f = root / rel
+        if not f.is_file() or expected not in f.read_text(encoding="utf-8"):
+            errors.append(rel + ": additional evidence disclaimer missing")
     return errors
 
 

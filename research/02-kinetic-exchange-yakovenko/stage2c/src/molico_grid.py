@@ -1,4 +1,7 @@
-"""Finite-grid implementation of Molico--Zhang (2005 draft) equations (1)-(14).
+"""Provisional finite-grid model built from indexed Molico--Zhang manuscript text.
+
+Source verification status for Molico--Zhang: web-indexed text only; PDF pages and equations have NOT been visually verified.
+Original equation labels and typography have NOT been checked against PDF pages.
 
 This is NOT a numerical replication of the authors' 100x100 spline/10,000
 sample nonlinear stationary equilibrium algorithm. A type-i agent stores its

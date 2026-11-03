@@ -1,8 +1,8 @@
 {
   "status": "NO_VERIFIED_MONETARY_GENERAL_EQUILIBRIUM",
   "reference": "Molico and Zhang November 2005 draft",
-  "source_equations": "1-14",
-  "description": "finite-grid equation reconstruction, not original numerical replication",
+  "source_equations": "Provisional, as seen in search-index text; exact equations (1)-(14) NOT visually verified",
+  "description": "Candidate finite-grid interpretation from indexed extracted text; no verified original equation mapping or GE",
   "table1": {
     "N": 3,
     "beta": 0.96,
@@ -66,5 +66,11 @@
     "No algorithm equivalent to original 100x100 spline and 10000 samples",
     "Finite money grid constrains contracts",
     "No claims of GE welfare effects or novel collision mechanism"
-  ]
+  ],
+  "original_pdf_verification": {
+    "status": "not_verified",
+    "pdf_bytes_downloaded": false,
+    "rendered_pages_checked": 0,
+    "registry": "research/source_provenance/registry.json"
+  }
 }
