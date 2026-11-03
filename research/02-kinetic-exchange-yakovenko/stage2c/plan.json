@@ -1,0 +1,24 @@
+{
+  "stage": "2-C",
+  "status": "executed_original_equation_pilot_money_market_uncleared",
+  "branch": "research/stage2c-canonical-monetary-ge",
+  "primary_source": "Molico and Zhang, November 2005 draft, equations 1–14",
+  "is_replication": false,
+  "completed": [
+    "7 local economic tests",
+    "Nash finite-menu acceptance",
+    "DM probability/money/production conservation",
+    "CM combined saving/consumption budget"
+  ],
+  "open": [
+    "Full stationary money-supply market clearing",
+    "Continuous bargaining",
+    "High-accuracy stationary money-capital distribution",
+    "Original 100x100/10000-agent protocol",
+    "Positive monetary equilibrium selection",
+    "Boltzmann/particle GE validation",
+    "Novel monetary transmission result"
+  ],
+  "next": "Endogenous CM price solve jointly with value function and stationary distribution using accurate interpolation",
+  "result": "results/reference_pilot.json"
+}

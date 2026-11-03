@@ -6,7 +6,7 @@ author:
   - name: "Author to be confirmed"
 lang: en
 abstract: |
-  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report numerical solutions for the stationary Aiyagari benchmark and a restricted, optimizing, monetary-search economy. A subsequent joint capital--money portfolio and discrete Nash bargaining prototype solves its private dynamic program, but fails to clear capital, fiat-money, labor, and goods markets at tested prices; it is not a general equilibrium. The literature already contains nondegenerate money--capital optimization models, importantly Molico and Zhang (2006). Our research contribution remains conditional on deriving new kinetic properties from a verified general equilibrium.
+  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. We report numerical solutions for the stationary Aiyagari benchmark and a restricted, optimizing, monetary-search economy. A subsequent joint capital--money portfolio and discrete Nash bargaining prototype solves its private dynamic program, but fails to clear capital, fiat-money, labor, and goods markets at tested prices; it is not a general equilibrium. A subsequent original-equation finite-grid exercise based on Molico and Zhang (2006) corrects the market timing and removes artificial money preferences, but has not yet found a positive-price equilibrium clearing the fiat-money market. The literature already contains nondegenerate money--capital optimization models, importantly Molico and Zhang (2006). Our research contribution remains conditional on deriving new kinetic properties from a verified general equilibrium.
 keywords:
   - heterogeneous-agent general equilibrium
   - econophysics
@@ -359,6 +359,60 @@ Starting from a perturbation of 0.01 units of household probability mass that ch
 A complementary feasibility-region diagnostic shows why the old outer price search cannot yet substantiate a GE claim. At assumed labor $L=0.94$ and fiat token value $\phi=0.8$, $K^{\mathrm{guess}}=1$ leads to 99.9915% probability at the **maximum capital-grid point** (asset supply 9.9997), while guesses $K=2$ and $2.8$ do not yield converged private problems. At $K=4$, the private solution converges but aggregate capital supplied is only 0.5877. This pattern reveals severe grid-boundary sensitivity and failing inner fixed points, not a theorem that a full equilibrium does not exist. All previous market-clearing failures and the nonessential money issue due to portfolio taste shocks remain unresolved.
 
 Our proposed submission gate requires a high-accuracy **canonical monetary search joint portfolio GE**, microfounded essentiality of money, consistent asset and labor issuer accounts, and a policy shock comparison with endogenous prices and optimal policies recalculated for both matching specifications. Any claim that this adds a mechanism beyond @molicozhang2006 or @aruoba2011 would then require a specific comparative-static distinction; otherwise the project should be represented as a computational kinetic reformulation of an already existing model.
+
+
+
+# Stage 2-C: Recovering the canonical monetary-search economic environment
+
+The previous joint capital--money model is not a numerical reproduction of @molicozhang2006. Its centralized-market representative firm, competitive capital rental rate, and market wage differ fundamentally from the reference economy. In Molico and Zhang's original draft (2005, Section 2 and equations (1)--(14)), households specialize in N>=3 consumption and production varieties. A type-i household stores good i as **type-specific productive capital**, and uses that capital with effort to produce good i+1 in the decentralized market (DM). No general-good production occurs in the centralized market (CM); households there exchange money against storable goods and choose consumption and next-period portfolios. These differences mean a root solver cannot repair the older specification into a canonical replication.
+
+For the original model's monetary growth rate $\mu=0$, the centralized household problem is, schematically,
+
+$
+W(\bar m,\bar k)=
+\max_{c,m',k'\geq 0}\bigl\{u(c)+\beta V(m',k')\bigr\}
+\quad\mathrm{s.t.}\quad
+c+k'+\frac{m'}{p_k}=\bar k+\frac{\bar m}{p_k}.
+$
+
+Here $p_k$ is the price of the stored good measured in fiat units, so $m/p_k$ is real purchasing power. This centralized value depends on total real wealth, but the optimal next **joint capital--money portfolio** need not be separable. The DM bilateral bargaining problem over real output $y$ and payment $d$ is
+
+$
+\max_{y,d}
+\left[
+W(m_b-d,(1-\delta)k_b+y)-W(m_b,(1-\delta)k_b)
+\right]^{\theta}
+\left[
+W(m_s+d,(1-\delta)k_s)-W(m_s,(1-\delta)k_s)-v(y,k_s)
+\right]^{1-\theta},
+$
+
+subject to acceptance and technologically feasible production. The seller's cost comes from the labor input required for $y=A k_s^\alpha \ell^{1-\alpha}$. The population distribution moves through a random-match DM operator, capital depreciation, and a CM joint portfolio decision. The source's key stationary price condition is **normalized money market clearing**, $E[m']=1$, in addition to value and population consistency.
+
+Our new Python experiment implements these source equations on a deliberately limited finite portfolio and bargaining grid. It uses the source's reported $N=3$, $\beta=0.96$, utility curvature $\eta=5$, shift $b=0.2$, $\alpha=0.36$, $A=1$, depreciation $\delta=0.07$, and buyer bargaining weight $\theta=0.5$. No direct money utility, portfolio logit taste, or representative producer in CM is imposed. Mass-splitting and an enlarged *post-DM goods grid* preserve freshly produced goods instead of clipping an entering buyer's goods to the next-period savings grid. Seven independently executed numerical tests verify individual-choice menu admissibility, bilateral cash constraints, CM budget identities, goods production, and conserved money and population mass.
+
+## Numerical status: private fixed points are not monetary equilibria
+
+The first pilot scans three fiat prices on a 5-by-5 next-period portfolio grid and one 7-by-7 test. The money endowment is normalized to one:
+
+| Capital x money grid | $p_k$ | Private value / distribution converged? | Mean money demand | Excess money demand |
+|---|---:|---|---:|---:|
+| 5 x 5 | 0.5 | Yes | approximately 0 | $-1.0000$ |
+| 5 x 5 | 1.4 | Yes | approximately 0 | $-1.0000$ |
+| 5 x 5 | 2.0 | Yes | $0.333804$ | $-0.666196$ |
+| 7 x 7 | 1.4 | **No** | $0.526249$ (invalid) | $-0.473751$ (invalid) |
+
+Although distribution mass is conserved and the bilateral accounting checks pass, **none of the tested prices is a positive-stock stationary monetary general equilibrium**. The 7-by-7 values cannot be used as steady-state economic statistics because private value iteration did not converge. Failure of this coarse pilot is not a nonexistence theorem, and the tiny grids do not reproduce the original authors' approximately 100-by-100 interpolated state grid and 10,000 simulated household portfolios.
+
+The exact aggregate period budget for the zero-inflation source environment is
+
+$
+C+K_{\mathrm{next}}+\frac{M_{\mathrm{next}}}{p_k}
+=(1-\delta)K_{\mathrm{current}}+Y_{\mathrm{DM}}
++\frac{M_{\mathrm{current}}}{p_k}.
+$
+
+Only after **both** joint asset-market clearing and stationarity are established does the identity become $Y_{\mathrm{DM}}=C+\delta K$. The new solver's next essential step is therefore an endogenous capital price that clears nominal fiat supply *inside* the fixed point for values, bargained trade policies, and population distribution. We must also replace the crude portfolio/contract grids with accurate continuous or interpolation-based choices and check multiple possible monetary branches before reporting general equilibrium, capital accumulation, welfare, or a distinctive kinetic result. In particular, switching off search in this specialized production model does not automatically yield the earlier Aiyagari economy.
 
 
 # Research sequence and precommitted acceptance criteria

@@ -37,3 +37,8 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-B: Current research attempt
 
 [Stage 2-B](stage2b/README.md) documents a Python joint capital--money Bellman/bargaining prototype and its **failure to clear all markets**. It does not change this earlier restricted Stage 2 benchmark and should not be cited as a completed general equilibrium. Molico and Zhang (2006) is now treated as the closest prior work.
+
+
+## Stage 2-C source-reconstructed monetary economy
+
+[Stage 2-C](stage2c/README.md) is a separate source-derived reconstruction of the Molico--Zhang original economic environment, not an extension of the representative-firm CM algorithm in Stage 2-B. It uses no CM production, type-specific capital and production, and no intrinsic money utility or portfolio taste shock. Seven Python model/economic tests pass locally. The reported 5x5/7x7 **pilot fails normalized fiat supply market clearing**, so the model is not yet stationary monetary GE. See source-audited notes and CI artifacts.
