@@ -1,0 +1,216 @@
+---
+title: "Aiyagariと異質的主体経済の統計力学：HJB、Forward Equation、Entropy"
+lang: ja
+date: 2026-11-03
+format:
+  html:
+    toc: true
+    number-sections: true
+    math: mathjax
+  typst:
+    toc: true
+    number-sections: true
+---
+
+**大学院研究講義 I。** 本講義は既存のAiyagari–Bewley–Huggett経済から出発し、個人の最適化→状態遷移→分布動学→価格と市場清算→統計力学的性質の順に導出する。中心文献は[Aiyagari (1994)](https://doi.org/10.2307/2118417)、[Huggett (1993)](https://doi.org/10.1016/0165-1889(93)90024-M)、[Krusell and Smith (1998)](https://doi.org/10.1086/250034)、[Achdou et al. (2022)](https://doi.org/10.1093/restud/rdab002)である。
+
+## 1. Economic Primitives：誰が何を選び、どの市場があるか
+
+質量1の家計$i$は資産$a_{it}\ge\underline a$と個別労働効率$z_{it}$を持つ。労働供給はまず1に固定し、所得リスクは家計間で保険できない。消費と次期資産を選び、CRRA効用
+$$
+E_0\sum_{t=0}^\infty\beta^t u(c_{it}),\quad
+u(c)=\begin{cases}c^{1-\gamma}/(1-\gamma)&\gamma\ne1,\\\log c&\gamma=1,\end{cases}
+\qquad0<\beta<1,\ \gamma>0
+$$
+を最大化する。有限Markov所得過程の遷移確率は$P_z(z,z')$とする。競争企業が$Y_t=F(K_t,L_t)=A K_t^\alpha L_t^{1-\alpha}$を生産し、資本減耗率は$\delta$。
+
+定常時の限界生産力条件は
+$$
+r=\alpha A(K/L)^{\alpha-1}-\delta,\qquad
+w=(1-\alpha)A(K/L)^\alpha.
+$$
+資本のみが取引可能な資産で、家計の一期間予算制約は
+$$
+c_t+a_{t+1}=(1+r)a_t+wz_t,\qquad a_{t+1}\ge\underline a,\quad c_t>0.
+$$
+時系列の総資本は家計の期首資産の総量と一致する。無限寿命・無保険・個別ショックであることが予備的貯蓄の要点となる。Huggettの基準モデルでは純供給が一定の無リスク債券を取引するので、資本の物的生産は存在しない。同じ分布技術を使えても市場清算式が異なる。
+
+## 2. Microstates、Empirical Measures、Macro Variables
+
+有限$N$の完全な経済状態は
+$$
+\omega_N=((a_1,z_1),\ldots,(a_N,z_N))\in(\mathcal A\times\mathcal Z)^N.
+$$
+経験測度$\mu_N=N^{-1}\sum_i\delta_{(a_i,z_i)}$は各家計の順番を捨て、状態分布だけを保持する。集計資本、効率労働、消費は
+$$
+K_N=\int a\,d\mu_N,\quad L_N=\int z\,d\mu_N,\quad
+C_N=\int c^*(a,z)\,\mu_N(da,dz).
+$$
+富の累積分布は$F_a(x)=\int\mathbf1\{a\le x\}\mu_N(da,dz)$、借入制約にいる割合は$\mu_N(\{\underline a\}\times\mathcal Z)$、集計資産Giniは$F_a$から計算できる。$K_N$が同じでも$F_a$が異なれば消費反応は異なり得る。これは「マクロ状態が分布」という数学的な意味であり、分布が**常に**均衡価格の十分統計量という主張ではない。
+
+原則として個人の最適政策は当期の価格と将来の価格予想に依存する。定常均衡で価格が一定なら政策を$g(a,z;r,w)$と書ける。集計ショックがあれば分布$\mu_t$も個人の情報状態に入り、$g_t(a,z;\mu_t,S_t)$という高次元の問題になる。Krusell–Smith (1998)は特定の較正経済で平均富による集計法則の近似が有用であることを見出したが、全経済の一般定理ではない。
+
+## 3. Individual Optimization：BellmanとEuler/KKT
+
+定常価格$r,w$を所与とする家計価値関数は
+$$
+V(a,z)=\max_{\substack{a'\ge\underline a\\0<c=(1+r)a+wz-a'}}
+\left\{u(c)+\beta\sum_{z'}P_z(z,z')V(a',z')\right\}.
+$$
+内点で$a'$を動かす一階条件は
+$$
+-u'(c)+\beta\sum_{z'}P_z(z,z')V_a(a',z')=0.
+$$
+包絡条件$V_a(a,z)=(1+r)u'(c(a,z))$を合わせると
+$$
+\boxed{u'(c_t)=\beta(1+r)E_t[u'(c_{t+1})]}
+$$
+を得る。次期資産の下限が拘束される場合は
+$$
+\boxed{u'(c_t)\ge\beta(1+r)E_t[u'(c_{t+1})],
+\quad a_{t+1}=\underline a}
+$$
+となる。これは制約付き最大化のKKT条件であり、制約が拘束される家計にEuler**等式**を課すのは誤りである。
+
+定常分布に質量が集中する境界点は通常のLebesgue密度だけでは表せない。$a=\underline a$に原子質量がある場合、遷移を測度のPushforwardとして定義すると正しく記述できる。
+
+## 4. Discrete Master Equation：最適政策から遷移核へ
+
+家計の最適次期資産政策を$a'=g(a,z)$とする。次期所得が$z'$となる確率は$P_z(z,z')$。したがって個人の状態$(a,z)$から$(a',z')$へのMarkov核は
+$$
+\mathcal P((a,z);da',dz')=
+\delta_{g(a,z)}(da')\,P_z(z,dz').
+$$
+集計分布の決定論的な無限人数極限は
+$$
+\boxed{
+\mu_{t+1}(A,z')
+=\sum_z\int\mathbf1\{g(a,z)\in A\}
+P_z(z,z')\mu_t(da,z).
+}
+$$
+この式は個人行動の最適化から生じる**正確なPushforward**であり、外生的なランダム交換を仮定していない。家計の個別所得ショックが条件付き独立で、標本法則に適切な条件があれば、有限人数の経験測度はこの式に近づく。集計ショックがある場合には、ショックを条件づけたランダムな集計遷移となる。
+
+有限グリッド$(a_j,z_k)$と確率質量ベクトル$f_t$では
+$$
+\boxed{f_{t+1}=f_tP_g,\quad P_g\mathbf1=\mathbf1}
+$$
+と書ける。$P_g$は資産政策による質量の分配（補間）と所得遷移から作る。離散時間の増分表示$f_{t+1}-f_t=f_t(P_g-I)$はMaster Equationの類似物。ただし有限グリッドの補間誤差と有限$N$のモンテカルロ誤差は別である。
+
+## 5. Continuous-Time Economy：HJBとKolmogorov Forward
+
+[Achdou et al. (2022)](https://doi.org/10.1093/restud/rdab002)に沿い、時間選好率$\rho>0$、所得状態$z\in\{z_1,\ldots,z_J\}$の連続時間生成行列$Q_z=(q_{zz'})$とする。家計の資産は消費政策によって
+$$
+da_t=[ra_t+wz_t-c_t]dt,\quad a_t\ge\underline a
+$$
+と変化する。短い時間$dt$の動的計画原理
+$$
+V(a,z)=\max_c\{u(c)dt+e^{-\rho dt}E[V(a+da,z+dz)]\}
+$$
+を一次展開し、$dt$で割って$dt\to0$とすれば
+$$
+\boxed{
+\rho V(a,z)=\max_{c>0}
+\left\{u(c)+(ra+wz-c)V_a(a,z)
++\sum_{z'}q_{zz'}V(a,z')\right\}.
+}
+$$
+$Q_z$の行和は0なので最後の項は$\sum_{z'\ne z}q_{zz'}[V(a,z')-V(a,z)]$とも書ける。内点条件は$u'(c^*)=V_a$。ドリフトを$s(a,z)=ra+wz-c^*(a,z)$とする。
+
+試験関数$\varphi(a,z)$の生成作用素は
+$$
+(\mathcal L\varphi)(a,z)=s(a,z)\partial_a\varphi(a,z)+
+\sum_{z'}q_{zz'}\varphi(a,z').
+$$
+分布についての弱形式
+$$
+\frac d{dt}\sum_z\int\varphi(a,z)g_t(da,z)
+=\sum_z\int(\mathcal L\varphi)(a,z)g_t(da,z)
+$$
+に部分積分を施す。内部に密度が存在するとき、
+$$
+\boxed{
+\partial_tg_t(a,z)=
+-\partial_a[s(a,z)g_t(a,z)]
++\sum_{z'}q_{z'z}g_t(a,z').
+}
+$$
+密度の連続部分には適切な流束境界条件を課し、境界の点質量には別の質量保存式を設ける。これが**Optimal HJB + Forward Equation**の既存経済学的構造である。統計力学から後付けした仮定ではない。
+
+## 6. Langevin–Fokker–Planckへの拡張
+
+上の有限状態のPoisson所得過程を変更し、連続所得$z_t$に
+$$
+dz_t=\kappa(\bar z-z_t)dt+\sigma_zdW_t
+$$
+というOrnstein–Uhlenbeck型の拡散を仮定する（負の労働効率を防ぐには対数所得でOUを採用する方が自然である）。この**別モデル**での家計のHJBは
+$$
+\rho V=\max_c\{u(c)+(ra+wz-c)V_a+
+\kappa(\bar z-z)V_z+\tfrac12\sigma_z^2V_{zz}\}.
+$$
+Itô公式により
+$$
+d\varphi(a_t,z_t)=
+[s\varphi_a+\kappa(\bar z-z)\varphi_z+\tfrac12\sigma_z^2\varphi_{zz}]dt+
+\sigma_z\varphi_zdW_t.
+$$
+期待値を取り、試験関数を分布の方へ二回部分積分すれば
+$$
+\boxed{\partial_tg=
+-\partial_a(sg)
+-\partial_z[\kappa(\bar z-z)g]
++\tfrac12\sigma_z^2\partial_{zz}g.}
+$$
+このForward PDEの積分から総質量保存が得られるのは境界の確率流が消える場合である。現物資本$a$にBrownian diffusionが直接入ることは、この仮定だけからは導かれない。拡散の変数を明示する。
+
+## 7. Stationary General Equilibrium
+
+定常一般均衡は$(V,c^*,g^*,r,w,K,L)$の組である。条件は(i)HJBと内点・制約付きの最適化、(ii)Forward方程式の定常性$\mathcal L^*g^*=0$、(iii)企業の限界生産力条件、(iv)資産市場$K=\sum_z\int a\,g^*(da,z)$、(v)効率労働の供給$L=\sum_z\int z\,g^*(da,z)$、(vi)資源清算$Y=C+\delta K$である。
+
+家計は価格を所与とするが、均衡価格は全員の最適政策から生じる定常分布に依存する。**Backward HJBとForward分布の固定点**である。定常分布だけを解く手順は一般均衡の十分条件ではない。存在・一意性も、小さな数値残差だけでは証明されない。
+
+Huggett型なら債券の純供給$B$に対して$\int a\,dg^*=B$が清算式で、資本の限界生産力は登場しない。移行過程では$g_t$と$r_t$が時間で変化するため、家計が予想する将来価格系列を整合させる必要がある。
+
+## 8. Entropy Contraction：固定Markov核における厳密な定理
+
+**命題1（KL縮小）。** 有限状態のMarkov行列$P$、確率分布$f,\pi$、$\pi P=\pi$、$f$が$\pi$に対して絶対連続であると仮定する。このとき
+$$
+\boxed{D_{\mathrm{KL}}(fP\Vert\pi)
+\le D_{\mathrm{KL}}(f\Vert\pi).}
+$$
+**証明。** Log–sum不等式より、任意の行列の列$j$について
+$$
+\left(\sum_i f_iP_{ij}\right)
+\log\frac{\sum_i f_iP_{ij}}{\sum_i\pi_iP_{ij}}
+\le\sum_i f_iP_{ij}\log\frac{f_iP_{ij}}{\pi_iP_{ij}}.
+$$
+ゼロの項は連続延長で定義する。$j$で和を取れば右辺は
+$$
+\sum_i f_i\sum_jP_{ij}\log\frac{f_i}{\pi_i}
+=\sum_if_i\log\frac{f_i}{\pi_i}.
+$$
+左辺の分母は$\pi P=\pi$より$\pi_j$。従って命題が従う。$\square$
+
+**重要：詳細釣合いは一度も仮定していない。** 非可逆な巡回Markov Chainでも成立する。$\pi$への距離が単調に減っても、厳密な減少・唯一性・幾何収束率は追加の既約性、非周期性や縮小係数を必要とする。
+
+経済全体の非線形均衡動学では$P_t=P(g(\mu_t),p(\mu_t))$となり、
+$$
+\mu_{t+1}=\mu_tP(\mu_t)
+$$
+は固定Markov核ではない。各時点でData Processing自体は成立しても、$\pi P(\mu_t)=\pi$が一般に成立しないので同一の参照分布$\pi$へのKL単調性は導けない。
+
+**明示的な反例。** 二状態$\mu=(p,1-p)$に対して、どの初期状態からも次期第一状態へ移る確率を$F(p)=1/2+0.48\tanh[10(p-1/2)]$とする（$P(p)$の両行が$(F(p),1-F(p))$）。$\pi=(1/2,1/2)$は固定点だが、$p=0.51$の次期確率$F(0.51)\simeq0.5478$は$1/2$からより遠い。したがって$D_{\mathrm{KL}}(\mu_{t+1}\Vert\pi)>D_{\mathrm{KL}}(\mu_t\Vert\pi)$となる。市場清算と最適化を満たす経済だと主張する反例ではなく、**非線形Markov核に固定核のKL定理を誤用できないこと**の反例である。
+
+## 9. Detailed Balance、Gibbs分布、Free Energyの境界
+
+固定$P$に不変分布$\pi$が存在しても、$\pi_iP_{ij}=\pi_jP_{ji}$という詳細釣合いは一般には要求されない。経済の資産蓄積は一方向のドリフトと所得ショックを含み、状態空間に循環確率流が残り得る。定常性は各状態の入出流の合計ゼロであってペアごとの相殺ではない。
+
+さらに、$\pi$が定常だというだけでは、物理的エネルギー$E_i$と逆温度$\beta_T$を**経済的に独立に定義した**Gibbs則$\pi_i\propto e^{-\beta_TE_i}$は導けない。事後的に$E_i=-\log\pi_i$と置けば形式上Gibbs表示できるが、予測力のある構造的な説明ではない。資産分布の定常均衡は一般に家計のEuler/KKT、所得遷移、借入制約で決まる。
+
+## 10. 研究判断・数値図・主要文献
+
+Aiyagariでの分布Forward Equation、固定政策のKL縮小、定常価格の固定点は既存の数学的・経済学的構造であり、新しいEconophysicsのメカニズムではない。研究上の追加価値は、(a)異質的家計間の**直接の相互作用が最適政策を変える**、(b)分布法則の収束や不変測度を効率的に計算する、(c)標準HANKから区別できる集計反応を示す場合にある。
+
+[数値図：最適貯蓄と資産分布](figures/aiyagari-savings.svg)。[再現用Python](scripts/generate_figures.py)。図は有限グリッド上の近似数値であり、原著の量的再現とは主張しない。セミナーで問うべき点は、同じ$K$でも借入制約家計の分布が違えばどの均衡反応が変わるのか、そして価格内生性がKL解析をどう変えるかである。
+
+**Primary references:** [Huggett (1993)](https://doi.org/10.1016/0165-1889(93)90024-M), [Aiyagari (1994)](https://doi.org/10.2307/2118417), [Krusell and Smith (1998)](https://doi.org/10.1086/250034), [Achdou et al. (2022)](https://doi.org/10.1093/restud/rdab002), [Auclert, Bardóczy, Rognlie and Straub (2021)](https://doi.org/10.3982/ECTA17434).
