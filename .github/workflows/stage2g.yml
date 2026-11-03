@@ -63,7 +63,7 @@ jobs:
           print('All relevant Nash pairs beat 201x201 independent deterministic benchmark')
           PY
       - name: Independent monotone upper/lower Nash bound for one actual pair
-        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_one_pair.py --gap 0.02 --max-boxes 50000
+        run: python research/02-kinetic-exchange-yakovenko/stage2g/scripts/certify_one_pair.py --gap 0.0001 --max-boxes 100000
       - name: Reject false full-global / GE claim in certificate
         run: |
           python - <<'PY'
