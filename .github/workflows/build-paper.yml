@@ -56,8 +56,14 @@ jobs:
         run: python research/01-agent-based-equilibrium/scripts/run_particles.py --quick
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+      - name: Validate QMD display math syntax
+        run: python scripts/check_paper_math.py
       - name: Render English academic research paper
         run: quarto render paper/article.qmd --to academic-typst
+      - name: Reject raw math delimiters in generated paper PDF
+        run: |
+          command -v pdftotext >/dev/null || (sudo apt-get update && sudo apt-get install -y poppler-utils)
+          python scripts/check_paper_math.py --pdf paper/article.pdf
       - name: Render research slides
         run: quarto render slides/research-agenda.qmd --to clean-typst
       - name: Save model data, SVG figures, and PDF papers

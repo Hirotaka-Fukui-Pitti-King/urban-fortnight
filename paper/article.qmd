@@ -167,10 +167,10 @@ The next conceptual step is to ask whether a Boltzmann-like bilateral collision 
 
 Let $V_i(a_i)$ and $V_j(a_j)$ be strictly increasing continuation values and suppose the only contract is $(a_i,a_j)\mapsto (a_i+\Delta,a_j-\Delta)$, without goods, liquidity service, promises, externalities or other contractual terms. Bilateral voluntary participation requires
 
-$
+$$
 V_i(a_i+\Delta)\geq V_i(a_i),\qquad
 V_j(a_j-\Delta)\geq V_j(a_j).
-$
+$$
 
 By strict monotonicity the first requires $\Delta\geq0$ and the second $\Delta\leq0$. Hence $\Delta=0$. Any nonzero, exogenously random zero-sum pure transfer violates at least one participation constraint. This proposition does not exclude potentially optimal insurance, heterogeneous commodity exchange, or payments for productive services.
 
@@ -180,18 +180,21 @@ Our first economically feasible alternative takes the simplest possible monetary
 
 With common discount factor $\beta$, the gains conditional on a prospective successful match are
 
-$
+$$
 G_B(m)=b+\beta[V(m-1)-V(m)],\qquad
 G_S(m)=-c+\beta[V(m+1)-V(m)].
-$
+$$
 
 Thus the chosen match is voluntary when both gains are nonnegative. Agents correctly forecast stationary $f$, which determines the probability of encountering each counterparty token balance. Writing $P(f,\chi)$ for the optimal match-induced transition of the individual token state, the stationary Bellman and distributional consistency equations are
 
-$
-V = u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V,
-\qquad fP(f,\chi)=f,\qquad
-\sum_m f_m=1,\quad\sum_m m f_m=\bar m.
-$
+$$
+V = u_{\mathrm{flow}}(f,\chi)+\beta P(f,\chi)V.
+$$
+
+$$
+fP(f,\chi)=f,\qquad
+\sum_m f_m=1,\qquad \sum_m m f_m=\bar m.
+$$
 
 The right to reject is evaluated *after solving* the value equation. A stationary fixed point of $f$ alone cannot certify optimality. Under the illustrative parameters $M=5$, $\bar m=2$, $\beta=0.96$, $b=5$, $c=0.15$, matching intensity $0.45$, an active full-trade candidate passes all participation inequalities. A **separate zero-trade equilibrium** also exists: if all sellers refuse, tokens provide no consumption services, and a token shadow value of zero makes refusal optimal. We have not selected among these equilibria.
 
@@ -199,21 +202,23 @@ The right to reject is evaluated *after solving* the value equation. A stationar
 
 Let the matching exposure depend on buyer and seller balances through $w(m_b,m_s)$, with contact probability $\lambda w$ not exceeding one. Conditional on a fixed optimal acceptance policy $\chi(m_b,m_s)$, the mean number of successful buyer-seller matches per household is
 
-$
+$$
 q_{b,s}(f)=\frac{\lambda}{2}
 w(b,s)\chi(b,s)f_bf_s.
-$
+$$
 
 For any test function $\varphi$ of token holdings, the exactly implied quadratic collision operator is
 
-$
+$$
 \sum_m\varphi(m)Q_m[f]
 =\sum_{b=1}^{M}\sum_{s=0}^{M-1}q_{b,s}(f)
-\left[
-\varphi(b-1)-\varphi(b)+
-\varphi(s+1)-\varphi(s)
-\right].
-$
+\,\Delta\varphi_{b,s}.
+$$
+
+$$
+\Delta\varphi_{b,s}
+=\varphi(b-1)-\varphi(b)+\varphi(s+1)-\varphi(s).
+$$
 
 The discrete forward equation is $f_{t+1}=f_t+Q[f_t]$. Taking $\varphi=1$ and $\varphi(m)=m$ gives population and token conservation. Since the one-period individual transition $P=I+L$ is stochastic, the distribution also preserves nonnegativity. Every successful trade delivers exactly one service from a producer to a consumer; the service-market clearing condition holds separately. Holding optimal policies fixed, $Q$ is quadratic in $f$; policies that respond to $f$ generate additional nonlinear feedback.
 
@@ -229,18 +234,18 @@ We implemented a numerical **product-economy verification** at 200 Aiyagari asse
 
 Under uniform matching and acceptance of all feasible trades, the birth rate of tokens for an eligible seller is $\lambda(1-f_0)/2$, and the death rate for an eligible buyer is $\lambda(1-f_M)/2$. The detailed-balance recursion becomes
 
-$
+$$
 \frac{f_{m+1}}{f_m}
 =\frac{1-f_0}{1-f_M},\qquad m=0,\ldots,M-1.
-$
+$$
 
 Consequently the stationary money distribution is truncated geometric. That family also maximizes Shannon entropy of the **money distribution** under total mass and average money constraints. This is a property of the particular equilibrium transition rates; it is not Foley's statement about transaction entropy.
 
 To test robustness, we use an economically explicit nonuniform matching technology,
 
-$
+$$
 w(m_b,m_s)=1+\gamma\frac{m_bm_s}{M^2}.
-$
+$$
 
 At $\gamma=3$ and $\lambda=0.2$, optimal bilateral participation still holds, but the stationary money distribution no longer equals that same max-entropy distribution: $D_{\mathrm{KL}}(f\Vert f_{\mathrm{ME}})=0.00606267$. We also compare realized trading probabilities with a constructed Foley-*style* entropy program over feasible token changes $-1,0,+1$ that excludes the actual role and matching constraints. Its KL divergences are 0.192400 and 0.359797 under uniform and nonuniform matching, respectively. Because the admissible offer sets differ, **this is not a refutation of Foley's finite-offer entropy theorem**.
 
@@ -271,29 +276,29 @@ Crucially, **a substantial part of the purported research question has already b
 
 As a diagnostic exercise, we implemented a finite-grid joint savings problem with household state $s=(a,m,z)$. A household in the centralized market jointly chooses next-period productive assets $a'$ and nominal money $m'$, with common budget
 
-$
+$$
 c+a'+\phi m'=(1+r)a+\phi m^{\mathrm{DM}}+wz(1-q_s),
-$
+$$
 
 where $\phi$ is the real value of one nominal token, $q_s$ is a seller's decentralized service-production time, and the same time endowment supplies centralized production. Cobb--Douglas competitive firms price capital and market labor at $r=F_K-\delta$ and $w=F_L$. Unlike the previous separable product example, money and productive assets enter the same household budget constraint.
 
 The centralized value is the optimal expected value over a *finite* choice set $(a',m')$, with specified independent Type-I extreme-value portfolio taste shocks. With buyer service utility $\xi\log(1+q)$, the surpluses for a bilateral decentralized meeting with token payment $d$ and service quantity $q$ are
 
-$
+$$
 \Delta_B=\xi\log(1+q)+W(a_b,m_b-d,z_b;0)-W(a_b,m_b,z_b;0),
-$
+$$
 
-$
+$$
 \Delta_S=W(a_s,m_s+d,z_s;q)-W(a_s,m_s,z_s;0).
-$
+$$
 
 The code maximizes $\Delta_B^\eta\Delta_S^{1-\eta}$ over every admissible **discrete** $(d,q)$ pair and the refusal option. Thus it checks true Nash optimality on the declared discrete menu, not a continuous bargaining first-order condition. The resulting conditional bilateral trades define a gain--loss transition for $f(a,m,z)$. For test functions $\varphi$, its decentralized component satisfies
 
-$
+$$
 \langle\varphi,Q[f]\rangle
 =\frac{\lambda}{2}\sum_{b,s}f_bf_s\chi(b,s)
 [\varphi(b')+\varphi(s')-\varphi(b)-\varphi(s)].
-$
+$$
 
 This preserves population mass and money/asset positions *within decentralized bilateral exchanges*. The subsequent centralized saving decisions need not preserve nominal money or clear capital markets at arbitrary assumed prices.
 
@@ -314,10 +319,10 @@ The test uses six asset choices, four nominal money states, two productivity sta
 
 The goods discrepancy is not an independent fourth failure. Stationary portfolio budget accounting and constant returns imply
 
-$
+$$
 Y(K^d,L^d)-C-\delta K^s
 =(r+\delta)(K^d-K^s)+w(L^d-L^s).
-$
+$$
 
 The two sides agree to within $1.67\times10^{-15}$ at the executed candidate. We therefore count the **capital, labor and money markets** as the independent equilibrium conditions, with the goods discrepancy as an accounting implication.
 
@@ -337,12 +342,15 @@ The narrower research question is whether the **endogenous joint liquidity distr
 
 As a first numerical check, **only conditional on the previously computed fixed-price stationary household distribution and fixed policy**, we implemented a conservative partner-distribution feedback diagnostic. Define $B(f,g)$ as the ordered buyer--seller collision mapping under rate $\lambda f_b g_s/2$, with the same Nash contract as the reference economy. The actual fixed-policy matching operator and an explicitly artificial one-factor-frozen comparison are
 
-$
-Q(f)=B(f,f),\quad
-DQ(f^*)[h]=B(h,f^*)+B(f^*,h),
-\qquad
-Q^{\mathrm{ref}}(f)=\frac{B(f,f^*)+B(f^*,f)}{2}.
-$
+$$
+Q(f)=B(f,f),\qquad
+DQ(f^*)[h]=B(h,f^*)+B(f^*,h).
+$$
+
+$$
+Q^{\mathrm{ref}}(f)
+=\frac{B(f,f^*)+B(f^*,f)}{2}.
+$$
 
 Both operators coincide at $f=f^*$, conserve total tokens, productive assets and population mass for every bilateral event, and are not asserted to be individually optimal away from $f^*$. The second mapping suppresses part of the matching distribution feedback. It is a **diagnostic comparison law, not a new equilibrium institution or an estimated policy counterfactual**.
 
