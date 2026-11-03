@@ -34,7 +34,7 @@ E_0\sum_{t=0}^{\infty}\beta^t u(c_t),\qquad
 u'(c)=c^{-\gamma},\qquad u''(c)=-\gamma c^{-\gamma-1}<0.
 $$
 
-$\gamma\neq1$なら$u(c)=c^{1-\gamma}/(1-\gamma)$、$\gamma=1$なら$u(c)=\,\log c$とし、効用の加法定数は価値の差に影響しない。借入下限は自然借入限度か、より厳しい外生制約とする。所得系列の支持と$1+r_t>0$により実行可能な正の消費が存在することを仮定する。
+$\gamma\neq1$なら$u(c)=c^{1-\gamma}/(1-\gamma)$、$\gamma=1$なら$u(c)=\log c$とし、効用の加法定数は価値の差に影響しない。借入下限は自然借入限度か、より厳しい外生制約とする。所得系列の支持と$1+r_t>0$により実行可能な正の消費が存在することを仮定する。
 
 企業は$Y_t=AK_t^\alpha L_t^{1-\alpha}$、$\alpha\in(0,1)$、減耗$\delta\in(0,1)$の技術を持ち、競争的な利潤最大化問題
 
@@ -316,7 +316,7 @@ $$
 
 ## 8. ItoからFokker–Planckを導く所得拡散への拡張
 
-離散所得を変更し、**別のモデル**として対数労働効率$x=\,\log z$に
+離散所得を変更し、**別のモデル**として対数労働効率$x=\log z$に
 
 $$
 dx_t=\kappa(\bar x-x_t)dt+\sigma dW_t,\qquad z_t=e^{x_t}
@@ -365,24 +365,24 @@ $$
 
 ## 10. Log–SumとKL Data Processingの完全な証明
 
-正の数$a_i,b_i$について、$A=\sum_i a_i$、$B=\sum_i b_i$とする。$q_i=a_i/A$、$p_i=b_i/B$と置く。$\,\log x\le x-1$を各比率$x=p_i/q_i$へ適用すると、
+正の数$a_i,b_i$について、$A=\sum_i a_i$、$B=\sum_i b_i$とする。$q_i=a_i/A$、$p_i=b_i/B$と置く。$\log x\le x-1$を各比率$x=p_i/q_i$へ適用すると、
 
 $$
 \begin{aligned}
-\sum_iq_i\,\log\frac{p_i}{q_i}
+\sum_iq_i\log\frac{p_i}{q_i}
 &\le\sum_iq_i\left(\frac{p_i}{q_i}-1\right)\\
 &=\sum_i(p_i-q_i)=0.
 \end{aligned}
 $$
 
-従って$\sum_iq_i\,\log(q_i/p_i)\ge0$であり、
+従って$\sum_iq_i\log(q_i/p_i)\ge0$であり、
 
 $$
 \begin{aligned}
-\sum_ia_i\,\log\frac{a_i}{b_i}
-&=\sum_iAq_i\,\log\frac{Aq_i}{Bp_i}\\
-&=A\,\log(A/B)+A\sum_iq_i\,\log(q_i/p_i)\\
-&\ge A\,\log(A/B).
+\sum_ia_i\log\frac{a_i}{b_i}
+&=\sum_iAq_i\log\frac{Aq_i}{Bp_i}\\
+&=A\log(A/B)+A\sum_iq_i\log(q_i/p_i)\\
+&\ge A\log(A/B).
 \end{aligned}
 $$
 
@@ -398,9 +398,9 @@ $$
 
 $$
 \begin{aligned}
-(fP)_j\,\log\frac{(fP)_j}{(\pi P)_j}
-&\le\sum_if_iP_{ij}\,\log\frac{f_iP_{ij}}{\pi_iP_{ij}}\\
-&=\sum_if_iP_{ij}\,\log\frac{f_i}{\pi_i}.
+(fP)_j\log\frac{(fP)_j}{(\pi P)_j}
+&\le\sum_if_iP_{ij}\log\frac{f_iP_{ij}}{\pi_iP_{ij}}\\
+&=\sum_if_iP_{ij}\log\frac{f_i}{\pi_i}.
 \end{aligned}
 $$
 
@@ -410,7 +410,7 @@ $$
 \begin{aligned}
 D_{\mathrm{KL}}(fP\Vert\pi)
 &=D_{\mathrm{KL}}(fP\Vert\pi P)\\
-&\le\sum_i f_i\left(\sum_jP_{ij}\right)\,\log\frac{f_i}{\pi_i}\\
+&\le\sum_i f_i\left(\sum_jP_{ij}\right)\log\frac{f_i}{\pi_i}\\
 &=D_{\mathrm{KL}}(f\Vert\pi).
 \end{aligned}
 $$
@@ -423,7 +423,7 @@ $$
 
 ## 11. Detailed Balance、Entropy、Gibbsの経済的な意味
 
-固定されたMarkov核で不変分布$\pi$を得ることと、ペアごとの流入流出が相殺するDetailed Balanceを得ることは別。更に$\pi_i\propto e^{-E_i/\tau}$という形式は、後から$E_i=-\tau\,\log\pi_i$と定義すれば任意の正分布について書ける。経済的に独立な効用・費用・ポテンシャルを使ってその形を**事前に導出**したときだけ構造的な意味がある。
+固定されたMarkov核で不変分布$\pi$を得ることと、ペアごとの流入流出が相殺するDetailed Balanceを得ることは別。更に$\pi_i\propto e^{-E_i/\tau}$という形式は、後から$E_i=-\tau\log\pi_i$と定義すれば任意の正分布について書ける。経済的に独立な効用・費用・ポテンシャルを使ってその形を**事前に導出**したときだけ構造的な意味がある。
 
 Aiyagariの富分布は、最適貯蓄政策、借入制約、所得過程、資本市場清算で決まる。通常は富を保存するランダム交換模型でも、Gibbsの詳細釣合いを前提とした模型でもない。KL縮小は固定政策の有限Markov作用素についての数学的定理であり、厚生最大化や競争均衡の存在証明ではない。
 
