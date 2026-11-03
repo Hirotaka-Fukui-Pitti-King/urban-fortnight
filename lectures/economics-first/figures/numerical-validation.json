@@ -1,15 +1,15 @@
 {
   "aiyagari": {
-    "r": 0.03417330274480579,
-    "K_supply": 6.015586743164045,
-    "K_demand": 6.015587188902083,
-    "wage": 1.2210123685445207,
-    "capital_error": -4.4573803847924864e-07,
-    "mass_error": 6.772360450213455e-14,
-    "upper_cap_stationary_mass": 6.653677489722531e-05,
+    "r": 0.034173777077783796,
+    "K_supply": 6.015533195120892,
+    "K_demand": 6.015548139490345,
+    "wage": 1.221009515162396,
+    "capital_error": -1.4944369453040451e-05,
+    "mass_error": 6.838973831690964e-14,
+    "upper_cap_stationary_mass": 3.128208314074112e-05,
     "budget_sup": 0.0,
-    "euler_kkt_sup": 0.05019454071250002,
-    "euler_interior_sup": 0.05019454071250002,
+    "euler_kkt_sup": 3.893458649464074e-06,
+    "euler_interior_sup": 3.893458649464074e-06,
     "euler_lower_violation": 0.0,
     "euler_upper_violation": 0.0,
     "upper_cap_nodes": 1,
@@ -30,39 +30,39 @@
   },
   "monetary_matching": {
     "uniform": {
-      "stationarity_sup": 3.122502256758253e-17,
+      "stationarity_sup": 6.7894018683380126e-18,
       "buyer_min_gain": 1.6292969941782833,
-      "seller_min_gain": 0.3724891716347667,
+      "seller_min_gain": 0.3724891716347736,
       "bellman_sup": 3.552713678800501e-15,
-      "conservation_mass": 2.7755575615628914e-17,
-      "conservation_money": 7.632783294297951e-17,
+      "conservation_mass": 4.044969223719083e-18,
+      "conservation_money": 2.90312523785521e-17,
       "transition_row_sum_sup": 0.0,
       "transition_negative_part": 0.0,
       "distribution": [
-        0.24678237923367716,
-        0.20724008691110063,
-        0.1740337124404366,
-        0.1461480426747411,
-        0.12273053351641962,
-        0.10306524522362481
+        0.2467823792336772,
+        0.20724008691110068,
+        0.17403371244043664,
+        0.14614804267474105,
+        0.12273053351641955,
+        0.10306524522362492
       ]
     },
     "assortative": {
-      "stationarity_sup": 9.71445146547012e-17,
-      "buyer_min_gain": 1.4207299035020013,
+      "stationarity_sup": 7.626849217618017e-17,
+      "buyer_min_gain": 1.4207299035020022,
       "seller_min_gain": 0.7589149021391369,
       "bellman_sup": 1.7763568394002505e-15,
-      "conservation_mass": 3.469446951953614e-18,
-      "conservation_money": 1.0408340855860843e-17,
+      "conservation_mass": 5.054780969509244e-19,
+      "conservation_money": 8.088078203055648e-18,
       "transition_row_sum_sup": 0.0,
       "transition_negative_part": 0.0,
       "distribution": [
-        0.27727517560821474,
-        0.19174839336407778,
+        0.2772751756082147,
+        0.19174839336407773,
         0.15231177133195345,
         0.13285152763654937,
-        0.12399217923365624,
-        0.12182095282554839
+        0.12399217923365623,
+        0.1218209528255485
       ]
     }
   }
