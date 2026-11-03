@@ -73,6 +73,7 @@ class Artifacts(unittest.TestCase):
             self.assertEqual(data["lang"],"ja")
             self.assertEqual(md.partition("\n\n")[2],body.lstrip("\n"))
             self.assertEqual(md.count("$$")%2,0)
+            self.assertNotRegex(md, r"(?m)^\$[ \t]*$", "Malformed single-dollar display math")
 
     def test_svg_vectors_parse(self):
         names=("aiyagari-savings.svg","aiyagari-distribution.svg",
