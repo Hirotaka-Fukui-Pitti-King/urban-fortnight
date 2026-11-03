@@ -78,6 +78,7 @@ def run(out=HERE/"results", nq=9,nx=7,maxfev=500):
     out.mkdir(parents=True,exist_ok=True)
     tic=time.monotonic()
     small,fs=fixture_3x3()
+    sys.path.insert(0,str(RESEARCH/"stage2g"/"scripts"))
     from solve_private import WARM_RELATIVE_VALUE
     baseline=solve_private(small,fs,2.5,np.asarray(WARM_RELATIVE_VALUE),
                            nq=17,nx=15,maxfev=200)
