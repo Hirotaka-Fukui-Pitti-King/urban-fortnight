@@ -183,3 +183,17 @@ def foley_style_transaction_benchmark(sol, prm):
             "transaction_market_balance": float(np.sum(f[:,None]*actual*x[None,:])),
             "transaction_entropy_distribution": h.tolist(),
             "realized_transition_transaction_distribution": actual.tolist()}
+
+
+def collision_operator(f, trade, prm):
+    """Exact Boltzmann gain-loss operator for feasible optimal bilateral trades."""
+    q = flows(f, trade, prm)
+    result = np.zeros_like(f)
+    for b in range(1, len(f)):
+        for s in range(len(f)-1):
+            w = q[b, s]
+            result[b] -= w
+            result[b-1] += w
+            result[s] -= w
+            result[s+1] += w
+    return result

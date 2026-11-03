@@ -5,7 +5,7 @@ import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"src"))
 from monetary_matching import (Params,solve_candidate,diagnostics,generator,flows,
-    seller_gain,optimal_trade,foley_style_transaction_benchmark)
+    seller_gain,optimal_trade,foley_style_transaction_benchmark,collision_operator)
 from particle_simulator import simulate
 
 class TestOptimalMatching(unittest.TestCase):
@@ -41,6 +41,14 @@ class TestOptimalMatching(unittest.TestCase):
         self.assertAlmostEqual(x["money_supply_error"],0.,places=10)
         self.assertLess(x["average_mass_W1"],.22)
         self.assertLess(abs(x["service_trade_error"]),.03)
+    def test_collision_operator_matches_forward_generator(self):
+        p=self.p
+        f=.5*self.sol["f"]+.5*np.array([0,0,1,0,0,0.])
+        q=collision_operator(f,self.sol["trade"],p)
+        np.testing.assert_allclose(q,generator(f,self.sol["trade"],p).T@f,atol=1e-14)
+        self.assertAlmostEqual(float(q.sum()),0.,places=14)
+        self.assertAlmostEqual(float(q@np.arange(len(f))),0.,places=14)
+        self.assertGreaterEqual(float(np.min(f+q)),-1e-14)
     def test_foley_style_transaction_benchmark_differs(self):
         x=foley_style_transaction_benchmark(self.sol,self.p)
         self.assertGreater(x["transaction_kl_realized_to_maxent"],0.1)
