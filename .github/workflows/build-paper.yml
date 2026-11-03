@@ -1,0 +1,55 @@
+name: Academic Typst paper and research slides
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Show Quarto version
+        run: quarto --version
+      - name: Validate nine stage plans
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          root = json.loads(Path("research-plan.json").read_text(encoding="utf-8"))
+          stages = root["stages"]
+          assert len(stages) == 9
+          for n, entry in enumerate(stages):
+              assert entry["id"] == n
+              d = Path(entry["directory"])
+              plan = json.loads((d / "plan.json").read_text(encoding="utf-8"))
+              assert plan["stage"] == n and plan["status"] == "planned"
+              for f in ["README.md", "RESEARCH.me", "results/.gitkeep"]:
+                  assert (d / f).is_file(), d / f
+              assert plan["research_question"] and plan["acceptance_tests"]
+          assert root["paper"]["format"] == "academic-typst"
+          assert Path("_extensions/academic/_extension.yml").is_file()
+          print("Nine new research plans and academic Typst setup validated.")
+          PY
+      - name: Render English academic paper with Quarto Typst
+        run: quarto render paper/article.qmd --to academic-typst
+      - name: Render clean Typst presentation
+        run: quarto render slides/research-agenda.qmd --to clean-typst
+      - name: Upload rendered PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: equilibrium-research-paper-and-slides
+          path: |
+            paper/article.pdf
+            slides/research-agenda.pdf
+          if-no-files-found: error
+          retention-days: 30

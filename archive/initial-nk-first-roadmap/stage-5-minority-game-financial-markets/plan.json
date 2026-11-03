@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "stage": 5,
+  "folder": "stage-5-minority-game-financial-markets",
+  "title": "Minority Game and Financial Markets",
+  "status": "planned",
+  "research_question": "How do adaptive trading and price impact affect financial volatility and monetary transmission?",
+  "dependencies": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "mechanisms": [
+    "Challet-style adaptive minority-game strategies",
+    "Order imbalance and market-maker price impact",
+    "Inventory and liquidity dynamics",
+    "Portfolio feedback to household and firm decisions"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Asset prices are distinct from Calvo-set goods prices.",
+    "Trade financing, dealer inventory and asset supply must clear.",
+    "Include matched fundamental and non-strategic trading benchmarks."
+  ],
+  "comparators": [
+    "no adaptive trading",
+    "fundamental trader benchmark",
+    "minority-game strategies"
+  ],
+  "acceptance_tests": [
+    "Order and inventory reconciliation",
+    "Trader wealth and dealer P&L identities",
+    "Asset market clearing",
+    "Random seed robustness and switch-off recovery"
+  ],
+  "deliverables": [
+    "Verified adaptive trading market",
+    "Financial stress and monetary transmission comparisons"
+  ],
+  "literature_leads_to_verify": [
+    "Challet, Marsili and Zhang (2005)",
+    "Bouchaud price-impact literature"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-5-minority-game-financial-markets/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}

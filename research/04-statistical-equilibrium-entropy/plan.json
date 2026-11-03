@@ -1,0 +1,61 @@
+{
+  "schema_version": "2.0",
+  "stage": 4,
+  "folder": "research/04-statistical-equilibrium-entropy",
+  "title": "Statistical Equilibrium and Maximum Entropy",
+  "category": "analytical_method",
+  "status": "planned",
+  "research_question": "Under what constraints, invariant measures and equilibrium policies does the heterogeneous-agent distribution admit a rigorous entropy-based characterization?",
+  "feasibility_hypothesis": "Conditional: household optimality and competitive clearing alone do not imply Boltzmann-Gibbs or maximum entropy; require derivable invariant or optimization conditions.",
+  "prerequisites": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "mechanisms": [
+    "Master equations for joint asset and action distributions",
+    "Stationary measures, probability currents and detailed balance",
+    "Constrained maximum entropy as a candidate representation",
+    "Phase diagrams and metastability if justified"
+  ],
+  "state_variables": [
+    "invariant distribution and transition kernel",
+    "conserved resources and explicit constraints",
+    "aggregate prices and any order parameters"
+  ],
+  "required_equations": [
+    "Stationary distribution operator or master equation",
+    "Resource/moment constraints and probability normalization",
+    "Conditional entropy optimization and Lagrange multipliers",
+    "Detailed balance or stationary probability-current identities"
+  ],
+  "comparison_baseline": "Direct invariant distribution of verified GE policy functions, with and without reversible dynamics",
+  "acceptance_tests": [
+    "Prove/verify existence of stationary distribution under assumptions",
+    "Check whether proposed entropy density is invariant under the actual kernel",
+    "Compare moments and tail behavior to direct microsimulation",
+    "Provide explicit counterexample if maximum-entropy property fails",
+    "Show when detailed balance is not required or not satisfied"
+  ],
+  "stage_gate": "Prove a conditional characterization or report an informative failure; do not impose entropy as an equilibrium axiom.",
+  "reference_leads": [
+    "Jaynes (1957)",
+    "Markov chains and invariant measures",
+    "Statistical equilibrium in economic models"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

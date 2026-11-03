@@ -1,0 +1,53 @@
+---
+title: "Statistical Mechanics in Optimizing General Equilibrium"
+subtitle: "Before New Keynesian Nominal Rigidity"
+date: "2026-11-03"
+lang: en
+format: clean-typst
+---
+
+# The central question
+
+## Economic compatibility comes first
+
+Can we generate econophysics mechanisms with:
+
+- individually optimizing heterogeneous agents
+- rational expectations of aggregate dynamics
+- goods, labor, credit, and security market clearing
+- coherent household, firm, and bank accounts?
+
+# Research sequence
+
+## Stages 0--1: Equilibrium and particle methods
+
+0. Incomplete-market general equilibrium
+1. Agent-based implementation of optimal policies
+
+## Stages 2--4: Core statistical mechanics
+
+2. Yakovenko-style voluntary kinetic exchange
+3. Optimal Ising-type social choices
+4. Stationarity, entropy, and conditional characterization
+
+## Stages 5--7: Financial econophysics
+
+5. Bouchaud-inspired optimizing firm fragility
+6. Challet-inspired strategic minority-game trading
+7. Random-matrix diagnostics of return correlations
+
+# Only then: Stage 8
+
+## New Keynesian integration
+
+- Calvo optimal reset pricing
+- Monetary policy in heterogeneous-agent equilibrium
+- One-at-a-time mechanism ablations and welfare comparisons
+
+## What counts as success?
+
+A mechanism must survive budget feasibility, deviations from optimality, rational forecasts, market-clearing residual checks, and numerical convergence.
+
+## Status
+
+Research design only. No existence theorem, simulation output, or empirical finding is claimed.

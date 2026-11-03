@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "stage": 2,
+  "folder": "stage-2-kinetic-exchange-wealth",
+  "title": "Kinetic Exchange and Wealth Distribution",
+  "status": "planned",
+  "research_question": "Does pairwise asset exchange change wealth concentration and monetary transmission in a HANK economy?",
+  "dependencies": [
+    0,
+    1
+  ],
+  "mechanisms": [
+    "Feasible pairwise asset transfer kernel",
+    "Boltzmann-type distribution evolution",
+    "Joint asset, income and belief distribution",
+    "Wealth-dependent interactions"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Conserve the combined financial assets of each closed pairwise exchange.",
+    "Account separately for income, asset issuance, taxes, and transfers.",
+    "Impose individual borrowing and budget constraints; exchange is not production."
+  ],
+  "comparators": [
+    "no pairwise exchange",
+    "exchange with independent beliefs",
+    "exchange with Ising beliefs"
+  ],
+  "acceptance_tests": [
+    "Exact two-agent and aggregate ledger identities",
+    "Mass conservation, nonnegative density and feasibility",
+    "Particle simulation versus distribution solver",
+    "Switch-off recovery and mesh/agent-count convergence"
+  ],
+  "deliverables": [
+    "Validated asset-exchange simulation",
+    "Wealth distribution and monetary MPC heterogeneity"
+  ],
+  "literature_leads_to_verify": [
+    "Yakovenko and Rosser (2009)",
+    "Kinetic exchange literature"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-2-kinetic-exchange-wealth/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}

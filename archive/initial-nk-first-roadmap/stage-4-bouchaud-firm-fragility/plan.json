@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "stage": 4,
+  "folder": "stage-4-bouchaud-firm-fragility",
+  "title": "Bouchaud-Inspired Firm Fragility",
+  "status": "planned",
+  "research_question": "Can endogenous balance-sheet fragility amplify unemployment, inflation and monetary-policy shocks?",
+  "dependencies": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "mechanisms": [
+    "Heterogeneous firm balance sheets, borrowing and default",
+    "Hiring, vacancy and output adjustment",
+    "Entry and exit with asset/liability reconciliation",
+    "Calvo pricing coupled to firm financial states"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Keep Calvo as the baseline nominal rigidity; compare any alternative pricing model separately.",
+    "No double-counting firm-price adjustment or bank losses.",
+    "Explicit loan market, firm cash-flow and accounting closure."
+  ],
+  "comparators": [
+    "baseline with no firm credit friction",
+    "Calvo with credit fragility",
+    "flexible prices with credit fragility"
+  ],
+  "acceptance_tests": [
+    "Loan/default loss identities",
+    "Goods, labor and loan-market clearing",
+    "Firm-price optimality and default accounting",
+    "Switch-off recovery and nonlinear response robustness"
+  ],
+  "deliverables": [
+    "Heterogeneous-firm transition engine",
+    "Employment, default and inflation responses"
+  ],
+  "literature_leads_to_verify": [
+    "Gualdi et al. (2015)",
+    "Bouchaud Mark-0 macro models"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-4-bouchaud-firm-fragility/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}

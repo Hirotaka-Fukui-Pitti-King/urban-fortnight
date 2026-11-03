@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0",
+  "stage": 8,
+  "folder": "research/08-new-keynesian-integration",
+  "title": "New Keynesian Integration after General-Equilibrium Compatibility",
+  "category": "extension",
+  "status": "planned",
+  "research_question": "Which equilibrium-compatible statistical-mechanical mechanisms add distinct predictions for inflation, monetary transmission, wealth inequality and welfare once nominal rigidity is introduced?",
+  "feasibility_hypothesis": "Proceed only after mechanisms in Stages 2–7 have individually passed feasibility, rational-expectations and market-clearing checks.",
+  "prerequisites": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "mechanisms": [
+    "Calvo staggered prices and optimal reset pricing",
+    "Monetary policy and goods-price inflation",
+    "Embedding of validated exchange, social, credit and trading mechanisms",
+    "Nonlinear inflation, output, inequality and welfare effects"
+  ],
+  "state_variables": [
+    "goods-price dispersion and monetary policy states",
+    "endogenous wealth-belief distribution",
+    "firm credit and security markets, where validated"
+  ],
+  "required_equations": [
+    "Firm dynamic optimal pricing and Calvo price index",
+    "Household Euler/Bellman equations with rational equilibrium forecasts",
+    "Goods, labor, money/bonds and security-market clearing",
+    "Central bank policy rule and equilibrium transition"
+  ],
+  "comparison_baseline": "Standard NK and HANK benchmark without statistical-mechanical components",
+  "acceptance_tests": [
+    "Recover flexible-price and conventional HANK limits",
+    "Exact Calvo price aggregation and pricing FOC",
+    "Monetary-policy impulse response with full asset and resource accounting",
+    "One-at-a-time and joint mechanism ablations",
+    "Welfare evaluated on optimized households and stable equilibrium"
+  ],
+  "stage_gate": "Do not implement before Stages 0–4 pass their core gates; optional firm/finance modules enter only if Stages 5–7 pass.",
+  "reference_leads": [
+    "Calvo (1983)",
+    "Woodford (2003)",
+    "Heterogeneous-agent New Keynesian literature"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

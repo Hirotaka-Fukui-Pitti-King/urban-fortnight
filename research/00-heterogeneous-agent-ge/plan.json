@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "stage": 0,
+  "folder": "research/00-heterogeneous-agent-ge",
+  "title": "Optimizing Heterogeneous-Agent General Equilibrium",
+  "category": "benchmark",
+  "status": "planned",
+  "research_question": "Can a canonical incomplete-markets heterogeneous-agent economy satisfy individual optimization, rational expectations and general equilibrium with sufficiently accurate numerical solutions?",
+  "feasibility_hypothesis": "Baseline: established in standard Aiyagari/Huggett-type economies, subject to the specified asset and aggregate-risk closure.",
+  "prerequisites": [],
+  "mechanisms": [
+    "Incomplete-markets household saving and labor decisions",
+    "Competitive firms, wages and asset returns",
+    "Stationary equilibrium and optional aggregate uncertainty with rational forecasting"
+  ],
+  "state_variables": [
+    "individual financial assets a",
+    "idiosyncratic productivity z",
+    "aggregate distribution mu",
+    "aggregate shocks and prices, when active"
+  ],
+  "required_equations": [
+    "Household Bellman and Euler equations",
+    "Household budget and borrowing constraints",
+    "Goods, labor and bond/capital market clearing",
+    "Rational aggregate transition law"
+  ],
+  "comparison_baseline": "Canonical representative-agent or no-idiosyncratic-risk economy under the same primitives",
+  "acceptance_tests": [
+    "Household feasibility and Euler/Bellman residuals",
+    "Firm optimization and zero-profit/distributional profit allocation",
+    "Asset supply and goods/labor clearing to documented tolerances",
+    "Distribution normalization, stationary moments and grid convergence",
+    "Krusell-Smith forecasting accuracy if aggregate risk is activated"
+  ],
+  "stage_gate": "Accept a fully converged and economically closed baseline; do not add nominal rigidity yet.",
+  "reference_leads": [
+    "Huggett (1993)",
+    "Aiyagari (1994)",
+    "Krusell and Smith (1998)"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0",
+  "stage": 7,
+  "folder": "research/07-random-matrix-endogenous-risk",
+  "title": "Random Matrix Diagnostics of Endogenous Correlations",
+  "category": "analytical_method",
+  "status": "planned",
+  "research_question": "Do spectral patterns of model-generated financial returns identify economically meaningful common risk beyond sampling noise?",
+  "feasibility_hypothesis": "Direct as a statistical diagnostic of equilibrium outcomes, but random matrix theory by itself is not an optimal-choice or market-clearing mechanism.",
+  "prerequisites": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "mechanisms": [
+    "Cross-asset covariance and spectral eigenvalue distributions",
+    "Marchenko-Pastur null when its assumptions hold",
+    "Common risk-factor and correlation-network diagnostics",
+    "Out-of-sample systemic-risk prediction"
+  ],
+  "state_variables": [
+    "T-by-N equilibrium return panel",
+    "empirical correlation and covariance matrices",
+    "eigenvalues, eigenvectors and factor estimates"
+  ],
+  "required_equations": [
+    "Finite-sample spectral measures",
+    "Null distribution under documented independence assumptions",
+    "Model-generated covariance and risk network functions"
+  ],
+  "comparison_baseline": "Independent asset returns and conventional factor models at the same sample size",
+  "acceptance_tests": [
+    "Recover reference null with controlled Monte Carlo",
+    "Stability under heavy tails and time dependence",
+    "Out-of-sample predictive content",
+    "Link risk eigenvectors back to holdings and balance sheets",
+    "Do not mistake statistical significance for a new equilibrium mechanism"
+  ],
+  "stage_gate": "Retain only diagnostically or predictively informative spectral statistics; no artificial structural claim.",
+  "reference_leads": [
+    "Marchenko and Pastur (1967)",
+    "Laloux et al. (1999)",
+    "Financial random matrix theory"
+  ],
+  "implementation": {
+    "status": "not_started",
+    "method": "equilibrium solving plus ABM/distribution verification when relevant",
+    "language": "Julia proposed; environment and APIs to be verified before implementation",
+    "artifacts": "results/",
+    "reporting": [
+      "code revision",
+      "economic assumptions",
+      "source provenance",
+      "numerical solver residuals",
+      "seed and tolerances",
+      "matched ablation comparisons"
+    ]
+  }
+}

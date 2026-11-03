@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "stage": 6,
+  "folder": "stage-6-random-matrix-systemic-risk",
+  "title": "Random Matrix Methods and Systemic Risk",
+  "status": "planned",
+  "research_question": "Can spectral correlation measures identify model-generated systemic risk beyond conventional factors and sampling noise?",
+  "dependencies": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "mechanisms": [
+    "Cross-asset covariance and correlation spectra",
+    "Random-matrix sampling-noise benchmarks",
+    "Macro-financial stress diagnostics",
+    "Out-of-sample correlation risk tests"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Treat random matrix theory first as a diagnostic, not an optimizing agent.",
+    "Apply Marchenko-Pastur benchmarks only under defensible null assumptions.",
+    "Separate predictive content from mechanical in-sample fitting."
+  ],
+  "comparators": [
+    "independent returns null",
+    "conventional factor model",
+    "endogenous market interactions"
+  ],
+  "acceptance_tests": [
+    "Null simulation across dimensions and samples",
+    "Eigenvalue and eigenvector stability",
+    "Out-of-sample stress predictability",
+    "Full model component ablation"
+  ],
+  "deliverables": [
+    "Spectral diagnostic toolkit",
+    "Validated macro-financial risk exhibits"
+  ],
+  "literature_leads_to_verify": [
+    "Marchenko and Pastur (1967)",
+    "Laloux et al. (1999)"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-6-random-matrix-systemic-risk/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}

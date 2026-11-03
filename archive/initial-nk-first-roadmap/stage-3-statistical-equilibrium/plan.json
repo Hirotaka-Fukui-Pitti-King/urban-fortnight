@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "stage": 3,
+  "folder": "stage-3-statistical-equilibrium",
+  "title": "Statistical Equilibrium and Entropy",
+  "status": "planned",
+  "research_question": "When does the wealth-belief economy admit a justified stationary or maximum-entropy characterization?",
+  "dependencies": [
+    0,
+    1,
+    2
+  ],
+  "mechanisms": [
+    "Stationary master/Boltzmann equations",
+    "Entropy under derived constraints",
+    "Non-equilibrium probability fluxes and metastability",
+    "Order parameters and critical thresholds"
+  ],
+  "equilibrium_conditions_and_caveats": [
+    "Do not assume an entropy maximizer is an economic equilibrium.",
+    "State conservation laws, invariant measures, ergodicity and detailed balance where used.",
+    "Allow non-equilibrium stationary states when detailed balance fails."
+  ],
+  "comparators": [
+    "Microscopic stationary simulation",
+    "Derived distributional dynamics",
+    "Constrained entropy approximation"
+  ],
+  "acceptance_tests": [
+    "Distribution normalization and moment constraints",
+    "Invariance under the transition kernel",
+    "Entropy approximation versus finite agents",
+    "Explicit failure examples if assumptions break"
+  ],
+  "deliverables": [
+    "Conditional analytical propositions",
+    "Validated stationary density and phase diagram"
+  ],
+  "literature_leads_to_verify": [
+    "Jaynes (1957)",
+    "Statistical equilibrium economics"
+  ],
+  "implementation": {
+    "language": "Julia (planned; dependencies must be verified)",
+    "method": "Agent-based microsimulation and distributional dynamics",
+    "results_path": "stage-3-statistical-equilibrium/results/",
+    "numerical_policy": "Record equilibrium residuals, calibration, random seeds, tolerances and convergence tests."
+  }
+}

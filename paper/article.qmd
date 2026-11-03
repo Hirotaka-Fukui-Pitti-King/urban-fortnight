@@ -1,0 +1,108 @@
+---
+title: "Can Statistical-Mechanical Models Be Reconciled with Heterogeneous-Agent General Equilibrium?"
+subtitle: "Optimization, Rational Expectations, Market Clearing, and a Research Design"
+date: "2026-11-03"
+author:
+  - name: "Author to be confirmed"
+lang: en
+abstract: |
+  We propose a research program to determine which statistical-mechanical mechanisms can be embedded in economies with heterogeneous optimizing agents, rational expectations, and market clearing. The point of departure is a standard incomplete-markets general equilibrium without nominal rigidity. We distinguish particle computation, voluntary kinetic exchange, Ising-type strategic complementarities, stationary distribution and entropy arguments, firm financial fragility, Minority Game trading, and random-matrix diagnostics. For each object we specify its equilibrium compatibility conditions and a nested falsification test. The final step adds New Keynesian nominal price rigidity only after the underlying economic mechanisms have passed equilibrium-consistency tests. This manuscript is a preregistered research design; it reports no numerical or empirical results.
+keywords:
+  - heterogeneous-agent general equilibrium
+  - econophysics
+  - kinetic exchange
+  - social interactions
+  - statistical equilibrium
+  - rational expectations
+bibliography: references.bib
+format:
+  academic-typst:
+    section-numbering: "1.1.1"
+execute:
+  echo: false
+---
+
+# The question before nominal rigidity
+
+Can the distinctive tools of statistical mechanics be integrated into heterogeneous-agent general equilibrium **without violating individual optimization, rational expectations, or market clearing**? The substantive question is not whether one can simulate many interacting agents. It is whether a collision kernel, mean-field interaction, equilibrium invariant distribution, or strategic trading process corresponds to admissible decisions and feasible aggregate resource allocations.
+
+The starting model is a competitive incomplete-markets economy in the spirit of @huggett1993, @aiyagari1994, and @krusellsmith1998. New Keynesian nominal rigidities are intentionally postponed. Adding Calvo price setting at the outset would make it harder to locate whether a novel prediction comes from interactions or from sticky prices.
+
+# A benchmark optimizing heterogeneous-agent economy
+
+Let $a$ denote individual asset holdings, $z$ idiosyncratic labor productivity, and $\mu$ the cross-sectional measure of households. Conditional on the public aggregate state $S$, household $i$ faces the recursive problem
+
+$$
+V(a,z;S)=\max_{c,\ell,a'}\left\{u(c,\ell)+\beta
+\mathbb{E}\left[V(a',z';S')\mid z,S\right]\right\}
+$$
+
+subject to the period budget constraint
+
+$$
+c+a'=(1+r(S))a+w(S)z\ell+\Pi(S)-T(S),\qquad a'\geq\underline a.
+$$
+
+The form above is a schematic example: alternative equity, bonds, capital, taxes, and profits require explicit ownership and asset-supply identities. Competitive factor prices follow from firm maximization. In equilibrium, the aggregate transition $S'=\mathcal G(S,\varepsilon')$ equals the distributional transition implied by household policies and shocks, and goods, labor, and each traded asset market clear.
+
+Under aggregate risk, "rational expectations" means that the decision-makers' perceived conditional transition law for $S$ matches the actual equilibrium law (or that a documented approximation has quantified forecast errors). Multiple solutions require an explicit equilibrium-selection rule. For every extension we will verify Euler/Bellman residuals, budget feasibility, distribution normalization, and market-clearing residuals.
+
+# Agent-based equilibrium as a numerical representation
+
+An agent-based implementation simulates the *same optimizing policy functions* on a finite population. Its first role is numerical: compare the limiting empirical distribution and equilibrium aggregates to a deterministic histogram or Kolmogorov forward operator. Particle simulations must distinguish idiosyncratic law-of-large-numbers effects from aggregate common shocks. Simulation alone does not validate an economic equilibrium.
+
+# Voluntary kinetic exchange and Boltzmann dynamics
+
+Classical exchange rules studied by @yakovenkorosser2009 often produce wealth or money distributions from conserved pairwise transfers. For a closed pair, one may write
+
+$$
+a_i^{+}=a_i^{-}+\Delta_{ij},\qquad
+a_j^{+}=a_j^{-}-\Delta_{ij}.
+$$
+
+This accounting identity is necessary but does not establish optimality. With frictionless complete trade and no gains from reallocation, a nondegenerate random transfer kernel may be inconsistent with voluntary decisions. We will therefore derive a state-dependent matching and contracting rule, under which each trading partner can reject a transaction and budgets remain feasible.
+
+When bilateral matches are conditionally independent given the distribution, a gain-loss collision operator may represent the cross-sectional law of motion,
+
+$$
+\partial_t f(a,z)=Q^{+}[f,f](a,z)-Q^{-}[f,f](a,z)+\mathcal L f(a,z).
+$$
+
+The operator $Q$ must be derived from the equilibrium matching protocol and optimal trade. The term $\mathcal L$ represents other productivity, saving, and aggregate transitions, with appropriate interpretation of real and nominal claims. A simulation matching the Boltzmann equation is insufficient if its underlying transfers are non-optimal.
+
+# Ising-type choices and rational expectations
+
+A rigorous entry point for Ising methods is **strategic complementarity in an optimal discrete action**, rather than an imposed error in price forecasts. Consider $s_i\in\{-1,+1\}$ denoting a participation or adoption decision. With complementarities in utility, a payoff difference that depends on $Jm+h_i$, and appropriately distributed idiosyncratic taste shocks, individual best responses can have a logit form,
+
+$$
+\Pr(s_i=+1\mid m,h_i)
+=\frac{1}{1+\exp[-2(Jm+h_i)/T]}.
+$$
+
+Under the special symmetric mean-field specification, an action consistency condition becomes $m=\tanh((Jm+h)/T)$. For $h=0$ and $J/T>1$, multiple nonzero fixed points are possible. **An Ising fixed point is not sufficient for general equilibrium:** household budget feasibility, optimality, rational aggregate forecasts, and all market-clearing equations must also hold.
+
+This approach is motivated by strategic-complementarity models such as @brockdurlauf2001. An alternative that uses non-Bayesian belief switching remains a meaningful behavioral comparison, but it is not classified as a rational-expectations equilibrium without a separate proof.
+
+# Stationary distributions and entropy
+
+A stationary equilibrium measure satisfies the actual policy-induced invariance equation, schematically $\mu^\star=\mathcal T(\mu^\star;P^\star)$, together with equilibrium prices $P^\star$. Maximum entropy subject to selected moment constraints is a *different* variational problem. It is valid as a characterization only under specified dynamical or informational assumptions. The mere existence of heterogeneous-agent general equilibrium does not imply a Boltzmann-Gibbs stationary law.
+
+We will test invariance, feasible constraints, detailed balance when asserted, and stationary probability currents. Failure of an entropy representation is an informative negative result, not a reason to drop optimizing behavior. This distinction is relevant when applying information-theoretic arguments originating with @jaynes1957.
+
+# Optimal firm fragility and strategic security trading
+
+Bouchaud-inspired models investigate default, credit cycles, and unemployment cascades. A useful comparison is between the original rule-based firm behavior and a fully specified dynamic profit-maximizing firm with debt, collateral, limited liability, and bank loss accounting. A heuristic firm model is not retroactively labeled optimal.
+
+Similarly, a Minority Game in the sense of @challet2005 features adaptive strategy scores and contrarian incentives. Rational strategic trading with price impact instead requires explicit payoff functions, information sets, Nash or dynamic optimality conditions, and a price function that clears the securities market. The two solution concepts are compared but not conflated. If the adaptive version cannot be reconciled with rational expectations, that limitation is reported rather than concealed.
+
+# Random-matrix diagnostics and the New Keynesian extension
+
+Once the economy generates multiple security returns, random-matrix eigenvalue diagnostics can distinguish collective factors from some types of sampling noise. They do not themselves establish a behavioral equilibrium mechanism. The random-matrix benchmark must be adjusted for temporal dependence, non-Gaussian returns, and the actual sample-to-dimension ratio.
+
+Only after the compatibility results are established do we add household and firm nominal contracts, optimal Calvo reset pricing [@calvo1983], a monetary policy rule, and New Keynesian equilibrium conditions. The central final comparison is a standard NK/HANK economy versus the same economy augmented with individually validated social, exchange, firm-financial, or strategic-trading mechanisms.
+
+# Research sequence and precommitted acceptance criteria
+
+The nine themes and stage gates are defined in the repository's root \`research-plan.json\` and individual \`research/*/plan.json\` files. The main tests are optimality and deviation inequalities; budget, resource, and financial clearing; forecast consistency; stationary distribution invariance; numerical refinement and random-seed robustness; and exact recovery of a nested baseline when each mechanism is disabled.
+
+This is an agenda manuscript, **not** a claimed existence theorem, computational replication, or empirically estimated paper. The value of the program depends on identifying which familiar statistical-mechanical patterns survive economically consistent microfoundations, and on recording the counterexamples where they do not.
