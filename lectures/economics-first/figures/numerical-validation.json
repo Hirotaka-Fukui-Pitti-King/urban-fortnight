@@ -1,0 +1,52 @@
+{
+  "source": "pedagogical numerical experiments locally run 2026-11-03; not original-paper replication",
+  "aiyagari": {
+    "r": 0.03409789470820705,
+    "capital_supply": 6.021799863508239,
+    "capital_demand": 6.021800437997738,
+    "wage": 1.2214662263617797,
+    "capital_error": -5.744894995274308e-7,
+    "mass_error": 6.94999613415348e-14
+  },
+  "ising": {
+    "N": 100,
+    "coupling_modes": {
+      "0.7": [
+        0
+      ],
+      "1.45": [
+        -0.86,
+        0.86
+      ]
+    },
+    "detailed_balance_sup_error_N7": 3.2526065174565133e-19
+  },
+  "monetary_matching": {
+    "uniform": {
+      "stationarity_sup": 6.7894018683380126e-18,
+      "buyer_min_gain": 1.6292969941782833,
+      "seller_min_gain": 0.3724891716347736,
+      "distribution": [
+        0.2467823792336772,
+        0.20724008691110068,
+        0.17403371244043664,
+        0.14614804267474105,
+        0.12273053351641955,
+        0.10306524522362492
+      ]
+    },
+    "assortative": {
+      "stationarity_sup": 7.626849217618017e-17,
+      "buyer_min_gain": 1.4207299035020022,
+      "seller_min_gain": 0.7589149021391369,
+      "distribution": [
+        0.2772751756082147,
+        0.19174839336407773,
+        0.15231177133195345,
+        0.13285152763654937,
+        0.12399217923365623,
+        0.1218209528255485
+      ]
+    }
+  }
+}
