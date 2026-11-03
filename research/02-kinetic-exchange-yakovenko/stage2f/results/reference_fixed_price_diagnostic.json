@@ -1,0 +1,38 @@
+{
+  "status": "FIXED_CONTRACT_VALUE_CONVERGED_ENDOGENOUS_NASH_DID_NOT_STABILIZE",
+  "equilibrium_certified": false,
+  "baseline": "Stage2D finite Nash menu 5x5 and fixed partner distribution Dirac at k1.5 m1",
+  "runs": [
+    {
+      "price": 2.5,
+      "inner_Bellman_iterations": 36,
+      "independent_Bellman_sup": 2.2048425307730213e-9,
+      "policy_improvements": 30,
+      "final_contract_changes": 96,
+      "last_six_changes": [
+        96,
+        96,
+        96,
+        96,
+        96,
+        96
+      ]
+    },
+    {
+      "price": 3,
+      "inner_Bellman_iterations": 37,
+      "independent_Bellman_sup": 1.1004885891452432e-9,
+      "policy_improvements": 30,
+      "final_contract_changes": 178,
+      "last_six_changes": [
+        149,
+        124,
+        120,
+        157,
+        183,
+        178
+      ]
+    }
+  ],
+  "interpretation": "Fixed-contract Bellman convergence does not imply endogenous Nash policy stability or stationary monetary GE."
+}
