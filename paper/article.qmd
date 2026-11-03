@@ -501,3 +501,31 @@ The paper now reports a numerically validated Aiyagari benchmark and a restricte
 ## Stage 2-G: Solved conditional Nash--Bellman problem, not stationary GE
 
 We next solve the endogenous continuous bargaining and household value equations at a fixed price and partner measure, instead of holding trade contracts constant during the value-function evaluation. With a three-by-three capital--money state grid, price 2.5, and all partners concentrated at capital 1.5 and nominal money one, a joint nonlinear root with Nash first-order-condition polishing reaches a Bellman sup residual of 9.09e-13 and a maximum smooth-branch Nash KKT residual of 8.88e-16. Eleven of seventeen relevant directed matches admit positive bilateral contracts. An independent 201-by-201 deterministic search finds no contract with a higher Nash objective among those tested. This is a finite-search check, **not** a proof of global optimality over the full continuous contract domain. The numerical agreement does not survive as a certified higher-resolution equilibrium: a five-by-five experiment has not converged. The partner distribution is imposed rather than invariant, and the price is imposed rather than monetary-market clearing. Consequently, stationary monetary general equilibrium, endogenous price, policy transmission, and welfare implications remain open. Implementation and independent executable checks are recorded in the Stage 2-G research directory and Draft PR #10.
+
+
+## Stage 2-H: Convex decomposition of bilateral Nash bargaining
+
+The main remaining numerical problem is the jointly endogenous bargaining-and-value-function fixed point, rather than conditional money-market clearing. To avoid relying solely on local first-order conditions, we decompose the bargaining problem globally for the *piecewise-affine continuation-value approximation currently used by the code*. This is a finite approximation technique, not a proof of concavity for the original value function.
+
+On each CM interpolation triangle, the continuation value is affine in saving decisions. Holding the buyer and seller interpolation triangles fixed, their bilateral participation gains are concave in transaction quantity, real payment, and the separate posttrade CM portfolios: consumption utility is increasing and concave, the CM portfolio constraints are affine, and the seller's production disutility is convex. Specifically, for the source technology, output capacity is $A k_s^\alpha$ and seller effort cost is
+
+$$
+v(y,k_s)
+=
+\frac{(y/(A k_s^\alpha))^{1/(1-\alpha)}}
+{1-(y/(A k_s^\alpha))^{1/(1-\alpha)}}.
+$$
+
+This cost is convex for $0\leq y<A k_s^\alpha$ when $0<\alpha<1$. Thus, with positive buyer and seller gains $B_h$ and $S_j$ on a fixed pair of triangles, the objective
+
+$$
+\max\; \theta\log B_h+(1-\theta)\log S_j
+$$
+
+is a concave maximization over a convex feasible set. We use disciplined convex programming and compare the optima of all triangle pairs. This construction follows the standard composition principles of convex analysis [@boyd2004convex]. It yields a global decomposition **conditional on the interpolated CM value**, but numerical conic-solver accuracy, possible ties, the endogenous Bellman fixed point, and convergence as the asset grids are refined remain separate problems.
+
+A first executed numerical experiment at $p=2.5$ on a $3\times3$ portfolio grid, with the fixed matching-partner distribution concentrated at $(k,m)=(1.5,1)$, obtains output $y=1.0635063$ and nominal payment $d=1$ for one representative matched pair. The logarithm of its generalized Nash product is approximately $4.6355727069$. The 64 buyer/seller triangle-pair subproblems can be reduced to 39 using safe upper bounds, without changing the optimum; this agrees with an independently computed monotone Nash bound. This is a **one-pair convex-optimization validation**, not a solved higher-resolution private fixed point.
+
+A direct $5\times5$ fixed-price root using the inherited fast continuous-Nash candidate procedure did not converge. Matching-opportunity continuation produced small relative-value residuals through 55% of the source matching intensity in one experiment, but failed at 80%; a finer alternative path stopped even earlier. Neither experiment establishes a $5\times5$ fixed point under globally optimizing Nash policies. In particular, the results do not establish an invariant distribution or an endogenous money-market clearing price. These failure boundaries are reported instead of promoting a conditional value or contract to monetary stationary GE.
+
+As related numerical evidence rather than source replication, we retrieved and inspected the public Fortran archive distributed with Chiu and Molico's later monetary-search work [@chiumolico2021]. Its bargaining code uses the objective's first and second derivatives, and its steady-state program constructs a payment-policy grid for distribution-moment calculations. That economy does not feature the same capital-and-money Nash constraints as Molico and Zhang [@molicozhang2006]. We therefore do not transfer the later code's seller-money numerical upper bound or its convergence criterion into the present model.
