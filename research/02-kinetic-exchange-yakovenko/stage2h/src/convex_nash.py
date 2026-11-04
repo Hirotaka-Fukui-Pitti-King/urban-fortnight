@@ -45,6 +45,8 @@ class NashResult:
     optimal_branch:tuple[int,int]|None
     dcp_pass:bool
     global_proof:bool=False
+    unresolved_branches:int=0
+    unresolved_branch_upper_log_nash:float=float("-inf")
 
 
 def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
@@ -94,6 +96,10 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
         if ub>incumbent.log_nash:
             candidate_pairs.append((ib,is_))
     pairs=candidate_pairs
+    branch_bound={(ib,is_):p.theta*np.log(buyer_bounds[ib])+
+                  (1-p.theta)*np.log(seller_bounds[is_])
+                  for ib,is_ in pairs}
+    pairs.sort(key=lambda ij:-branch_bound[ij])
     if cap_branches is not None:
         pairs=pairs[:cap_branches] # Explicitly *not* a global search
     considered=len(triangles)**2
@@ -102,9 +108,14 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
     result.triangles_considered=considered
     result.triangles_pruned=pruned
     successes=solved=0
-    failed_branches=0
+    unresolved=[]
     r=1/(1-p.alpha)
     for ib,is_ in pairs:
+        # Updated incumbents can only remove branches, never discard a
+        # candidate whose admissible global upper bound exceeds the best.
+        if branch_bound[(ib,is_)] <= result.log_nash:
+            pruned+=1
+            continue
         tri_b=np.asarray(triangles[ib],dtype=int)
         tri_s=np.asarray(triangles[is_],dtype=int)
         weights_b=cp.Variable(3,nonneg=True)
@@ -134,15 +145,20 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
                           **({"tol_gap_abs":1e-9,"tol_feas":1e-9,
                               "tol_gap_rel":1e-9} if solver=="CLARABEL" else {}))
         except cp.SolverError:
-            failed_branches+=1
+            pass
+        # A solver exception, ambiguous infeasibility, or inaccurate
+        # termination is not proof of an infeasible/noncompetitive branch.
+        # Try a second conic solver, and if still not solved, retain its
+        # admissible Nash upper bound as an unresolved optimality gap.
+        if problem.status not in ("optimal","infeasible"):
+            try:
+                problem.solve(solver="SCS",verbose=False,eps=5e-7,max_iters=20000)
+            except cp.SolverError:
+                pass
+        if problem.status=="infeasible":
             continue
-        # An economically infeasible triangle pair is not a numerical
-        # solver failure. Such cells are allowed by coarse surplus upper
-        # bounds but ruled out by joint participation/budget constraints.
-        if problem.status in ("infeasible","infeasible_inaccurate"):
-            continue
-        if problem.status not in ("optimal","optimal_inaccurate"):
-            failed_branches+=1
+        if problem.status not in ("optimal",):
+            unresolved.append((ib,is_,branch_bound[(ib,is_)]))
             continue
         successes+=1
         q=float(yy.value)
@@ -164,6 +180,7 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
             result=NashResult(q,pay,BS,SS,score,considered,pruned,
                               solved,successes,(ib,is_),True)
     result.triangles_solved=solved
+    result.triangles_pruned=pruned
     result.successes=successes
     # Polish the globally selected convex-branch incumbent in the original
     # continuous (quantity,payment) contract space. This is a NUMERICAL
@@ -191,8 +208,15 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
                     result.buyer_surplus=float(B)
                     result.seller_surplus=float(S)
                     result.log_nash=float(adjusted)
-    # Failed convex branches cannot be silently certified.
-    if failed_branches:
+    # Do not promote numerical failures if their *admissible* bounds can
+    # still improve the selected Nash objective. A dominated failure
+    # is harmless after incumbent updates.
+    active_failures=[(ib,is_,ub) for ib,is_,ub in unresolved
+                     if ub>result.log_nash]
+    result.unresolved_branches=len(active_failures)
+    result.unresolved_branch_upper_log_nash=(max(ub for _,_,ub in active_failures)
+                        if active_failures else float("-inf"))
+    if active_failures:
         result.dcp_pass=False
     # Not even successful convex solver status is an exact numerical proof.
     return result
