@@ -1,0 +1,43 @@
+name: Stage 2-I fast policy discrepancy at lambda 0.61
+on:
+  push:
+    branches:
+      - research/stage2i-active-set-nash-bellman-homotopy
+    paths:
+      - '.github/workflows/stage2i-fast-gap.yml'
+      - 'research/02-kinetic-exchange-yakovenko/stage2i/src/audit_061_fast.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  discrepancy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 41770869977
+          github-token: ${{ github.token }}
+          name: stage2i-conditional-kkt-attempt
+          path: research/02-kinetic-exchange-yakovenko/stage2i/results
+      - run: python research/02-kinetic-exchange-yakovenko/stage2i/src/audit_061_fast.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2i-fast-policy-divergence
+          path: research/02-kinetic-exchange-yakovenko/stage2i/results/fast_policy_divergence_061.json
