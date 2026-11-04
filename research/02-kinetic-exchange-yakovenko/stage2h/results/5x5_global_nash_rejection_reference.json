@@ -1,0 +1,58 @@
+{
+  "status": "PREVIOUS_5x5_MATCHING_055_ROOT_REJECTED_BY_GLOBAL_NASH_DEVIATION",
+  "source_actions_run": 41745514625,
+  "source_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41745514625",
+  "source_artifact": "stage2h-intermediate-all49-convex-nash",
+  "grid": [
+    5,
+    5
+  ],
+  "price": 2.5,
+  "matching_multiplier": 0.55,
+  "partner_state": [
+    1.5,
+    1
+  ],
+  "relevant_pairs": 49,
+  "surrogate_positive_contracts": 39,
+  "convex_positive_contracts": 39,
+  "coarse_Bellman_sup": 3.982222551712766e-9,
+  "Bellman_sup_after_convex_reoptimization": 0.6554151026730324,
+  "max_log_Nash_improvement": 0.003689051462218096,
+  "max_improvement_pair": {
+    "buyer": 13,
+    "seller": 12,
+    "old_quantity": 1.0807054068319557,
+    "old_payment": 1.5,
+    "convex_quantity": 1.0730849819241912,
+    "convex_payment": 1.4147215466595213,
+    "old_logNash": 4.0671239415139535,
+    "convex_logNash": 4.070812992976172
+  },
+  "second_changed_pair": {
+    "buyer": 12,
+    "seller": 6,
+    "old_quantity": 0.8550853775054221,
+    "old_payment": 1.0000000000000002,
+    "convex_quantity": 0.8538081547153833,
+    "convex_payment": 0.9583034807652986
+  },
+  "convex_solver_failures": [
+    {
+      "buyer": 2,
+      "seller": 12
+    },
+    {
+      "buyer": 3,
+      "seller": 12
+    },
+    {
+      "buyer": 12,
+      "seller": 5
+    }
+  ],
+  "strict_all_pair_global_certification": false,
+  "private_root_5x5_certified": false,
+  "stationary_GE": false,
+  "diagnosis": "False private convergence under fast Nash policy. Upper-bound payment active set maintained without releasing after a negative payment-direction derivative is a concrete hypothesis, to be checked and corrected."
+}
