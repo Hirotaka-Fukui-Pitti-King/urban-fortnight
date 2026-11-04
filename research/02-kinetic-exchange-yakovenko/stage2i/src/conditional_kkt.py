@@ -109,8 +109,12 @@ class ConditionalKKT:
             production=g(qty,model.k[j],p.alpha,p.A)
             B=float(bw-outside[i])
             S=float(sw-outside[j]-production)
-            T[i]+=lm*B/p.Ntypes
-            T[j]+=lm*S/p.Ntypes
+            # Only matches with a partner drawn from the Dirac
+            # distribution affect an individual's Bellman value.
+            if j==12:
+                T[i]+=lm*B/p.Ntypes
+            if i==12:
+                T[j]+=lm*S/p.Ntypes
             quantities[i,j]=qty
             payments[i,j]=xx*price
             ell=(qty/self.capacity[n])**(1/(1-p.alpha))
