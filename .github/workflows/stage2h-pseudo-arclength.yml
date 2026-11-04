@@ -1,0 +1,55 @@
+name: Stage 2-H pseudo-arclength 5x5 continuation experiment
+
+on:
+  pull_request:
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_pseudo_arclength.py'
+      - '.github/workflows/stage2h-pseudo-arclength.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-pseudoarc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      NUMBA_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Syntax and solver dependency verification
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_pseudo_arclength.py
+          python -c 'import numpy,scipy,numba; print(numpy.__version__, scipy.__version__, numba.__version__)'
+      - name: Execute bordered pseudo-arclength 5x5 endogenous private root
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_pseudo_arclength.py --max-points 36 --maxfev 500 --nq 9 --nx 7
+      - name: Require recorded economic status without false equilibrium certification
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('research/02-kinetic-exchange-yakovenko/stage2h/results/pseudo_arclength_5x5.json')
+          r=json.loads(path.read_text())
+          assert r['stationary_GE'] is False
+          assert r['global_Nash_verified'] is False
+          assert r['fixed_price_5x5_certified'] is False
+          print('5x5 continuation status:',r['status'])
+          print('max lambda:',r['max_matching_on_traced_branch'])
+          print('turning point observed:',r['turning_point_observed'])
+          PY
+      - name: Upload full experiment
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2h-pseudo-arclength-5x5
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results/
+          if-no-files-found: warn
+          retention-days: 30
