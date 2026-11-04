@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/stage2i-joint-kkt.yml'
       - 'research/02-kinetic-exchange-yakovenko/stage2i/src/conditional_kkt.py'
+      - 'research/02-kinetic-exchange-yakovenko/stage2i/src/active_set_homotopy.py'
   workflow_dispatch:
 
 permissions:
@@ -40,27 +41,27 @@ jobs:
           github-token: ${{ github.token }}
           name: stage2h-5x5-active-payment-private-root
           path: research/02-kinetic-exchange-yakovenko/stage2h/results
-      - name: Attempt direct conditional KKT Bellman roots at increasing matching rate
-        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/conditional_kkt.py --max-nfev 25
+      - name: Attempt event-driven payment active-set KKT Bellman roots up to source matching
+        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/active_set_homotopy.py --max-nfev 65
       - name: Verify results declare actual mathematical status
         if: always()
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path("research/02-kinetic-exchange-yakovenko/stage2i/results/joint_kkt_source_rate_attempt.json")
+          p=Path("research/02-kinetic-exchange-yakovenko/stage2i/results/active_set_homotopy_summary.json")
           if not p.is_file():
               raise SystemExit("No joint KKT result artifact: investigate failure logs")
           d=json.loads(p.read_text())
-          print("SOURCE_RATE_REACHED",d["matching_last_accepted"])
+          print("SOURCE_RATE_REACHED",d["last_accepted_multiplier"])
           print("RESULT_STATUS",d["status"])
           assert d["stationary_GE"] is False
-          assert d["full_source_rate_globally_certified"] is d["final_check"]["verified_source_rate_5x5_private_fixedpoint"]
+          assert d["source_rate_5x5_verified"] is d["final_independent_check"]["verified_source_rate_5x5_private_fixedpoint"]
           PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: stage2i-conditional-kkt-attempt
           path: |
-            research/02-kinetic-exchange-yakovenko/stage2i/results/joint_kkt_*
+            research/02-kinetic-exchange-yakovenko/stage2i/results/active_set_*\n            research/02-kinetic-exchange-yakovenko/stage2i/results/homotopy_path.csv
           retention-days: 30
