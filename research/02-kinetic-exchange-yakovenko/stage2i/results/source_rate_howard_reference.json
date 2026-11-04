@@ -1,0 +1,37 @@
+{
+  "status": "FULL_MATCHING_PRIVATE_NASH_BELLMAN_NOT_CERTIFIED",
+  "workflow_run": 41897630094,
+  "workflow_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41897630094",
+  "model": {
+    "grid": [
+      5,
+      5
+    ],
+    "price": 2.5,
+    "partner_state": 12,
+    "matching_multiplier": 1
+  },
+  "inherited_branch_matching_multiplier": 0.850006103515625,
+  "inherited_conditional_Bellman_sup": 4.547473508864641e-13,
+  "full_matching_fast_oracle_sup_at_inherited_value": 21.555938190446795,
+  "frozen_contract_full_matching": {
+    "iterations": 602,
+    "independent_fixed_contract_Bellman_sup": 9.458744898438454e-11,
+    "fast_oracle_sup_after_reoptimizing_contracts": 4.426012343527418,
+    "beta_contraction_for_frozen_feasible_policy": true
+  },
+  "safeguarded_policy_iteration": {
+    "attempted_initializations": 2,
+    "outer_iterations_per_initialization_max": 30,
+    "best_fast_candidate_Bellman_sup": 0.43575461162163265,
+    "reached_residual_tolerance": false,
+    "independent_global_nash_49_pair_reopt_executed_for_best": false
+  },
+  "verification": {
+    "global_49_pair_Bellman_sup": null,
+    "full_matching_private_fixed_point_certified": false,
+    "stationary_general_equilibrium": false,
+    "nonexistence_proven": false
+  },
+  "limitation": "All full-rate reported residuals except frozen-policy residual use the corrected fast Nash candidate oracle, not independent global Nash."
+}
