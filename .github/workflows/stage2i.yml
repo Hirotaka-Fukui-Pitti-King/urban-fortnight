@@ -1,0 +1,66 @@
+name: Stage 2-I economic contract switching audit
+
+on:
+  push:
+    branches:
+      - research/stage2i-active-set-nash-bellman-homotopy
+  pull_request:
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2i/**'
+      - '.github/workflows/stage2i.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  switching-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt pytest
+      - name: Verify syntax and unit tests
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2i
+          python -m pytest -q research/02-kinetic-exchange-yakovenko/stage2i/tests
+      - name: Retrieve verified intermediate 5x5 input
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Execute 49-pair economic contract and CM switching audit
+        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/contract_branch_diagnostics.py
+      - name: Validate observable output and prohibit false root claim
+        run: |
+          python - <<'PY'
+          import csv,json
+          from pathlib import Path
+          root=Path("research/02-kinetic-exchange-yakovenko/stage2i/results")
+          data=json.loads((root/"matching_boundary_diagnostics.json").read_text())
+          with (root/"contract_branches.csv").open(newline="") as stream:
+              rows=list(csv.DictReader(stream))
+          assert len(rows)==49
+          assert data["relevant_pairs"]==49
+          assert data["full_matching_5x5_fixedpoint_certified"] is False
+          assert data["stationary_GE"] is False
+          assert data["actual_branch_root_tracking"] is False
+          print(json.dumps(data,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2i-economic-contract-switching
+          path: research/02-kinetic-exchange-yakovenko/stage2i/results/
+          retention-days: 30
