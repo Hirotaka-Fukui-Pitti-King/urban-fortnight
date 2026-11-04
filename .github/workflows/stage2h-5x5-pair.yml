@@ -1,10 +1,6 @@
 name: Stage 2-H 5x5 convex Nash one-pair numerical audit
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/probe_5x5_convex_pair.py'
-      - '.github/workflows/stage2h-5x5-pair.yml'
   workflow_dispatch:
 
 permissions:
