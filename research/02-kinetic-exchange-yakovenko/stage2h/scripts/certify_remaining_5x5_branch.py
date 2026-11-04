@@ -53,7 +53,6 @@ def run(folder=ROOT/"results"):
         buyer=i,seller=j,old_quantity=float(q),old_payment=float(pay),
         old_nash_log=score,upper_objective_minus_incumbent=float(
             bound.upper_log_nash-score),
-        bounded_to_tolerance=bool(bound.bounded_to_tolerance),
         numerical_global_bound_only=True,
         original_source_matching_fixedpoint_certified=False,
         stationary_GE=False,**asdict(bound))
