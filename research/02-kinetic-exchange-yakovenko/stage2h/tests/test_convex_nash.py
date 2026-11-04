@@ -40,7 +40,7 @@ class ConvexBranchTests(unittest.TestCase):
         # At zero continuation values the CM selects only current
         # consumption. Buyer/seller positive Nash is still feasible.
         result=solve_pair(model,np.zeros(model.n),2.5,4,4)
-        self.assertTrue(result.dcp_pass)
+        self.assertTrue(result.dcp_pass, f'Unresolved branches: {result}')
         self.assertGreater(result.y,0.)
         self.assertGreater(result.d,0.)
         self.assertLess(result.y,model.p.A*model.k[4]**model.p.alpha)
