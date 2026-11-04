@@ -87,7 +87,10 @@ def run(folder=HERE/"results",maxfev=500):
     path.append(dict(diag,label="repaired_seed"))
     print("ACTIVE_ROOT",json.dumps(path[-1]),flush=True)
     verified=diag["sup"]<1e-7
-    if verified:z=znext
+    if verified:
+        z=znext
+        np.savez(folder/"private_5x5_active_last_accepted.npz",
+                 relative_value=z,matching_multiplier=.55)
     lam=.55; step=.05
     for num in range(35):
         if not verified or lam>=1.-1e-12 or step<.0005:break
@@ -98,6 +101,8 @@ def run(folder=HERE/"results",maxfev=500):
         print("ACTIVE_FOLLOW",json.dumps(path[-1]),flush=True)
         if accept:
             z=trial;lam=target;step=min(.10,step*1.25)
+            np.savez(folder/"private_5x5_active_last_accepted.npz",
+                     relative_value=z,matching_multiplier=lam)
         else:step*=.5
     at_one=verified and lam>=1.-1e-12
     final={}
