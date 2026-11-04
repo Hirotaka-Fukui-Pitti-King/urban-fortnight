@@ -151,8 +151,19 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
         # Try a second conic solver, and if still not solved, retain its
         # admissible Nash upper bound as an unresolved optimality gap.
         if problem.status not in ("optimal","infeasible"):
+            # Original strict Clarabel tolerances may terminate early on
+            # nearly-infeasible branch pairs; retry standard conic tolerances
+            # before an independent SCS solve.
             try:
-                problem.solve(solver="SCS",verbose=False,eps=5e-7,max_iters=20000)
+                problem.solve(solver="CLARABEL",verbose=False,
+                              tol_gap_abs=1e-7,tol_feas=1e-7,
+                              tol_gap_rel=1e-7)
+            except cp.SolverError:
+                pass
+        if problem.status not in ("optimal","infeasible"):
+            try:
+                problem.solve(solver="SCS",verbose=False,
+                              eps=1e-5,max_iters=20000)
             except cp.SolverError:
                 pass
         if problem.status=="infeasible":
