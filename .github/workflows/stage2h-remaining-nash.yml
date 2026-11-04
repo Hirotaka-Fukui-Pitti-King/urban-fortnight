@@ -1,10 +1,6 @@
 name: Stage 2-H certify remaining 5x5 intermediate Nash pair
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/certify_remaining_5x5_branch.py'
-      - '.github/workflows/stage2h-remaining-nash.yml'
   workflow_dispatch:
 
 permissions:
