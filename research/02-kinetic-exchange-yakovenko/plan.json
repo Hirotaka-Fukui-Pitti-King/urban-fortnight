@@ -152,6 +152,19 @@
     "five_grid_initial_false_root_matching_multiplier": 0.55,
     "five_grid_initial_false_root_independent_Bellman_sup": 0.6554151026730324,
     "alternate_high_price_full_matching_initial_root_converged": false,
-    "matching_source_actions_run": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41748837033"
+    "matching_source_actions_run": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41748837033",
+    "five_grid_last_accepted_all49_numeric_Nash_verified": true,
+    "five_grid_last_accepted_targeted_monotone_gap": 9.999988401787618e-7,
+    "five_grid_last_accepted_targeted_monotone_boxes": 284778,
+    "five_grid_last_accepted_numeric_tolerance": 0.000001,
+    "five_grid_strict_roundoff_global_certification": false,
+    "five_grid_source_matching_multiplier_one_reached": false,
+    "five_grid_source_matching_multiplier_one_converged": false,
+    "five_grid_stationary_GE": false,
+    "five_grid_jacobian_min_singular": 0.027953944679839457,
+    "five_grid_jacobian_condition": 5327.652176115164,
+    "five_grid_jacobian_step_sensitivity": 94.48192650772305,
+    "five_grid_lambda_061_trust_region_best_sup": 0.022488364251785242,
+    "five_grid_lambda_062_trust_region_best_sup": 0.07687841196820955
   }
 }
