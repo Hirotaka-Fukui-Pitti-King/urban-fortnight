@@ -140,40 +140,47 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
         if not problem.is_dcp():
             raise AssertionError(f"Non-DCP branch ({ib},{is_})")
         solved+=1
-        try:
-            problem.solve(solver=solver,verbose=verbose,
-                          **({"tol_gap_abs":1e-9,"tol_feas":1e-9,
-                              "tol_gap_rel":1e-9} if solver=="CLARABEL" else {}))
-        except cp.SolverError:
-            pass
-        # A solver exception, ambiguous infeasibility, or inaccurate
-        # termination is not proof of an infeasible/noncompetitive branch.
-        # Try a second conic solver, and if still not solved, retain its
-        # admissible Nash upper bound as an unresolved optimality gap.
-        if problem.status not in ("optimal","infeasible"):
-            # Original strict Clarabel tolerances may terminate early on
-            # nearly-infeasible branch pairs; retry standard conic tolerances
-            # before an independent SCS solve.
+        # Preserve the primal candidate *before* trying another conic solver:
+        # an inaccurate solve can still provide a genuine feasible Nash lower
+        # bound even when its dual/optimality certificate is unresolved.
+        primal_candidates=[]
+        reliable_optimal=False
+        last_status=None
+        attempts=[
+            (solver,({"tol_gap_abs":1e-9,"tol_feas":1e-9,
+                       "tol_gap_rel":1e-9} if solver=="CLARABEL" else {})),
+            ("CLARABEL",{"tol_gap_abs":1e-7,"tol_feas":1e-7,
+                         "tol_gap_rel":1e-7}),
+            ("SCS",{"eps":1e-5,"max_iters":20000}),
+        ]
+        for name,settings in attempts:
             try:
-                problem.solve(solver="CLARABEL",verbose=False,
-                              tol_gap_abs=1e-7,tol_feas=1e-7,
-                              tol_gap_rel=1e-7)
+                problem.solve(solver=name,verbose=verbose,**settings)
             except cp.SolverError:
-                pass
-        if problem.status not in ("optimal","infeasible"):
-            try:
-                problem.solve(solver="SCS",verbose=False,
-                              eps=1e-5,max_iters=20000)
-            except cp.SolverError:
-                pass
-        if problem.status=="infeasible":
+                continue
+            last_status=problem.status
+            if problem.status in ("optimal","optimal_inaccurate"):
+                if yy.value is not None and xx.value is not None:
+                    qtrial=float(yy.value)
+                    dtrial=float(xx.value)*price
+                    if np.isfinite(qtrial+dtrial):
+                        primal_candidates.append((qtrial,dtrial))
+            if problem.status=="optimal":
+                reliable_optimal=True
+                break
+            if problem.status=="infeasible" and not primal_candidates:
+                break
+        if not primal_candidates:
+            if last_status!="infeasible":
+                unresolved.append((ib,is_,branch_bound[(ib,is_)]))
             continue
-        if problem.status not in ("optimal",):
+        # If only an optimal_inaccurate candidate survived, retain it as a
+        # FEASIBLE LOWER BOUND, not a globally certified branch optimizer.
+        if not reliable_optimal:
             unresolved.append((ib,is_,branch_bound[(ib,is_)]))
-            continue
-        successes+=1
-        q=float(yy.value)
-        pay=float(xx.value)*price
+        else:
+            successes+=1
+        q,pay=primal_candidates[-1]
         if q<=0 or pay<=0 or q>=capacity or pay>model.m[buyer]+1e-6:
             continue
         # Independent objective re-evaluation via *globally* optimal CM policy.
