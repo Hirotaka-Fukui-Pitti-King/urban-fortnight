@@ -63,5 +63,7 @@ jobs:
         with:
           name: stage2i-conditional-kkt-attempt
           path: |
-            research/02-kinetic-exchange-yakovenko/stage2i/results/active_set_*\n            research/02-kinetic-exchange-yakovenko/stage2i/results/homotopy_path.csv
+            research/02-kinetic-exchange-yakovenko/stage2i/results/active_set_*
+            research/02-kinetic-exchange-yakovenko/stage2i/results/homotopy_path.csv
+            research/02-kinetic-exchange-yakovenko/stage2i/results/source_*
           retention-days: 30
