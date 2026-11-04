@@ -67,3 +67,6 @@ A further Python experiment now combines the Aiyagari capital-income stationary 
 ## Stage 2-H: convex Nash decomposition and source-code verification
 
 [Stage 2-H](stage2h/README.md) implements convex DCP Nash bargaining by buyer/seller CM interpolation-triangle pairs, with analytically admissible pruning and independent re-evaluation. A 3x3 single actual pair passes a 64-branch numerical benchmark (39 after pruning). The related Chiu–Molico (2021) Fortran archive was actually downloaded and inspected; it is not the original Molico–Zhang source. The 5x5 private Nash–Bellman root and stationary monetary GE remain **not certified**. Draft PR #11, stacked on Stage 2-G PR #10.
+
+
+**Stage 2-H qualification (2026-11-04):** The earlier 5x5 lambda=.55 private root was rejected under all-49 convex Nash reoptimization (Bellman residual 0.6554). Corrected payment-bound Nash polishing and 5x5 continuation recovered an intermediate matching lambda=.6090332 candidate, whose full independent all-49 convex Nash reoptimization yields Bellman residual 5.91e-12 (one unresolved conic branch). The actual matching multiplier lambda=1 remains unresolved, as does monetary stationary GE. See [executed results](stage2h/notes/numerical_results.md).
