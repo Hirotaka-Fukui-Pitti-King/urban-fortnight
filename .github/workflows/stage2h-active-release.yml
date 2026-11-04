@@ -1,11 +1,6 @@
 name: Stage 2-H payment active-set Nash repair test
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/src/active_nash.py'
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/probe_active_payment_release.py'
-      - '.github/workflows/stage2h-active-release.yml'
   workflow_dispatch:
 
 permissions:
