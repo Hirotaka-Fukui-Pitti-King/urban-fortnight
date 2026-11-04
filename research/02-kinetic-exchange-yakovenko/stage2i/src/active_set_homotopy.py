@@ -201,8 +201,18 @@ def run(folder=None,max_nfev=65):
             latest=1.
             system,unknown=direct_sys,direct_u
             print("ACTIVE_SET_HOMOTOPY_DIRECT_SOURCE_ACCEPT",flush=True)
+    if abs(latest-1.)<1e-12:
+        candidate_diag,candidate_y,candidate_d,candidate_v,_=system.validate(
+            unknown,latest)
+        np.savez(out/"source_conditional_5x5_candidate.npz",
+            relative_value=candidate_v[1:],
+            joint_unknown=unknown,matching_multiplier=latest,
+            payment_upper_flags=system.upper.astype(np.int8),
+            quantity=candidate_y,nominal_payment=candidate_d,
+            conditional_Bellman_sup=candidate_diag["bellman_sup"])
     final=independent_candidate_check(system,unknown,latest,
-             global_check=abs(latest-1.)<1e-12)
+             global_check=abs(latest-1.)<1e-12,
+             export_folder=out if abs(latest-1.)<1e-12 else None)
     # This strict flag requires independent 49-pair Nash reoptimization.
     success=bool(final["verified_source_rate_5x5_private_fixedpoint"])
     report=dict(status=("SOURCE_RATE_FULL_GLOBAL_CHECK_PASSED" if success
