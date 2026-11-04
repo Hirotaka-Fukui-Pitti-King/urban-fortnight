@@ -87,7 +87,7 @@ def run(folder=None, max_nfev=60):
                     abs(yy[pair]-y[pair]),abs(dd[pair]-d[pair]))),
                 distance_from_challenger=float(max(
                     abs(yy[pair]-CHALLENGERS[pair][0]),
-                    abs(dd[pair]-CHALLENGERS[pair][1]))) for pair in subset}
+                    abs(dd[pair]-CHALLENGERS[pair][1])))) for pair in subset}
             # Compare KKT root against the original competing contract at
             # the corrected V. This is a lower-bound dominance test only.
             best_score=None
