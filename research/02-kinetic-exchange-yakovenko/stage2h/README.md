@@ -16,3 +16,8 @@ python research/02-kinetic-exchange-yakovenko/stage2h/scripts/benchmark_global_n
 ```
 
 Refer to `notes/convex_nash_derivation.md`, `notes/literature_and_code_audit.md` and `results/*.json`.
+
+
+## Subsequent executed 5x5 economic experiments
+
+A corrected Nash payment-active-set policy now gives a **conditional private** Bellman root up to matching multiplier 0.609033203125 (source=1). Independent all-49 convex Nash contract optimization on that same 5x5 V preserves Bellman sup 5.9117155615e-12, with 39 positive matches and one unresolved conic branch, buyer 3/seller 12. This improves substantially on the earlier **false** lambda=.55 root (global-Nash Bellman 0.655415), but is **not** a 5x5 root of the original matching-rate economy. An alternative source-matching/full-rate price homotopy failed even to establish its high-price initial private root. The stricter convex Nash recovery passed all 3x3 economic tests and the 17-pair reoptimization (Actions run 41749186786). See [full 5x5 numeric audit](notes/numerical_results.md). The original source-rate 5x5 stationary monetary GE is NOT solved.
