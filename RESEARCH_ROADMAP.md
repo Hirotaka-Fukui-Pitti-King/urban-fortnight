@@ -103,3 +103,6 @@ The initial 5x5 matching=.55 fixed point was **false**: residual 3.98e-9 under a
 
 
 Additional Stage 2-H diagnostic: using the saved matching=.609033 5x5 private root, the corrected-Nash relative Bellman Jacobian has min singular value 0.02795, condition number 5328 and *large finite-difference step sensitivity* (sup change 94.48); trust-region residuals at matching .61/.62 remain 0.02249/0.07688. GitHub Actions run 41750484604. This is evidence of unstable/nonsmooth local behavior, not a proof of a fold or equilibrium nonexistence. No original matching-rate root is certified.
+
+
+Numerical Nash completeness at intermediate 5x5 lambda=.609033: the one unresolved conic branch (buyer3 seller12) was bounded by a direct monotonicity-based global Nash upper bound with log gap 9.9999884e-7 after 284,778 subdivisions, GitHub Actions 41751526520. All 49 matches have a numerical optimality check for the same intermediate-value candidate; no strict rounding proof, no source-lambda=1 root or monetary GE.
