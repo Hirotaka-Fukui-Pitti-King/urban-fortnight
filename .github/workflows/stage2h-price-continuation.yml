@@ -1,0 +1,54 @@
+name: Stage 2-H independent 5x5 full-matching price homotopy
+
+on:
+  pull_request:
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py'
+      - '.github/workflows/stage2h-price-continuation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-matching-price-path:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Syntax and dependencies
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py
+          python -c 'import numpy, scipy, numba;print(numpy.__version__,scipy.__version__,numba.__version__)'
+      - name: Solve conditional 5x5 private fixed point through price continuation at full matching
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py --initial-price 100 --maxfev 250 --max-trials 35
+      - name: Check economic and certification honesty
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/02-kinetic-exchange-yakovenko/stage2h/results/private_5x5_price_continuation.json')
+          z=json.loads(p.read_text())
+          assert z['source_matching_multiplier']==1.
+          assert z['global_Nash_allpair_certified'] is False
+          assert z['private_5x5_fixed_point_certified'] is False
+          assert z['stationary_GE'] is False
+          print('Reached price',z['reached_price'],'target',z['source_price'],
+                'candidate',z['source_price_candidate'])
+          PY
+      - name: Upload full matching price-path experiments
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2h-5x5-full-matching-price-path
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results/
+          retention-days: 30
