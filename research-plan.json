@@ -248,7 +248,7 @@
   "stage2h": {
     "branch": "research/stage2h-global-convex-nash-private-equilibrium",
     "directory": "research/02-kinetic-exchange-yakovenko/stage2h",
-    "status": "convex_Nash_3x3_pilot_success_5x5_private_not_certified",
+    "status": "5x5_intermediate_matching_private_root_independently_checked_source_rate_UNSOLVED",
     "related_Fortran_archive_retrieved": true,
     "related_Fortran_archive_is_original_source": false,
     "convex_Nash_3x3_pair": [
@@ -267,6 +267,19 @@
     "private_stationary_distribution": false,
     "endogenous_price": false,
     "stationary_GE": false,
-    "draft_pr": 11
+    "draft_pr": 11,
+    "globally_reoptimized_3x3_Bellman_sup": 4.547473508864641e-13,
+    "globally_reoptimized_3x3_pairs": 17,
+    "source_matching_multiplier": 1,
+    "five_grid_last_accepted_matching_multiplier": 0.609033203125,
+    "five_grid_last_accepted_fast_Bellman_sup": 6.366462912410498e-12,
+    "five_grid_last_accepted_all49_reoptimized_Bellman_sup": 5.9117155615240335e-12,
+    "five_grid_last_accepted_all49_max_log_Nash_improvement": 5.329070518200751e-15,
+    "five_grid_last_accepted_global_positive_contracts": 39,
+    "five_grid_unresolved_conic_branch_count": 1,
+    "five_grid_initial_false_root_matching_multiplier": 0.55,
+    "five_grid_initial_false_root_independent_Bellman_sup": 0.6554151026730324,
+    "alternate_high_price_full_matching_initial_root_converged": false,
+    "matching_source_actions_run": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41748837033"
   }
 }
