@@ -1,0 +1,48 @@
+{
+  "status": "PSEUDO_ARCLENGTH_PRIVATE_5x5_PATH_DID_NOT_REACH_SOURCE_MATCHING_RATE",
+  "run_id": 41744277837,
+  "run_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41744277837",
+  "conditions": {
+    "price": 2.5,
+    "grid": [
+      5,
+      5
+    ],
+    "partner_state": [
+      1.5,
+      1
+    ],
+    "source_matching_multiplier": 1
+  },
+  "seed_path": [
+    {
+      "lambda": 0,
+      "residual": 1.0015810403274372e-9
+    },
+    {
+      "lambda": 0.05,
+      "residual": 5.240963218966499e-10
+    },
+    {
+      "lambda": 0.15,
+      "residual": 2.954948286060244e-9
+    },
+    {
+      "lambda": 0.3,
+      "residual": 8.222286851378158e-9
+    },
+    {
+      "lambda": 0.55,
+      "residual": 3.982222551712766e-9
+    }
+  ],
+  "max_matching_on_traced_branch": 0.604785311029915,
+  "last_accepted_augmented_residual": 1.3457338354783133e-8,
+  "next_rejected_point_residual": 0.00006988822133280337,
+  "turning_point_observed": false,
+  "elapsed_seconds": 630.958645493,
+  "globally_optimal_nash_certification": false,
+  "private_5x5_source_rate_root_certified": false,
+  "stationary_GE": false,
+  "conclusion": "Failure persists with bordered arclength; no observed ordinary fold. Cannot distinguish abrupt Nash selection transition from numerical optimizer inaccuracies without independent all-pair Nash reoptimization."
+}
