@@ -12,7 +12,7 @@ permissions:
   actions: read
 
 jobs:
-  5x5-jacobian:
+  jacobian-five:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
