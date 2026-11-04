@@ -1,0 +1,39 @@
+{
+  "status": "EXECUTED_49_PAIR_CANDIDATE_PROBES",
+  "action_run": 41769156562,
+  "source_artifact_run": 41748837033,
+  "grid": [
+    5,
+    5
+  ],
+  "price": 2.5,
+  "matching_multiplier": 0.609033203125,
+  "probe_direction": "normalized_matching_exposure_not_equilibrium_tangent",
+  "relevant_pairs": 49,
+  "positive_contracts": 39,
+  "probes": [
+    {
+      "value_amplitude": 0.000003,
+      "contract_changes": 0,
+      "cm_portfolio_changes": 0,
+      "distinct_near_ties": 0
+    },
+    {
+      "value_amplitude": 0.001,
+      "contract_changes": 0,
+      "cm_portfolio_changes": 0,
+      "distinct_near_ties": 0
+    },
+    {
+      "value_amplitude": 0.01,
+      "contract_changes": 0,
+      "cm_portfolio_changes": 4,
+      "distinct_near_ties": 0
+    }
+  ],
+  "maximum_binding_payment_kkt_violation": 2.142730437526552e-14,
+  "interpretation": "CM portfolio changes appear for larger perturbations; no economically distinct candidate Nash contract switches detected along these probes. These are not points on a solved equilibrium correspondence and do not identify the cause of the lambda continuation failure.",
+  "global_nash_in_new_probes": false,
+  "full_matching_5x5_private_root_certified": false,
+  "stationary_GE": false
+}
