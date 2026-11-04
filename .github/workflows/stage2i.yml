@@ -40,6 +40,8 @@ jobs:
           github-token: ${{ github.token }}
           name: stage2h-5x5-active-payment-private-root
           path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Independent CM envelope and true Nash derivative audit
+        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/cm_envelope_audit.py
       - name: Execute 49-pair economic contract and CM switching audit
         run: python research/02-kinetic-exchange-yakovenko/stage2i/src/contract_branch_diagnostics.py
       - name: Repeat 49-pair audit at larger economically distinguishable perturbations
