@@ -43,7 +43,7 @@ def stable_logit(x):
 
 
 class ConditionalKKT:
-    def __init__(self,model,price,y,d,*,payment_tol=1e-6):
+    def __init__(self,model,price,y,d,*,payment_tol=1e-6,upper_override=None):
         self.model=model
         self.price=float(price)
         self.p=model.p
@@ -54,7 +54,11 @@ class ConditionalKKT:
                 if i!=12 and j!=12:continue
                 if y[i,j]<=0:continue
                 self.pairs.append((i,j))
-                self.upper.append(bool(d[i,j]>=model.m[i]-payment_tol))
+                key=(i,j)
+                bound=bool(d[i,j]>=model.m[i]-payment_tol)
+                if upper_override is not None:
+                    bound=bool(upper_override[key])
+                self.upper.append(bound)
         assert len(self.pairs)==39,(len(self.pairs),self.pairs)
         self.upper=np.asarray(self.upper,dtype=bool)
         self.nv=model.n-1
