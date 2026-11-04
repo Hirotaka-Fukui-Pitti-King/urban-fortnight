@@ -1,10 +1,6 @@
 name: Stage 2-H independent 5x5 full-matching price homotopy
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py'
-      - '.github/workflows/stage2h-price-continuation.yml'
   workflow_dispatch:
 
 permissions:
