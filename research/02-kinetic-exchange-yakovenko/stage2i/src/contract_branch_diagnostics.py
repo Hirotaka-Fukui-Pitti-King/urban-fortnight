@@ -224,5 +224,6 @@ if __name__=="__main__":
     ap=argparse.ArgumentParser()
     ap.add_argument("--global-audit",action="store_true")
     ap.add_argument("--scale",type=float,default=3e-6)
+    ap.add_argument("--folder",type=Path,default=None)
     args=ap.parse_args()
-    diagnose(global_audit=args.global_audit,scale=args.scale)
+    diagnose(folder=args.folder,global_audit=args.global_audit,scale=args.scale)
