@@ -1,10 +1,6 @@
 name: Stage 2-H 5x5 intermediate private all-pair global Nash audit
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/audit_5x5_intermediate_global_nash.py'
-      - '.github/workflows/stage2h-intermediate-global.yml'
   workflow_dispatch:
 
 permissions:
