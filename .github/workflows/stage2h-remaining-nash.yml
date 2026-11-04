@@ -1,0 +1,46 @@
+name: Stage 2-H certify remaining 5x5 intermediate Nash pair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  remaining-nash:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Bound the remaining buyer 3 seller 12 Nash contract globally
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/certify_remaining_5x5_branch.py
+      - name: Independent monotone upper bound accuracy
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/02-kinetic-exchange-yakovenko/stage2h/results/remaining_5x5_monotone_nash.json')
+          d=json.loads(p.read_text())
+          print('numerical global gap',d['upper_objective_minus_incumbent'])
+          assert d['numerical_global_bound_only'] and not d['stationary_GE']
+          assert d['upper_log_nash']>=d['lower_log_nash']-1e-10
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2h-remaining-nash-numerical-bounds
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results/remaining_5x5_monotone_nash.json

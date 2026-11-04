@@ -1,0 +1,59 @@
+name: Stage 2-H 5x5 corrected private-root Jacobian and trust-region diagnostics
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  jacobian-five:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Fetch last accepted independently checked 5x5 private root from prior run
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Verify reference candidate exists
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('research/02-kinetic-exchange-yakovenko/stage2h/results/private_5x5_active_last_accepted.npz')
+          assert p.exists(), list(p.parent.iterdir())
+          PY
+      - name: Numerically diagnose failure at matching rate 0.609 by Jacobian singularity and trust region
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/diagnose_5x5_jacobian.py
+      - name: Prevent overclaiming global Nash or monetary GE
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/02-kinetic-exchange-yakovenko/stage2h/results/5x5_jacobian_diagnostics.json')
+          z=json.loads(p.read_text())
+          assert z['stationary_GE'] is False
+          assert z['globally_optimal_allpair_at_tried_lambda'] is False
+          assert z['base_sup']<1e-8
+          print('min singular',z['jacobian_singular_min'],
+                'condition',z['jacobian_condition'])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2h-5x5-jacobian-trust-region
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results/5x5_jacobian*
+          retention-days: 30

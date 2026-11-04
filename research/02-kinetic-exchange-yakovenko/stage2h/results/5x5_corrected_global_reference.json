@@ -1,0 +1,29 @@
+{
+  "status": "CONDITIONAL_FIVE_GRID_INTERMEDIATE_PRIVATE_ROOT_ONLY",
+  "source_run_id": 41748837033,
+  "source_actions_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41748837033",
+  "fixed_price": 2.5,
+  "matching_multiplier": 0.609033203125,
+  "source_matching_multiplier": 1,
+  "grid": [
+    5,
+    5
+  ],
+  "partner_state": {
+    "capital": 1.5,
+    "nominal_money": 1
+  },
+  "relevant_directed_pairs": 49,
+  "positive_pairs": 39,
+  "original_active_Bellman_sup": 6.366462912410498e-12,
+  "Bellman_sup_after_all49_convex_reopt": 5.9117155615240335e-12,
+  "max_finite_logNash_improvement": 5.329070518200751e-15,
+  "max_unresolved_conic_branches_per_pair": 1,
+  "unresolved_pair": {
+    "buyer": 3,
+    "seller": 12
+  },
+  "strict_global_nash_certified": false,
+  "full_source_5x5_private_root_certified": false,
+  "stationary_GE": false
+}

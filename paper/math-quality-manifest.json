@@ -2,8 +2,8 @@
   "schema_version": 1,
   "documents": {
     "paper/article.qmd": {
-      "display": 24,
-      "inline": 145,
+      "display": 26,
+      "inline": 159,
       "minimum_pages": 10,
       "minimum_extracted_chars": 8000,
       "math_font_required": true

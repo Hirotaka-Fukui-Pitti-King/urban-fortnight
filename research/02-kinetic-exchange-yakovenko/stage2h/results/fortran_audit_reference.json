@@ -1,0 +1,20 @@
+{
+  "status": "ARCHIVE_DOWNLOADED_AND_INSPECTED",
+  "archive": "https://red-files-public.s3.amazonaws.com/codes/18/18-446/Chiu_Molico_codes.zip",
+  "sha256": "deae7bbd3f24167367fa4716b15621ffa9e33ec9fc841f9f68e24c655171c014",
+  "size_bytes": 18082836,
+  "text_or_code_files": 211,
+  "source_files_inspected": [
+    "Steady State/src_code/bargprob.f90",
+    "Steady State/src_code/dq.f90",
+    "Steady State/src_code/mm2020.f90"
+  ],
+  "source_is_original_Molico_Zhang_2006": false,
+  "methodological_findings": [
+    "derivative-based one-dimensional bargaining optimizer in related economy",
+    "production from inverse cost",
+    "interpolation of payment grid for distribution moments",
+    "separate directly evaluated bargaining in value updates"
+  ],
+  "source_run": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41738179419"
+}
