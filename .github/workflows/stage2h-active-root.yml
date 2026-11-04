@@ -1,10 +1,6 @@
 name: Stage 2-H 5x5 private root after Nash payment active-set repair
 
 on:
-  pull_request:
-    paths:
-      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_active.py'
-      - '.github/workflows/stage2h-active-root.yml'
   workflow_dispatch:
 
 permissions:
