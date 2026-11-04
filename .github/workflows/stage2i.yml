@@ -42,6 +42,10 @@ jobs:
           path: research/02-kinetic-exchange-yakovenko/stage2h/results
       - name: Execute 49-pair economic contract and CM switching audit
         run: python research/02-kinetic-exchange-yakovenko/stage2i/src/contract_branch_diagnostics.py
+      - name: Repeat 49-pair audit at larger economically distinguishable perturbations
+        run: |
+          python research/02-kinetic-exchange-yakovenko/stage2i/src/contract_branch_diagnostics.py --scale 0.001 --folder research/02-kinetic-exchange-yakovenko/stage2i/results/scale_1e3
+          python research/02-kinetic-exchange-yakovenko/stage2i/src/contract_branch_diagnostics.py --scale 0.01 --folder research/02-kinetic-exchange-yakovenko/stage2i/results/scale_1e2
       - name: Validate observable output and prohibit false root claim
         run: |
           python - <<'PY'
@@ -56,6 +60,11 @@ jobs:
           assert data["full_matching_5x5_fixedpoint_certified"] is False
           assert data["stationary_GE"] is False
           assert data["actual_branch_root_tracking"] is False
+          for sub in ("scale_1e3","scale_1e2"):
+              diag=json.loads((root/sub/"matching_boundary_diagnostics.json").read_text())
+              assert diag["relevant_pairs"]==49
+              assert not diag["actual_branch_root_tracking"]
+              print(sub,json.dumps(diag,indent=2))
           print(json.dumps(data,indent=2))
           PY
       - uses: actions/upload-artifact@v4
