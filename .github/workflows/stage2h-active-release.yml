@@ -1,0 +1,55 @@
+name: Stage 2-H payment active-set Nash repair test
+
+on:
+  pull_request:
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2h/src/active_nash.py'
+      - 'research/02-kinetic-exchange-yakovenko/stage2h/scripts/probe_active_payment_release.py'
+      - '.github/workflows/stage2h-active-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  payment-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt 'cvxpy>=1.6,<1.8' 'clarabel>=0.9,<0.12'
+      - name: Syntax, dependency and smoke tests
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2h/src/active_nash.py research/02-kinetic-exchange-yakovenko/stage2h/scripts/probe_active_payment_release.py
+          python -c 'import cvxpy; assert "CLARABEL" in cvxpy.installed_solvers()'
+      - name: Reproduce 5x5 intermediate root and test payment-bound release
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/probe_active_payment_release.py
+      - name: Check relative improvement and prevent unsupported GE claims
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('research/02-kinetic-exchange-yakovenko/stage2h/results/payment_active_release.json').read_text())
+          assert r['stationary_GE'] is False
+          assert r['source_rate_root'] is False if 'source_rate_root' in r else True
+          assert r['status']=='ACTIVE_SET_DIAGNOSIS_EXECUTED', r
+          print('Old payment derivative:',r['old_real_payment_gradient'])
+          print('Repaired payment:',r['repaired_payment'])
+          print('Global convex payment:',r['convex_payment'])
+          print('Legacy vs active Bellman:',r['legacy_lambda_055_Bellman_sup'],r['active_lambda_055_Bellman_sup'])
+          PY
+      - name: Upload executed payment active-set evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2h-active-payment-release
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results/
+          retention-days: 30
