@@ -174,13 +174,33 @@ def solve_pair(model,V,price,buyer,seller,*,solver="CLARABEL",
             if last_status!="infeasible":
                 unresolved.append((ib,is_,branch_bound[(ib,is_)]))
             continue
-        # If only an optimal_inaccurate candidate survived, retain it as a
-        # FEASIBLE LOWER BOUND, not a globally certified branch optimizer.
+        # Retain ALL feasible primal points from the different solvers.
+        # A later fallback can overwrite CVXPY variables with a worse or
+        # slightly infeasible point: never select "last returned" blindly.
+        valid_primal=[]
+        from molico_grid import g
+        for qtrial,dtrial in primal_candidates:
+            if not (0<qtrial<capacity and 0<dtrial<=model.m[buyer]+1e-6
+                    and dtrial/price<qtrial):
+                continue
+            buyerw=float(cm_opt(wb+qtrial-dtrial/price,price,model.k,
+                    model.m,V,model.edges,p.beta,p.b,p.eta)[0])
+            sellerw=float(cm_opt(ws+dtrial/price,price,model.k,
+                    model.m,V,model.edges,p.beta,p.b,p.eta)[0])
+            buyer_gain=buyerw-Wb
+            seller_gain=sellerw-Ws-float(g(qtrial,model.k[seller],p.alpha,p.A))
+            if buyer_gain>0 and seller_gain>0:
+                score_trial=p.theta*np.log(buyer_gain)+(
+                    1-p.theta)*np.log(seller_gain)
+                valid_primal.append((score_trial,qtrial,dtrial))
+        if not valid_primal:
+            unresolved.append((ib,is_,branch_bound[(ib,is_)]))
+            continue
         if not reliable_optimal:
             unresolved.append((ib,is_,branch_bound[(ib,is_)]))
         else:
             successes+=1
-        q,pay=primal_candidates[-1]
+        _,q,pay=max(valid_primal)
         if q<=0 or pay<=0 or q>=capacity or pay>model.m[buyer]+1e-6:
             continue
         # Independent objective re-evaluation via *globally* optimal CM policy.
