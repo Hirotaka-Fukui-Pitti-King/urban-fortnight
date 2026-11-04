@@ -30,7 +30,7 @@ jobs:
           python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py
           python -c 'import numpy, scipy, numba;print(numpy.__version__,scipy.__version__,numba.__version__)'
       - name: Solve conditional 5x5 private fixed point through price continuation at full matching
-        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py --initial-price 100 --maxfev 250 --max-trials 35
+        run: python research/02-kinetic-exchange-yakovenko/stage2h/scripts/solve_5x5_price_continuation.py --initial-price 100000 --maxfev 250 --max-trials 35
       - name: Check economic and certification honesty
         run: |
           python - <<'PY'
