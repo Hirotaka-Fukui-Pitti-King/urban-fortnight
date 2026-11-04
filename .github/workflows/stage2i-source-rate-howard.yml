@@ -1,0 +1,73 @@
+name: Stage 2-I original matching-rate 5x5 Howard contraction experiment
+
+on:
+  push:
+    branches:
+      - research/stage2i-active-set-nash-bellman-homotopy
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2i/src/source_rate_howard.py'
+      - '.github/workflows/stage2i-source-rate-howard.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  source-rate-howard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies for original model and independent global Nash audit
+        run: python -m pip install -r requirements.txt 'cvxpy>=1.6,<1.8' 'clarabel>=0.9,<0.12'
+      - name: Source-rate solver syntax and dependency gate
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2i/src/
+          python -c 'import numpy,scipy,numba,cvxpy; assert "CLARABEL" in cvxpy.installed_solvers()'
+      - name: Retrieve independently checked intermediate root
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Retrieve actual conditional KKT branch at matching 0.85
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41772112814
+          github-token: ${{ github.token }}
+          name: stage2i-conditional-kkt-attempt
+          path: research/02-kinetic-exchange-yakovenko/stage2i/results
+      - name: Solve original-rate fixed-contract Bellman and endogenous policy iteration
+        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/source_rate_howard.py --iterations 30
+      - name: Truthful numerical result gate
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path("research/02-kinetic-exchange-yakovenko/stage2i/results/source_rate_howard_summary.json")
+          if not r.exists():
+              print("No numerical output: inspect preceding failure.")
+          else:
+              d=json.loads(r.read_text())
+              assert d["matching_multiplier"]==1.
+              assert not d["stationary_GE"]
+              print("SOURCE_RATE_HOWARD_RESULT",json.dumps({k:v for k,v in d.items() if k!="iteration_diagnostics"}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2i-source-rate-howard-results
+          path: |
+            research/02-kinetic-exchange-yakovenko/stage2i/results/source_rate_howard_summary.json
+            research/02-kinetic-exchange-yakovenko/stage2i/results/howard_best_source_candidate.npz
+          retention-days: 30

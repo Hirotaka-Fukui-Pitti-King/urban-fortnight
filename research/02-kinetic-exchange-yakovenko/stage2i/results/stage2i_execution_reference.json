@@ -1,0 +1,81 @@
+{
+  "status": "SOURCE_RATE_5X5_PRIVATE_FIXED_POINT_NOT_CERTIFIED",
+  "source_model": "Molico-Zhang private fixed-price, fixed partner Dirac (1.5,1)",
+  "price": 2.5,
+  "grid": [
+    5,
+    5
+  ],
+  "partner_state_index": 12,
+  "prior_verified_root": {
+    "lambda_matching": 0.609033203125,
+    "source_run": 41748837033,
+    "independent_all49_Bellman_sup": 5.9117155615240335e-12
+  },
+  "new_intermediate": {
+    "lambda_matching": 0.61,
+    "conditional_KKT_Bellman_sup": 9.094947017729282e-13,
+    "all49_convex_reoptimized_Bellman_sup": 9.094947017729282e-13,
+    "max_finite_log_Nash_improvement": 2.0872192862952943e-14,
+    "max_payment_difference": 9.814371537686384e-14,
+    "unresolved_conic_pairs": [
+      [
+        2,
+        12
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "all49_strictly_certified": false,
+    "run": 41771251680
+  },
+  "fast_oracle_diagnostic": {
+    "lambda_matching": 0.61,
+    "affected_pair": {
+      "buyer": 19,
+      "seller": 12,
+      "quantity_conditional": 1.066253093544976,
+      "quantity_fast": 1.0662530935449748,
+      "payment_conditional": 1.2906539979845006,
+      "payment_fast": 1.454187835912666,
+      "fast_log_Nash_minus_conditional": -0.0007917125266612146
+    },
+    "fast_policy_Bellman_sup": 0.711968101507864,
+    "run": 41771614010,
+    "interpretation": "Fast candidate selects a strictly inferior nominal payment; objective gap does not bound individual surplus/Bellman error."
+  },
+  "payment_switching": {
+    "source": 41770969738,
+    "lambda_matching": 0.62,
+    "conditional_Bellman_sup": 4.547473508864641e-13,
+    "upper_payment_KKT_violation": 0.0073516157543007665,
+    "interpretation": "Conditional equality root exists but violates payment-cap KKT; active-set release needed."
+  },
+  "source_conditional_one_run": {
+    "lambda_matching": 1,
+    "conditional_Bellman_sup": 2.5920599000528455e-11,
+    "global_Nash_reoptimized_Bellman_sup": 0.9410449425622573,
+    "unresolved_global_conic_pairs": [
+      [
+        12,
+        12
+      ]
+    ],
+    "global_optimality_or_bellman_certified": false,
+    "run": 41770969738
+  },
+  "source_reexecution": {
+    "latest_accepted_lambda": 0.850006103515625,
+    "source_conditional_recovered": false,
+    "global_source_rate_verified": false,
+    "run": 41772112814
+  },
+  "conclusions": {
+    "full_matching_private_fixed_point_certified": false,
+    "stationary_general_equilibrium": false,
+    "nonexistence_proven": false,
+    "robust_source_rate_root_reproduced": false
+  }
+}

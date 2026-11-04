@@ -1,0 +1,73 @@
+name: Stage 2-I global Nash branch switching from verified 0.85 conditional root
+
+on:
+  push:
+    branches:
+      - research/stage2i-active-set-nash-bellman-homotopy
+    paths:
+      - 'research/02-kinetic-exchange-yakovenko/stage2i/src/solve_global_branch_switch.py'
+      - '.github/workflows/stage2i-switch-global-branch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  correct-global-branches:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      NUMBA_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements.txt 'cvxpy>=1.6,<1.8' 'clarabel>=0.9,<0.12'
+      - name: Python syntax and solver availability
+        run: |
+          python -m compileall -q research/02-kinetic-exchange-yakovenko/stage2i/src/
+          python -c 'import numpy,scipy,numba,cvxpy; assert "CLARABEL" in cvxpy.installed_solvers()'
+      - name: Fetch reference source 5x5 intermediate private root
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41748837033
+          github-token: ${{ github.token }}
+          name: stage2h-5x5-active-payment-private-root
+          path: research/02-kinetic-exchange-yakovenko/stage2h/results
+      - name: Fetch actual converged 0.85 conditional branch from Stage 2-I
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41772112814
+          github-token: ${{ github.token }}
+          name: stage2i-conditional-kkt-attempt
+          path: research/02-kinetic-exchange-yakovenko/stage2i/results
+      - name: Directly correct global Nash challenger branches and attempt matching one
+        run: python research/02-kinetic-exchange-yakovenko/stage2i/src/solve_global_branch_switch.py --max-nfev 60
+      - name: Report numerical result without false convergence
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/02-kinetic-exchange-yakovenko/stage2i/results/branch_switch_085.json')
+          if p.exists():
+              d=json.loads(p.read_text())
+              print('GLOBAL_NASH_BRANCH_SWITCH',json.dumps(d))
+              assert d["stationary_GE"] is False
+          else:
+              print('No branch-switch output. Check numerical failure log.')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2i-global-branch-switch-experiment
+          path: |
+            research/02-kinetic-exchange-yakovenko/stage2i/results/branch_switch_085.json
+            research/02-kinetic-exchange-yakovenko/stage2i/results/switched_085_conditional_candidate.npz
+            research/02-kinetic-exchange-yakovenko/stage2i/results/source_global_policy_at_conditional_V.npz
+            research/02-kinetic-exchange-yakovenko/stage2i/results/source_global_policy_pair_gaps.json
+          retention-days: 30
