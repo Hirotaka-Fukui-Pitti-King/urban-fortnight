@@ -225,8 +225,9 @@ def fit_step(system,u0,lm,max_nfev=20):
                   message=str(sol.message)), d
 
 
-def independent_candidate_check(system,u,lm,*,global_check=False):
+def independent_candidate_check(system,u,lm,*,global_check=False,export_folder=None):
     from convex_nash import solve_pair
+    from private_nash_bellman import nash_score
     diag,q,payment,v,T=system.validate(u,lm)
     model=system.model; p=model.p
     f=np.zeros(model.n);f[12]=1.
@@ -235,7 +236,7 @@ def independent_candidate_check(system,u,lm,*,global_check=False):
     fast,fast_q,fast_d,_,_=active_operator(v,f,system.price,model,9,7)
     fast_full=o+lm*(fast-o)
     result=dict(conditional_Bellman_sup=diag["bellman_sup"],
-                independent_fast_Bellman_sup=float(max(abs(
+                independent_fast_Bellman_sup=float(np.max(np.abs(
                     fast_full[1:]-fast_full[0]-v[1:]))),
                 conditional_KKT_pass=bool(diag["conditional_solution"]),
                 fast_policy_max_quantity_diff=float(np.max(np.abs(fast_q-q))),
@@ -252,24 +253,55 @@ def independent_candidate_check(system,u,lm,*,global_check=False):
                 answer=solve_pair(model,v,system.price,i,j)
                 gy[i,j]=answer.y
                 gd[i,j]=answer.d
+                old=(nash_score(q[i,j],payment[i,j],i,j,model,v,
+                                system.price) if q[i,j]>0 else float("-inf"))
+                improvement=(float(answer.log_nash-old)
+                             if np.isfinite(old) and
+                             np.isfinite(answer.log_nash) else None)
                 if answer.unresolved_branches:
                     unresolved.append([i,j,answer.unresolved_branches])
-                # Log comparison only when both positive.
                 gaps.append(dict(buyer=i,seller=j,
-                            unresolved_branches=answer.unresolved_branches,
-                            global_log_nash=answer.log_nash))
+                    unresolved_branches=int(answer.unresolved_branches),
+                    conditional_y=float(q[i,j]),
+                    conditional_d=float(payment[i,j]),
+                    global_y=float(answer.y),
+                    global_d=float(answer.d),
+                    global_log_nash=(float(answer.log_nash)
+                        if np.isfinite(answer.log_nash) else None),
+                    log_nash_improvement=improvement,
+                    quantity_diff=float(abs(q[i,j]-answer.y)),
+                    payment_diff=float(abs(payment[i,j]-answer.d))))
         TT=_frozen_operator(v,f,system.price,model.k,model.m,model.edges,
                 p.beta,p.b,p.eta,p.alpha,p.A,p.delta,p.Ntypes,gy,gd)
         global_T=o+lm*(TT-o)
-        global_sup=float(max(abs(global_T[1:]-global_T[0]-v[1:])))
+        global_sup=float(np.max(np.abs(global_T[1:]-global_T[0]-v[1:])))
+        sorted_gaps=sorted(gaps,key=lambda a:max(a["payment_diff"],
+                                  a["quantity_diff"]),reverse=True)
+        scores=[a["log_nash_improvement"] for a in gaps
+                if a["log_nash_improvement"] is not None]
+        policy_close=bool(np.max(np.abs(gy-q))<1e-7 and
+                          np.max(np.abs(gd-payment))<1e-7)
+        if export_folder is not None:
+            path=Path(export_folder)
+            path.mkdir(parents=True,exist_ok=True)
+            np.savez(path/"source_global_policy_at_conditional_V.npz",
+                     global_quantity=gy,global_nominal_payment=gd,
+                     conditional_quantity=q,conditional_nominal_payment=payment,
+                     relative_value=v[1:],matching_multiplier=lm)
+            (path/"source_global_policy_pair_gaps.json").write_text(
+                json.dumps(gaps,indent=2)+"\n",encoding="utf-8")
         result.update(global_all49_attempted=True,
             global_Bellman_sup=global_sup,
             unresolved_global_pair_branches=unresolved,
+            max_finite_global_log_nash_improvement=(
+                float(max(scores)) if scores else None),
+            top_global_policy_changes=sorted_gaps[:12],
+            global_policy_matches_conditional=policy_close,
             max_globally_reoptimized_quantity_diff=float(np.max(np.abs(gy-q))),
             max_globally_reoptimized_payment_diff=float(np.max(np.abs(gd-payment))),
             verified_source_rate_5x5_private_fixedpoint=bool(
                 abs(lm-1)<1e-12 and global_sup<1e-8 and
-                not unresolved and
+                policy_close and not unresolved and
                 diag["conditional_solution"]))
     return result
 
