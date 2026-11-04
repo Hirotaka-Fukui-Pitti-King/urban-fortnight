@@ -234,8 +234,8 @@ def independent_candidate_check(system,u,lm,*,global_check=False):
                 independent_fast_Bellman_sup=float(max(abs(
                     fast_full[1:]-fast_full[0]-v[1:]))),
                 conditional_KKT_pass=bool(diag["conditional_solution"]),
-                fast_policy_max_quantity_diff=float(max(abs(fast_q-q))),
-                fast_policy_max_payment_diff=float(max(abs(fast_d-payment))),
+                fast_policy_max_quantity_diff=float(np.max(np.abs(fast_q-q))),
+                fast_policy_max_payment_diff=float(np.max(np.abs(fast_d-payment))),
                 global_all49_attempted=False,global_Bellman_sup=None,
                 verified_source_rate_5x5_private_fixedpoint=False)
     if global_check and diag["conditional_solution"]:
@@ -261,8 +261,8 @@ def independent_candidate_check(system,u,lm,*,global_check=False):
         result.update(global_all49_attempted=True,
             global_Bellman_sup=global_sup,
             unresolved_global_pair_branches=unresolved,
-            max_globally_reoptimized_quantity_diff=float(max(abs(gy-q))),
-            max_globally_reoptimized_payment_diff=float(max(abs(gd-payment))),
+            max_globally_reoptimized_quantity_diff=float(np.max(np.abs(gy-q))),
+            max_globally_reoptimized_payment_diff=float(np.max(np.abs(gd-payment))),
             verified_source_rate_5x5_private_fixedpoint=bool(
                 abs(lm-1)<1e-12 and global_sup<1e-8 and
                 not unresolved and
