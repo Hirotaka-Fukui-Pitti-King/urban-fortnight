@@ -1,0 +1,24 @@
+{
+  "status": "EXECUTED_NUMERICALLY_BOUNDED_UNRESOLVED_CONIC_NASH_PAIR",
+  "run_id": 41751526520,
+  "source_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41751526520",
+  "grid": [
+    5,
+    5
+  ],
+  "price": 2.5,
+  "matching_multiplier": 0.609033203125,
+  "buyer": 3,
+  "seller": 12,
+  "quantity": 1.0659298209325412,
+  "nominal_payment": 1.5,
+  "real_payment": 0.6,
+  "lower_log_nash": 4.698007738920431,
+  "upper_log_nash": 4.698008738919271,
+  "numerical_log_gap": 9.999988401787618e-7,
+  "boxes_examined": 284778,
+  "monotone_branch_bound_tolerance_met": true,
+  "finite_float_rounding_rigorous": false,
+  "source_rate_5x5_private_fixedpoint_certified": false,
+  "stationary_GE": false
+}
