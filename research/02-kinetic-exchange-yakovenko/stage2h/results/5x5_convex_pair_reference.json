@@ -1,0 +1,29 @@
+{
+  "status": "ACTUALLY_EXECUTED_5x5_CONVEX_NASH_SINGLE_PAIR",
+  "run_id": 41745092965,
+  "run_url": "https://github.com/Hirotaka-Fukui-Pitti-King/urban-fortnight/actions/runs/41745092965",
+  "grid": [
+    5,
+    5
+  ],
+  "price": 2.5,
+  "buyer": 12,
+  "seller": 12,
+  "continuation_value_source": "Interpolated 3x3 private root, NOT solved 5x5 root",
+  "triangles": 32,
+  "pairs": 1024,
+  "pruned_by_valid_upper_bound": 859,
+  "solved_convex_subproblems": 165,
+  "successful_convex_subproblems": 145,
+  "quantity": 1.063506336913268,
+  "nominal_payment": 1,
+  "convex_log_nash": 4.635572706912882,
+  "independent_lower": 4.635572706912877,
+  "independent_upper": 4.6365690751278965,
+  "independent_gap": 0.0009963682150191389,
+  "convex_elapsed_seconds": 3.837383496,
+  "bnb_elapsed_seconds": 0.008929913000002898,
+  "full_candidate_private_root": false,
+  "stationary_GE": false,
+  "strict_interval_global_optimality_proven": false
+}
